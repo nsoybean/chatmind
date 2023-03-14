@@ -38,7 +38,7 @@ function Sidebar() {
     padding: '10px',
     borderRadius: '5px',
     width: '100%',
-    margin: '0px 0',
+    margin: '5px 0',
     fontSize: '16px',
     border: '0.5px solid #ccc',
     cursor: 'pointer'
@@ -49,7 +49,7 @@ function Sidebar() {
     backgroundColor: '#ececf1',
     width: '100%',
     padding: '10px',
-    margin: '8px 0',
+    margin: '5px 0',
     boxSizing: 'border-box',
     border: '0.5px solid #ccc',
     borderRadius: '5px',
@@ -135,16 +135,17 @@ function Sidebar() {
       </div>
       {isOpen && (
         <div>
-          <button onClick={onClickNewChat} style={newChatStyle}>
-            <FontAwesomeIcon icon={faComment} style={{ marginRight: '8px' }} />
-            <span>New chat</span>
-          </button>
           <input
             type='text'
             placeholder='Search Chat...'
             style={searchBarStyle}
             onChange={handleInputChange}
           />
+          <button onClick={onClickNewChat} style={newChatStyle}>
+            <FontAwesomeIcon icon={faComment} style={{ marginRight: '8px' }} />
+            <span>New chat</span>
+          </button>
+
           <ul
             style={{
               listStyleType: 'none',
