@@ -125,7 +125,10 @@ function Sidebar() {
           }}
           onClick={toggleSidebar} // Add onClick event handler to toggle sidebar
         >
-          {isOpen ? <>&times;</> : <>&#9776;</>}{' '}
+          {isOpen ? <>&times;</> : <>&#9776;</>}
+          {/* commented out temporarily as 'Chats' title feels redundant */}
+          {/* {isOpen && <span style={{ paddingLeft: '60px' }}>Chats </span>} */}
+
           {/* Render hamburger icon based on isOpen state */}
         </button>
         <div></div>
