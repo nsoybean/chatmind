@@ -28,7 +28,7 @@ function Sidebar() {
     left: '0',
     overflowX: 'hidden',
     padding: '0 10px',
-    transition: 'all 0.1s ease-in-out'
+    transition: 'all 0.2s ease-in-out'
   }
 
   const newChatStyle = {
