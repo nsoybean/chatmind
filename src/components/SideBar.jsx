@@ -28,7 +28,7 @@ function Sidebar() {
     left: '0',
     overflowX: 'hidden',
     padding: '0 10px',
-    transition: 'all 0.2s ease-in-out'
+    transition: 'all 0.1s ease-in-out'
   }
 
   const newChatStyle = {
@@ -89,12 +89,20 @@ function Sidebar() {
   }
 
   // mouse event
-  const handleMouseEnter = () => {
+  const handleMouseEnterChat = () => {
     setIsHovered(true)
   }
 
-  const handleMouseLeave = () => {
+  const handleMouseLeaveChat = () => {
     setIsHovered(false)
+  }
+
+  const handleMouseEnterSideBar = () => {
+    setIsOpen(true)
+  }
+
+  const handleMouseLeaveSideBar = () => {
+    setIsOpen(false)
   }
 
   const onClickNewChat = () => {
@@ -106,7 +114,11 @@ function Sidebar() {
   }
 
   return (
-    <div style={sideBarStyle}>
+    <div
+      style={sideBarStyle}
+      onMouseEnter={handleMouseEnterSideBar}
+      onMouseLeave={handleMouseLeaveSideBar}
+    >
       <div
         style={{
           display: 'flex',
@@ -123,7 +135,8 @@ function Sidebar() {
             cursor: 'pointer',
             color: '#fff'
           }}
-          onClick={toggleSidebar} // Add onClick event handler to toggle sidebar
+          //   temp commented out as toggling is based on hovering over sidebar
+          //   onClick={toggleSidebar} // Add onClick event handler to toggle sidebar
         >
           {isOpen ? <>&#9776;</> : <>&#9776;</>}
           {/* commented out temporarily as 'Chats' title feels redundant */}
@@ -155,8 +168,8 @@ function Sidebar() {
           >
             <li
               style={listItemStyle}
-              onMouseEnter={handleMouseEnter}
-              onMouseLeave={handleMouseLeave}
+              onMouseEnter={handleMouseEnterChat}
+              onMouseLeave={handleMouseLeaveChat}
             >
               <HiOutlineChatBubbleLeft
                 icon={faCircle}
