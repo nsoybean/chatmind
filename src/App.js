@@ -1,7 +1,9 @@
 import './App.css'
 import Sidebar from './components/SideBar'
 // import Layout from './components/Layout'
-import HomePage from './pages/NewChat'
+import NewChat from './pages/NewChat'
+import Info from './pages/Info'
+import { Routes, Route } from 'react-router-dom'
 
 function Layout({ children }) {
   return (
@@ -21,18 +23,24 @@ function Layout({ children }) {
 
 function App() {
   return (
-    // <div
-    //   style={{
-    //     display: 'flex',
-    //     height: '100vh',
-    //     backgroundColor: '#f8f7fe'
-    //   }}
-    // >
-    //   <Sidebar />
-    // </div>
-    <Layout>
-      <HomePage />
-    </Layout>
+    <Routes>
+      <Route
+        path='/'
+        element={
+          <Layout>
+            <NewChat />
+          </Layout>
+        }
+      />
+      <Route
+        path='/info'
+        element={
+          <Layout>
+            <Info />
+          </Layout>
+        }
+      />
+    </Routes>
   )
 }
 
