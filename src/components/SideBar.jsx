@@ -1,11 +1,19 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { HiOutlineChatBubbleLeft } from 'react-icons/hi2'
+import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 function Sidebar() {
   const [isOpen, setIsOpen] = useState(true)
+  const [isHovered, setIsHovered] = useState(false) // state to determine if chat is being hovered over
+  const [searchTerm, setSearchTerm] = useState('')
+
+  useEffect(() => {
+    // TODO: filter chats based on search input
+    console.log(searchTerm)
+  }, [searchTerm])
 
   // function to manage state of sidebar
   const toggleSidebar = () => {
@@ -32,7 +40,8 @@ function Sidebar() {
     width: '100%',
     margin: '0px 0',
     fontSize: '16px',
-    border: '0.5px solid #ccc'
+    border: '0.5px solid #ccc',
+    cursor: 'pointer'
   }
 
   const searchBarStyle = {
@@ -53,11 +62,47 @@ function Sidebar() {
     fontSize: '16px',
     color: '#fff',
     display: 'inline-block',
-    alignItems: 'left',
+    alignItems: 'center',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '240px'
+    width: '240px',
+    cursor: 'pointer'
+    // position: 'relative'
+  }
+
+  // icon and delete icon. shown when hovered
+  const editChatStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+    height: '24px',
+    borderRadius: '50%',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    color: '#fff',
+    position: 'relative',
+    right: '-200px',
+    transform: 'translateY(-100%)',
+    opacity: isHovered ? 1 : 0,
+    transition: 'opacity 0.2s ease-in-out'
+  }
+
+  // mouse event
+  const handleMouseEnter = () => {
+    setIsHovered(true)
+  }
+
+  const handleMouseLeave = () => {
+    setIsHovered(false)
+  }
+
+  const onClickNewChat = () => {
+    console.log('new chat initiated!')
+  }
+
+  const handleInputChange = (event) => {
+    setSearchTerm(event.target.value)
   }
 
   return (
@@ -68,7 +113,6 @@ function Sidebar() {
           justifyContent: 'space-between',
           alignItems: 'center',
           margin: '5px 5px'
-          //   marginBottom: '20px'
         }}
       >
         <button
@@ -88,7 +132,7 @@ function Sidebar() {
       </div>
       {isOpen && (
         <div>
-          <button style={newChatStyle}>
+          <button onClick={onClickNewChat} style={newChatStyle}>
             <FontAwesomeIcon icon={faComment} style={{ marginRight: '8px' }} />
             <span>New chat</span>
           </button>
@@ -96,6 +140,7 @@ function Sidebar() {
             type='text'
             placeholder='Search Chat...'
             style={searchBarStyle}
+            onChange={handleInputChange}
           />
           <ul
             style={{
@@ -104,13 +149,22 @@ function Sidebar() {
               margin: '0'
             }}
           >
-            <li style={listItemStyle}>
+            <li
+              style={listItemStyle}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
+            >
               <HiOutlineChatBubbleLeft
                 icon={faCircle}
                 style={{ marginRight: '8px' }}
               />
-              Menu Item 1 Menu Item 1 Menu Item 1 Menu Item 1 Menu Item 1 Menu
-              Item u Item 1 Menu Item 1 Menu Item 1 Menu Item 1
+              This is a very long menu that cannot be seen in its entirety
+              {/* temp commented out 
+                TODO: implement edit chat title */}
+              {/* <div style={editChatStyle}>
+                <FontAwesomeIcon icon={faEdit} style={{ marginRight: '8px' }} />
+                <FontAwesomeIcon icon={faTrash} />
+              </div> */}
             </li>
             <li style={listItemStyle}>
               <HiOutlineChatBubbleLeft
