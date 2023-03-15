@@ -2,6 +2,7 @@ import './App.css'
 import Sidebar from './components/SideBar'
 // import Layout from './components/Layout'
 import NewChat from './pages/NewChat'
+import HomePage from './pages/HomePage'
 import Info from './pages/Info'
 import { Routes, Route } from 'react-router-dom'
 
@@ -26,6 +27,14 @@ function App() {
     <Routes>
       <Route
         path='/'
+        element={
+          <Layout>
+            <HomePage />
+          </Layout>
+        }
+      />
+      <Route
+        path='/new_chat'
         element={
           <Layout>
             <NewChat />

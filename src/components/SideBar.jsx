@@ -4,8 +4,10 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { useNavigate } from 'react-router-dom'
 
 function Sidebar() {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [isHovered, setIsHovered] = useState(false) // state to determine if chat is being hovered over
   const [searchTerm, setSearchTerm] = useState('')
@@ -68,6 +70,7 @@ function Sidebar() {
     whiteSpace: 'nowrap',
     width: '240px',
     cursor: 'pointer'
+
     // position: 'relative'
   }
 
@@ -107,6 +110,8 @@ function Sidebar() {
 
   const onClickNewChat = () => {
     console.log('new chat initiated!')
+    navigate('/new_chat')
+    // navigate('/new_chat') // navigate to new chat page
   }
 
   const handleInputChange = (event) => {
@@ -163,7 +168,7 @@ function Sidebar() {
             style={{
               listStyleType: 'none',
               padding: '0px',
-              margin: '0'
+              margin: '15px 0'
             }}
           >
             <li
@@ -175,7 +180,8 @@ function Sidebar() {
                 icon={faCircle}
                 style={{ marginRight: '8px' }}
               />
-              This is a very long menu that cannot be seen in its entirety
+              Write me a react component that render 3 icons relavant to help
+              desk
               {/* temp commented out 
                 TODO: implement edit chat title */}
               {/* <div style={editChatStyle}>
@@ -188,7 +194,8 @@ function Sidebar() {
                 icon={faCircle}
                 style={{ marginRight: '8px' }}
               />
-              Menu Item 2
+              Write a golang map struct interface that create a document into
+              mongo
             </li>
           </ul>
         </div>
