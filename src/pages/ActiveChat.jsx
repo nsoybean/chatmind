@@ -1,5 +1,6 @@
 import React from 'react'
 import ChatConversation from '../components/ChatConversation'
+import ChatInputBar from '../components/ChatInputBar'
 
 const mockMessages = [
   { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
@@ -24,6 +25,7 @@ function NewChat() {
     >
       <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>Active Chat UI</h1>
       <ChatConversation messages={mockMessages} />
+      <ChatInputBar />
     </div>
   )
 }
