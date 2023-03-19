@@ -3,6 +3,7 @@ import Sidebar from './components/SideBar'
 // import Layout from './components/Layout'
 import NewChat from './pages/NewChat'
 import HomePage from './pages/HomePage'
+import ActiveChat from './pages/ActiveChat'
 import Info from './pages/Info'
 import { Routes, Route } from 'react-router-dom'
 
@@ -11,7 +12,7 @@ function Layout({ children }) {
     <div
       style={{
         display: 'flex',
-        justifyContent: '',
+        justifyContent: 'center',
         height: '100vh'
         // backgroundColor: '#f8f7fe'
       }}
@@ -46,6 +47,14 @@ function App() {
         element={
           <Layout>
             <Info />
+          </Layout>
+        }
+      />
+      <Route
+        path='/active_chat'
+        element={
+          <Layout>
+            <ActiveChat />
           </Layout>
         }
       />
