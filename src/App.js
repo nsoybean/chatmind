@@ -12,8 +12,8 @@ function Layout({ children }) {
       style={{
         display: 'flex',
         justifyContent: '',
-        height: '100vh',
-        backgroundColor: '#f8f7fe'
+        height: '100vh'
+        // backgroundColor: '#f8f7fe'
       }}
     >
       <Sidebar />

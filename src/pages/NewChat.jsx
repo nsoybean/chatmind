@@ -65,12 +65,11 @@ function NewChat() {
       style={{
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: 'center', // main axis
+        alignItems: 'center', // cross axis
         height: '100vh',
         backgroundColor: '#f8f7fe',
-        textAlign: 'left',
-        margin: '0 auto' // makes content at the center of page horizontally
+        width: '100%'
       }}
     >
       <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>
