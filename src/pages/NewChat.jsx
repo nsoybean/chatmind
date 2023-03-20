@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import Popup from 'reactjs-popup'
-
+import { useNavigate } from 'react-router-dom'
 import {
   BsPersonFillAdd,
   BsChatQuoteFill,
@@ -60,6 +59,13 @@ function Card({ icon, backgroundColor, title, onClick }) {
 }
 
 function NewChat() {
+  const navigate = useNavigate()
+
+  const onClickSkipPrompt = () => {
+    console.log('skipping prompts')
+    navigate('/active_chat')
+  }
+
   return (
     <div
       style={{
@@ -118,6 +124,7 @@ function NewChat() {
           marginTop: '2rem',
           cursor: 'pointer'
         }}
+        onClick={onClickSkipPrompt}
       >
         Skip
       </button>
