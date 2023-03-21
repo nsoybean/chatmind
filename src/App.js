@@ -12,7 +12,8 @@ function Layout({ children }) {
     <div
       style={{
         display: 'flex',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
         height: '100vh'
       }}
     >

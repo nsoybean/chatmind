@@ -86,17 +86,21 @@ function NewChat() {
   return (
     <div
       style={{
+        // display: 'flex',
+        // flexDirection: 'column',
+        // justifyContent: 'center', // main axis (vertically)
+        // alignItems: 'center', // cross axis (horizontally)
+        // height: '100vh',
+        // backgroundColor: '#f8f7fe'
         display: 'flex',
+        flexGrow: 3,
         flexDirection: 'column',
-        justifyContent: 'center', // main axis (vertically)
-        alignItems: 'center', // cross axis (horizontally)
+        justifyContent: 'center',
+        alignItems: 'center',
         height: '100vh',
-        width: '100%',
         backgroundColor: '#f8f7fe'
       }}
     >
-      {/* temp comment out title */}
-      {/* <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>Active Chat UI</h1> */}
       <ChatConversation messages={mockMessages} />
       <ChatInputBar />
     </div>

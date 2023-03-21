@@ -23,9 +23,10 @@ function Sidebar() {
   }
   const sideBarStyle = {
     backgroundColor: '#202123',
-    height: '100%',
+    height: '100vh',
     width: isOpen ? '250px' : '50px',
-    position: 'fixed',
+    // commented out as this caused chatConversation flex-grow to not work
+    // position: 'fixed',
     top: '0',
     left: '0',
     overflowX: 'hidden',

@@ -18,10 +18,10 @@ const ChatInputBar = () => {
   return (
     <div
       style={{
-        position: 'fixed',
+        // position: 'fixed',
         bottom: 0,
-        maxWidth: '60%',
-        width: '70%',
+        // maxWidth: '70%',
+        // width: '70%',
         marginTop: '10px',
         marginBottom: '30px',
         display: 'flex',
