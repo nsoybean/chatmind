@@ -63,7 +63,7 @@ function NewChat() {
 
   const onClickSkipPrompt = () => {
     console.log('skipping prompts')
-    navigate('/active_chat')
+    navigate('/chat')
   }
 
   return (

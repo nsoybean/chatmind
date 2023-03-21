@@ -51,7 +51,7 @@ function App() {
         }
       />
       <Route
-        path='/active_chat'
+        path='/chat'
         element={
           <Layout>
             <ActiveChat />

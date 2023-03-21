@@ -112,6 +112,7 @@ function NewChat() {
         backgroundColor: '#f8f7fe'
       }}
     >
+      {/* section at the top of page to show quotes, chatGPT usage */}
       <div
         style={{
           display: 'flex',
@@ -132,7 +133,11 @@ function NewChat() {
           <blockquote>{quote}</blockquote>
         </div>
       </div>
+
+      {/* actual conversation text bubbles */}
       <ChatConversation messages={mockMessages} />
+
+      {/* input text bar */}
       <ChatInputBar />
     </div>
   )
