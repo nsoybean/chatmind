@@ -28,7 +28,9 @@ const ChatConversation = ({ messages }) => {
   return (
     <div
       style={{
-        maxWidth: '60%'
+        maxWidth: '60%',
+        overflow: 'auto',
+        maxHeight: '80vh' // set a height to make sure the div doesn't expand infinitely
       }}
     >
       {chatMessages.map((message, index) => (
