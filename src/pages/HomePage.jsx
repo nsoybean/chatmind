@@ -1,44 +1,44 @@
 import React from 'react'
+import mindAiLogo from '../assets/mindAi.png'
 
-function HomePage() {
+const MindAiTitle = () => {
+  const styles = {
+    title: {
+      fontSize: '4rem',
+      fontWeight: 'bold',
+      color: '#1C1C1C',
+      textAlign: 'center',
+      marginBottom: '1rem'
+    },
+    slogan: {
+      fontSize: '1.5rem',
+      fontWeight: 'normal',
+      color: '#5B5B5B',
+      textAlign: 'center'
+    }
+  }
+
   return (
     <div
       style={{
         display: 'flex',
+        flexGrow: 1,
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#f8f7fe'
+        justifyContent: 'center', // main axis
+        alignItems: 'center' // cross axis
       }}
     >
-      <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>
-        This is the homepage!!
-      </h1>
-      <p style={{ fontSize: '1.5rem', maxWidth: '50%', textAlign: 'center' }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus
-        lacus vitae ex pulvinar, sit amet euismod lorem congue. Sed euismod
-        sapien velit, eu rhoncus mauris dapibus ac. Suspendisse potenti. Sed sed
-        arcu quis nulla sodales rutrum. Nam lacinia, quam at commodo imperdiet,
-        ex dolor tempor nulla, eu lacinia ipsum sapien vitae magna. Aenean
-        gravida tempor magna, nec sollicitudin nulla ullamcorper id.{' '}
-      </p>
-      <button
-        style={{
-          padding: '1rem 2rem',
-          backgroundColor: '#4CAF50',
-          color: 'white',
-          border: 'none',
-          borderRadius: '0.5rem',
-          fontSize: '1.2rem',
-          marginTop: '2rem',
-          cursor: 'pointer'
-        }}
-      >
-        View all features!
-      </button>
+      <img
+        src={mindAiLogo}
+        alt='mindAi Logo'
+        style={{ margin: '8px 8px', width: '250px', height: 'auto' }}
+      />
+
+      <h2 style={styles.slogan}>
+        Maximize the power of ChatGPT with better UI
+      </h2>
     </div>
   )
 }
 
-export default HomePage
+export default MindAiTitle
