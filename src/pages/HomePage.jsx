@@ -1,6 +1,6 @@
 import React from 'react'
 
-function NewChat() {
+function HomePage() {
   return (
     <div
       style={{
@@ -13,7 +13,7 @@ function NewChat() {
       }}
     >
       <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>
-        This is the homepage!
+        This is the homepage!!
       </h1>
       <p style={{ fontSize: '1.5rem', maxWidth: '50%', textAlign: 'center' }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed luctus
@@ -41,4 +41,4 @@ function NewChat() {
   )
 }
 
-export default NewChat
+export default HomePage
