@@ -127,7 +127,8 @@ function NewChat() {
           style={{
             maxWidth: '70%',
             overflowY: 'auto',
-            maxHeight: '80%'
+            maxHeight: '100px',
+            padding: '10px 0px'
           }}
         >
           <blockquote>{quote}</blockquote>
