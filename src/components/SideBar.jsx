@@ -29,7 +29,7 @@ function Sidebar() {
     // position: 'fixed',
     top: '0',
     left: '0',
-    overflowX: 'hidden',
+    // overflowX: 'scroll',
     padding: '0 10px',
     transition: 'all 0.2s ease-in-out'
   }
@@ -76,21 +76,21 @@ function Sidebar() {
   }
 
   // icon and delete icon. shown when hovered
-  const editChatStyle = {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '24px',
-    height: '24px',
-    borderRadius: '50%',
-    backgroundColor: 'rgba(0, 0, 0, 0.3)',
-    color: '#fff',
-    position: 'relative',
-    right: '-200px',
-    transform: 'translateY(-100%)',
-    opacity: isHovered ? 1 : 0,
-    transition: 'opacity 0.2s ease-in-out'
-  }
+  // const editChatStyle = {
+  //   display: 'flex',
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  //   width: '24px',
+  //   height: '24px',
+  //   borderRadius: '50%',
+  //   backgroundColor: 'rgba(0, 0, 0, 0.3)',
+  //   color: '#fff',
+  //   position: 'relative',
+  //   right: '-200px',
+  //   transform: 'translateY(-100%)',
+  //   opacity: isHovered ? 1 : 0,
+  //   transition: 'opacity 0.2s ease-in-out'
+  // }
 
   // mouse event
   const handleMouseEnterChat = () => {

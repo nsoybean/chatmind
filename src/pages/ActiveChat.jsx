@@ -123,16 +123,16 @@ function NewChat() {
           boxShadow: '0 5px 5px -5px rgba(0, 0, 0, 0.25)'
         }}
       >
-        <div
+        <blockquote
           style={{
             maxWidth: '70%',
             overflowY: 'auto',
-            maxHeight: '100px',
-            padding: '10px 0px'
+            maxHeight: '50px',
+            padding: '5px 0px'
           }}
         >
-          <blockquote>{quote}</blockquote>
-        </div>
+          {quote}
+        </blockquote>
       </div>
 
       {/* actual conversation text bubbles */}
