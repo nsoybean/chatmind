@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
 
@@ -83,22 +83,57 @@ const mockMessages = [
   }
 ]
 function NewChat() {
+  const [quote, setQuote] = useState('')
+
+  useEffect(() => {
+    fetch('https://api.quotable.io/random')
+      .then((response) => response.json())
+      .then((data) => setQuote(`${data.content} - ${data.author}`))
+      .catch((error) => {
+        console.error(
+          'Error fetching random quote from https://api.quotable.io/random:',
+          error
+        )
+        setQuote(
+          'If you cannot do great things, do small things in a great way - Napoleon Hill'
+        )
+      })
+  }, [])
+
   return (
     <div
       style={{
         display: 'flex',
         flexGrow: 3,
         flexDirection: 'column',
-        justifyContent: 'center', // main axis (vertically)
+        justifyContent: 'flex-start', // main axis (vertically)
         alignItems: 'center', // cross axis (horizontally)
         height: '100%',
         backgroundColor: '#f8f7fe'
       }}
     >
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '70px',
+          boxShadow: '0 5px 5px -5px rgba(0, 0, 0, 0.25)'
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '70%',
+            overflowY: 'auto',
+            maxHeight: '80%'
+          }}
+        >
+          <blockquote>{quote}</blockquote>
+        </div>
+      </div>
       <ChatConversation messages={mockMessages} />
-      {/* <div style={{ justifySelf: 'flex-end' }}> */}
       <ChatInputBar />
-      {/* </div> */}
     </div>
   )
 }
