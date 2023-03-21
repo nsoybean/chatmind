@@ -44,7 +44,8 @@ const ChatInputBar = () => {
           marginRight: '8px', // add some margin to make space for the send button
           overflowWrap: 'break-word', // break long words onto a new line
           height: 'auto', // allow input to expand/contract based on amount of text
-          maxHeight: '100px'
+          maxHeight: '100px',
+          fontSize: '16px'
         }}
       />
       {/* send button */}
