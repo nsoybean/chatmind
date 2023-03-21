@@ -28,7 +28,7 @@ const ChatConversation = ({ messages }) => {
   return (
     <div
       style={{
-        // maxWidth: '70%',
+        maxWidth: '70%',
         overflow: 'auto',
         maxHeight: '80vh' // set a height to make sure the div doesn't expand infinitely
       }}

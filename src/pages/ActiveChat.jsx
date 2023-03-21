@@ -86,23 +86,19 @@ function NewChat() {
   return (
     <div
       style={{
-        // display: 'flex',
-        // flexDirection: 'column',
-        // justifyContent: 'center', // main axis (vertically)
-        // alignItems: 'center', // cross axis (horizontally)
-        // height: '100vh',
-        // backgroundColor: '#f8f7fe'
         display: 'flex',
         flexGrow: 3,
         flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
+        justifyContent: 'center', // main axis (vertically)
+        alignItems: 'center', // cross axis (horizontally)
+        height: '100%',
         backgroundColor: '#f8f7fe'
       }}
     >
       <ChatConversation messages={mockMessages} />
+      {/* <div style={{ justifySelf: 'flex-end' }}> */}
       <ChatInputBar />
+      {/* </div> */}
     </div>
   )
 }

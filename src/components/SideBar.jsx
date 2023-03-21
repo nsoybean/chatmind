@@ -35,8 +35,8 @@ function Sidebar() {
   }
 
   const newChatStyle = {
-    fontFamily: 'Arial', // add font-family property
-    backgroundColor: 'transparent', // original: #008CBA
+    fontFamily: 'Arial',
+    backgroundColor: 'transparent',
     color: 'white',
     padding: '10px',
     borderRadius: '5px',
