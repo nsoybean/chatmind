@@ -95,7 +95,8 @@ function NewChat() {
         backgroundColor: '#f8f7fe'
       }}
     >
-      <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>Active Chat UI</h1>
+      {/* temp comment out title */}
+      {/* <h1 style={{ fontSize: '3rem', marginBottom: '2rem' }}>Active Chat UI</h1> */}
       <ChatConversation messages={mockMessages} />
       <ChatInputBar />
     </div>
