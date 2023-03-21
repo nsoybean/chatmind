@@ -116,7 +116,7 @@ function NewChat() {
       <button
         style={{
           padding: '0.8rem 2rem',
-          backgroundColor: '#7393B3',
+          backgroundColor: '#0033aa',
           color: 'white',
           border: 'none',
           borderRadius: '0.5rem',
