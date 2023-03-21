@@ -20,7 +20,7 @@ const ChatInputBar = () => {
       style={{
         position: 'fixed',
         bottom: 0,
-        maxWidth: '70%',
+        maxWidth: '60%',
         width: '70%',
         marginTop: '10px',
         marginBottom: '30px',
@@ -52,7 +52,7 @@ const ChatInputBar = () => {
         type='button'
         onClick={handleSend} // call handleSend function on send button click
         style={{
-          backgroundColor: '#3b82f6', // blue background color
+          backgroundColor: '#0033aa', // blue background color
           color: 'white', // white text color
           border: 'none', // remove border
           borderRadius: '20px', // rounded radius to match text input
