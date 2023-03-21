@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { FaUserAlt } from 'react-icons/fa'
+import chatmindLogo from '../assets/chatmind.png'
 
 const ChatConversation = ({ messages }) => {
   const [hoveredChat, setHoveredChat] = useState(null)
@@ -44,9 +46,9 @@ const ChatConversation = ({ messages }) => {
         >
           {message.sender === 'CHATGPT' ? (
             <img
-              src='chatGPTt-logo.png'
+              src={chatmindLogo}
               alt='chatGPT'
-              style={{ margin: '8px 8px', width: '24px', height: '24px' }}
+              style={{ margin: '8px 8px', width: '36px', height: '36px' }}
             />
           ) : (
             ''
@@ -65,11 +67,23 @@ const ChatConversation = ({ messages }) => {
             {message.msg}
           </p>
           {message.sender === 'USER' ? (
-            <img
-              src='user-logo.png'
-              alt='User'
-              style={{ margin: '8px 8px', width: '24px', height: '24px' }}
-            />
+            // <img
+            //   src='user-logo.png'
+            //   alt='User'
+            //   style={{ margin: '8px 8px', width: '24px', height: '24px' }}
+            // />
+            <div
+              style={{
+                backgroundColor: '#e5e7eb',
+                borderRadius: '20%',
+                margin: '8px 8px',
+                padding: '8px',
+                display: 'inline-flex',
+                alignItems: 'center'
+              }}
+            >
+              <FaUserAlt size={16} color='#808080' />
+            </div>
           ) : (
             ''
           )}
