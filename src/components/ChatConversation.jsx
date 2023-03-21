@@ -28,7 +28,7 @@ const ChatConversation = ({ messages }) => {
   return (
     <div
       style={{
-        maxWidth: '70%'
+        maxWidth: '60%'
       }}
     >
       {chatMessages.map((message, index) => (
@@ -53,6 +53,7 @@ const ChatConversation = ({ messages }) => {
           ) : (
             ''
           )}
+
           <p
             style={{
               backgroundColor: message.sender === 'USER' ? '#3b82f6' : 'white',
@@ -67,11 +68,6 @@ const ChatConversation = ({ messages }) => {
             {message.msg}
           </p>
           {message.sender === 'USER' ? (
-            // <img
-            //   src='user-logo.png'
-            //   alt='User'
-            //   style={{ margin: '8px 8px', width: '24px', height: '24px' }}
-            // />
             <div
               style={{
                 backgroundColor: '#e5e7eb',
@@ -87,14 +83,15 @@ const ChatConversation = ({ messages }) => {
           ) : (
             ''
           )}
-          {hoveredChat === index && (
+          {/* temp comment out edit and delete button */}
+          {/* {hoveredChat === index && (
             <div>
               <button onClick={() => handleEdit(index, 'edited message')}>
                 Edit
               </button>
               <button onClick={() => handleDelete(index)}>Delete</button>
             </div>
-          )}
+          )} */}
         </div>
       ))}
     </div>
