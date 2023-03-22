@@ -60,19 +60,13 @@ function Sidebar() {
   }
 
   const listItemStyle = {
-    fontFamily: 'Arial',
-    padding: '10px',
-    fontSize: '16px',
+    padding: '5px',
     color: '#fff',
-    display: 'inline-block',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    whiteSpace: 'nowrap',
-    width: '240px',
     cursor: 'pointer'
-
-    // position: 'relative'
   }
 
   // icon and delete icon. shown when hovered
@@ -179,10 +173,25 @@ function Sidebar() {
             >
               <HiOutlineChatBubbleLeft
                 icon={faCircle}
-                style={{ marginRight: '8px' }}
+                style={{
+                  fontSize: '18px',
+                  marginRight: '8px'
+                }}
               />
-              Write me a react component that render 3 icons relavant to help
-              desk
+              <p
+                style={{
+                  fontSize: '16px',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                  width: '100%',
+                  margin: '5px 0px'
+                }}
+              >
+                Write me a react component that render 3 icons relavant to help
+                desk
+              </p>
+
               {/* temp commented out 
                 TODO: implement edit chat title */}
               {/* <div style={editChatStyle}>
