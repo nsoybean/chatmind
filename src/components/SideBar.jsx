@@ -106,7 +106,6 @@ function Sidebar() {
   const onClickNewChat = () => {
     console.log('new chat initiated!')
     navigate('/new_chat')
-    // navigate('/new_chat') // navigate to new chat page
   }
 
   const handleInputChange = (event) => {
