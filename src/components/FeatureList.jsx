@@ -2,21 +2,21 @@ import { FaCheck } from 'react-icons/fa'
 
 const FeatureList = () => {
   const features = [
-    'Pay once, use forever',
+    'Use your personal API key',
     'Data stored locally',
-    'No repeated logins required',
-    'Ask more optimized questions with prompts',
-    'Integration',
-    'Fast loading speed',
-    'Mobile-friendly'
+    'No repetitive logins',
+    'Useful prompts library',
+    'Integrations',
+    'Faster response',
+    '...and more features!'
   ]
 
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+    <div style={{ display: 'flex', justifyContent: 'center ', gap: '20px' }}>
       {/* col 1 */}
-      <ul style={{ listStyle: 'none', marginRight: '2rem' }}>
+      <ul style={{ listStyle: 'none' }}>
         {features.slice(0, Math.ceil(features.length / 2)).map((feature) => (
-          <li key={feature} style={{ display: 'flex' }}>
+          <li key={feature} style={{ marginBottom: '5px' }}>
             <FaCheck style={{ color: '#22c55e', marginRight: '0.5rem' }} />
             {feature}
           </li>
@@ -25,7 +25,7 @@ const FeatureList = () => {
       {/* col 2 */}
       <ul style={{ listStyle: 'none' }}>
         {features.slice(Math.ceil(features.length / 2)).map((feature) => (
-          <li key={feature} style={{ display: 'flex' }}>
+          <li key={feature} style={{ marginBottom: '5px' }}>
             <FaCheck style={{ color: '22c55e', marginRight: '0.5rem' }} />
             {feature}
           </li>
