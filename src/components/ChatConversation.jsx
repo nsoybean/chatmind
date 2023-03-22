@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { FaUserAlt } from 'react-icons/fa'
 import chatmindLogo from '../assets/chatmind.png'
 import MindAiTitle from '../components/MindAiTitle'
+import FeatureList from '../components/FeatureList'
 
 const ChatConversation = ({ messages }) => {
   const [hoveredChat, setHoveredChat] = useState(null)
@@ -34,9 +35,13 @@ const ChatConversation = ({ messages }) => {
         maxHeight: '80vh' // set a height to make sure the div doesn't expand infinitely
       }}
     >
-      {/* mini landing page */}
+      {/* brand */}
       <MindAiTitle />
 
+      {/* feature list */}
+      <FeatureList />
+
+      {/* rendering of conversation in text bubbles */}
       {chatMessages.map((message, index) => (
         <div
           key={index}
