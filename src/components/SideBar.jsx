@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
 
-function Sidebar() {
+function Sidebar({ chatList }) {
+  console.log('🚀 ~ file: SideBar.jsx:10 ~ Sidebar ~ chatList:', chatList)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
@@ -165,7 +166,7 @@ function Sidebar() {
               margin: '15px 0'
             }}
           >
-            <ChatList chats={localChats} />
+            <ChatList chats={chatList ?? []} />
           </ul>
         </div>
       )}

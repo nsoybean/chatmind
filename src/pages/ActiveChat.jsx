@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 
 function ActiveChat() {
   const [quote, setQuote] = useState('')
-  const [chatList, setChatList] = useState(null)
+  // const [chatList, setChatList] = useState(null)
 
   // get chat ID and get chat message from local storage
   const location = useLocation()
@@ -19,42 +19,42 @@ function ActiveChat() {
   console.log('🚀 ~ file: ActiveChat.jsx:16 ~ ActiveChat ~ chatData:', chatData)
 
   //  chatList useEffect
-  useEffect(() => {
-    console.log(
-      '🚀 ~ file: ActiveChat.jsx:23 ~ useEffect ~ chatList:',
-      chatList
-    )
-  }, [chatList])
+  // useEffect(() => {
+  //   console.log(
+  //     '🚀 ~ file: ActiveChat.jsx:23 ~ useEffect ~ chatList:',
+  //     chatList
+  //   )
+  // }, [chatList])
 
   // first render useEffect
   useEffect(() => {
-    // fetch all chats from local storage
-    let tempChatList = []
-    for (let i = 0; i < localStorage.length; i++) {
-      console.log('🚀 looping through local storage')
-      const key = localStorage.key(i)
+    // // fetch all chats from local storage
+    // let tempChatList = []
+    // for (let i = 0; i < localStorage.length; i++) {
+    //   console.log('🚀 looping through local storage')
+    //   const key = localStorage.key(i)
 
-      // only extract chat-related data from local storage
-      if (key.includes('mindAI_chat')) {
-        const chatData = JSON.parse(localStorage.getItem(key))
-        const chatTitleObj = { id: chatData.id, title: chatData.title }
-        tempChatList.push(chatTitleObj)
-      }
-    }
+    //   // only extract chat-related data from local storage
+    //   if (key.includes('mindAI_chat')) {
+    //     const chatData = JSON.parse(localStorage.getItem(key))
+    //     const chatTitleObj = { id: chatData.id, title: chatData.title }
+    //     tempChatList.push(chatTitleObj)
+    //   }
+    // }
 
-    // if there are no chats or no data in local storage
-    if (tempChatList.length === 0 || localStorage.length === 0) {
-      console.log('🚀 tempChatList is empty')
-      const chatID = uuidv4()
-      const initChat = { id: chatID, title: 'New Chat', messages: [] }
-      // push to local storage
-      localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
+    // // if there are no chats or no data in local storage
+    // if (tempChatList.length === 0 || localStorage.length === 0) {
+    //   console.log('🚀 tempChatList is empty')
+    //   const chatID = uuidv4()
+    //   const initChat = { id: chatID, title: 'New Chat', messages: [] }
+    //   // push to local storage
+    //   localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
 
-      // push to tempChatList
-      tempChatList.push(initChat)
-    }
+    //   // push to tempChatList
+    //   tempChatList.push(initChat)
+    // }
 
-    setChatList(tempChatList)
+    // setChatList(tempChatList)
 
     // get quote of the day
     fetch('https://api.quotable.io/random')
