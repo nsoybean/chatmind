@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { v4 as uuidv4 } from 'uuid'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
@@ -98,7 +99,15 @@ function Sidebar() {
 
   const onClickNewChat = () => {
     console.log('new chat initiated!')
-    navigate('/new_chat')
+    // generate UUID for new chat
+    const chatID = uuidv4()
+    const initChat = { title: 'New Chat', messages: [] }
+
+    // create new chat in local storage
+    localStorage.setItem(chatID, JSON.stringify(initChat))
+
+    // navigate
+    navigate(`/chat?id=${chatID}`)
   }
 
   const handleInputChange = (event) => {

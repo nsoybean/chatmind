@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
+import { useLocation } from 'react-router-dom'
 
-const mockMessages = [
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' }
-  // { sender: 'USER', msg: 'I need help with this and that' },
-  // {
-  //   sender: 'USER',
-  //   msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  // }
-]
-function NewChat() {
+function ActiveChat() {
   const [quote, setQuote] = useState('')
 
+  // get chat ID and get chat message from local storage
+  const location = useLocation()
+  const queryParams = new URLSearchParams(location.search)
+  const chatID = queryParams.get('id')
+  const chatData = JSON.parse(localStorage.getItem(chatID)) // parse required as data is stored as string
+
   useEffect(() => {
+    // get quote of the day
     fetch('https://api.quotable.io/random')
       .then((response) => response.json())
       .then((data) => setQuote(`${data.content} - ${data.author}`))
@@ -64,7 +64,7 @@ function NewChat() {
       </div>
 
       {/* actual conversation text bubbles */}
-      <ChatConversation messages={mockMessages} />
+      <ChatConversation messages={chatData?.messages} />
 
       {/* input text bar */}
       <ChatInputBar />
@@ -72,4 +72,4 @@ function NewChat() {
   )
 }
 
-export default NewChat
+export default ActiveChat
