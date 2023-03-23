@@ -14,7 +14,8 @@ const MindAiTitle = () => {
       fontSize: '1.5rem',
       fontWeight: 'normal',
       color: '#5B5B5B',
-      textAlign: 'center'
+      textAlign: 'center',
+      margin: '10px 0px'
     }
   }
 
@@ -31,7 +32,12 @@ const MindAiTitle = () => {
       <img
         src={mindAiLogo}
         alt='mindAi Logo'
-        style={{ margin: '8px 8px', width: '250px', height: 'auto' }}
+        style={{
+          marginTop: '20px',
+          marginBottom: '10px',
+          width: '250px',
+          height: 'auto'
+        }}
       />
 
       <h2 style={styles.slogan}>
