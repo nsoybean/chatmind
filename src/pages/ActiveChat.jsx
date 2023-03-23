@@ -2,10 +2,11 @@ import React, { useState, useEffect } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
 import { useLocation } from 'react-router-dom'
-import { v4 as uuidv4 } from 'uuid'
 
 function ActiveChat() {
   const [quote, setQuote] = useState('')
+  const [sentMessage, setSentMessage] = useState('')
+  const [chatConvo, setChatConvo] = useState([])
   // const [chatList, setChatList] = useState(null)
 
   // get chat ID and get chat message from local storage
@@ -17,11 +18,16 @@ function ActiveChat() {
   if (chatID) {
     console.log('🚀 ActiveChat ~ chatID:', chatID)
     chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`)) // parse required as data is stored as string
+    setChatConvo(chatData)
     console.log('🚀 ActiveChat ~ chatData:', chatData)
   } else {
     // root directory, init empty chat
     console.log('🚀 ActiveChat ~ /chatID:', chatID)
   }
+
+  useEffect(() => {
+    console.log('sent message:', sentMessage)
+  }, [sentMessage])
 
   useEffect(() => {
     // get quote of the day
@@ -74,11 +80,11 @@ function ActiveChat() {
         </blockquote>
       </div>
 
-      {/* actual conversation text bubbles */}
-      <ChatConversation messages={chatData?.messages ?? []} />
+      {/* chat conversation text bubbles */}
+      <ChatConversation messages={chatConvo?.messages ?? []} />
 
       {/* input text bar */}
-      <ChatInputBar />
+      <ChatInputBar setSentMessage={setSentMessage} />
     </div>
   )
 }

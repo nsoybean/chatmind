@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { FaPaperPlane } from 'react-icons/fa' // import send icon
 
-const ChatInputBar = () => {
+const ChatInputBar = ({ setSentMessage }) => {
   const [message, setMessage] = useState('') // define state for message input
 
   const handleSend = () => {
-    // handle logic for send button
-    console.log(`Sending message: ${message}`)
-    setMessage('') // clear message input after sending
+    setSentMessage(message)
+    setMessage('') // clear input after sending
   }
 
   const handleKeyDown = (event) => {
