@@ -3,84 +3,12 @@ import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
 
 const mockMessages = [
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  },
-  { sender: 'CHATGPT', msg: 'Hi how may i help you?' },
-  { sender: 'USER', msg: 'I need help with this and that' },
-  {
-    sender: 'USER',
-    msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
-  }
+  { sender: 'CHATGPT', msg: 'Hi how may i help you?' }
+  // { sender: 'USER', msg: 'I need help with this and that' },
+  // {
+  //   sender: 'USER',
+  //   msg: 'Please give me a solution! This is a very long paragraph that does not mean anything rather than making things extremely long and windy'
+  // }
 ]
 function NewChat() {
   const [quote, setQuote] = useState('')
