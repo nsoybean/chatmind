@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { HiOutlineChatBubbleLeft } from 'react-icons/hi2'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
+import ChatList from '../components/ChatList'
 
 function Sidebar() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
-  const [hoveredChat, setHoveredChat] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
   const [localChats, setLocalChats] = useState([])
 
@@ -90,15 +88,6 @@ function Sidebar() {
   //   transition: 'opacity 0.2s ease-in-out'
   // }
 
-  // mouse event
-  const handleMouseEnterChat = (index) => {
-    setHoveredChat(index)
-  }
-
-  const handleMouseLeaveChat = () => {
-    setHoveredChat(null)
-  }
-
   const handleMouseEnterSideBar = () => {
     setIsOpen(true)
   }
@@ -169,53 +158,7 @@ function Sidebar() {
               margin: '15px 0'
             }}
           >
-            {localChats.map((chat, index) => (
-              <div key={chat.id}>
-                <li
-                  style={{
-                    padding: '5px',
-                    color: '#fff',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    backgroundColor:
-                      hoveredChat === index ? '#82868c' : '#202123',
-                    borderRadius: '5px'
-                  }}
-                  onMouseEnter={() => handleMouseEnterChat(index)}
-                  onMouseLeave={() => handleMouseLeaveChat()}
-                >
-                  <HiOutlineChatBubbleLeft
-                    icon={faCircle}
-                    style={{
-                      fontSize: '18px',
-                      marginRight: '8px'
-                    }}
-                  />
-                  <p
-                    style={{
-                      fontSize: '16px',
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                      whiteSpace: 'nowrap',
-                      width: '100%',
-                      margin: '5px 0px'
-                    }}
-                  >
-                    {chat.title}
-                  </p>
-
-                  {/* temp commented out 
-                TODO: implement edit chat title */}
-                  {/* <div style={editChatStyle}>
-                <FontAwesomeIcon icon={faEdit} style={{ marginRight: '8px' }} />
-                <FontAwesomeIcon icon={faTrash} />
-              </div> */}
-                </li>
-              </div>
-            ))}
+            <ChatList chats={localChats} />
           </ul>
         </div>
       )}
