@@ -4,11 +4,12 @@ import Sidebar from './components/SideBar'
 import NewChat from './pages/NewChat'
 import ActiveChat from './pages/ActiveChat'
 import Info from './pages/Info'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 import React, { useState, useEffect } from 'react'
 import { v4 as uuidv4 } from 'uuid'
 
 function Layout({ children }) {
+  const navigate = useNavigate()
   const [chatList, setChatList] = useState(null)
 
   // first render useEffect
@@ -16,7 +17,7 @@ function Layout({ children }) {
     // fetch all chats from local storage
     let tempChatList = []
     for (let i = 0; i < localStorage.length; i++) {
-      console.log('🚀 looping through local storage')
+      console.log('🚀 looking through local storage')
       const key = localStorage.key(i)
 
       // only extract chat-related data from local storage
@@ -29,20 +30,17 @@ function Layout({ children }) {
 
     // if there are no chats or no data in local storage
     if (tempChatList.length === 0 || localStorage.length === 0) {
-      console.log('🚀 tempChatList is empty')
-      const chatID = uuidv4()
-      const initChat = { id: chatID, title: 'New Chat', messages: [] }
+      console.log('🚀 no chat found in local storage')
+      // const chatID = uuidv4()
+      // const initChat = { id: chatID, title: 'New Chat', messages: [] }
       // push to local storage
-      localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
+      // localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
 
-      // push to tempChatList
-      tempChatList.push(initChat)
+      // push to tempChatList for render
+      // tempChatList.push(initChat)
     }
 
-    console.log(
-      '🚀 ~ file: App.js:44 ~ useEffect ~ tempChatList:',
-      tempChatList
-    )
+    // navigate(`/chat?id=${tempChatList[0].id}`)
     setChatList(tempChatList)
   }, [])
 
@@ -64,14 +62,24 @@ function Layout({ children }) {
 function App() {
   return (
     <Routes>
-      {/* <Route
+      <Route
+        exact
         path='/'
         element={
           <Layout>
-            <HomePage />
+            <ActiveChat />
           </Layout>
         }
-      /> */}
+      />
+      <Route
+        exact
+        path='/chat'
+        element={
+          <Layout>
+            <ActiveChat />
+          </Layout>
+        }
+      />
       <Route
         path='/new_chat'
         element={
@@ -85,14 +93,6 @@ function App() {
         element={
           <Layout>
             <Info />
-          </Layout>
-        }
-      />
-      <Route
-        path='/chat'
-        element={
-          <Layout>
-            <ActiveChat />
           </Layout>
         }
       />

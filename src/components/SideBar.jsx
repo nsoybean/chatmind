@@ -7,27 +7,14 @@ import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
 
 function Sidebar({ chatList }) {
-  console.log('🚀 ~ file: SideBar.jsx:10 ~ Sidebar ~ chatList:', chatList)
+  console.log('🚀 Sidebar render chatList:', chatList)
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
-  const [localChats, setLocalChats] = useState([])
-
-  // TODO: pull from browser's local storage
-  useEffect(() => {
-    // mock
-    setLocalChats([
-      { id: '4234342', title: 'I love coding' },
-      {
-        id: '11112124',
-        title: 'This is pretty interesting and a long sentence'
-      }
-    ])
-  }, [])
 
   // TODO: filter chats based on search input
   useEffect(() => {
-    console.log(searchTerm)
+    console.log('search bar:', searchTerm)
   }, [searchTerm])
 
   // function to manage state of sidebar

@@ -36,8 +36,8 @@ const ChatList = ({ chats }) => {
             <HiOutlineChatBubbleLeft
               icon={faCircle}
               style={{
-                fontSize: '18px',
-                marginRight: '8px'
+                fontSize: '20px',
+                margin: '5px 8px'
               }}
             />
             <p
