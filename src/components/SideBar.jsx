@@ -14,7 +14,6 @@ function Sidebar() {
 
   // TODO: pull from browser's local storage
   useEffect(() => {
-    console.log('Reading local storage')
     // mock
     setLocalChats([
       { id: '4234342', title: 'I love coding' },
@@ -99,12 +98,11 @@ function Sidebar() {
 
   const onClickNewChat = () => {
     console.log('new chat initiated!')
-    // generate UUID for new chat
-    const chatID = uuidv4()
-    const initChat = { title: 'New Chat', messages: [] }
 
-    // create new chat in local storage
-    localStorage.setItem(chatID, JSON.stringify(initChat))
+    // init new chat in browser local storage
+    const chatID = uuidv4()
+    const initChat = { id: chatID, title: 'New Chat', messages: [] }
+    localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
 
     // navigate
     navigate(`/chat?id=${chatID}`)
