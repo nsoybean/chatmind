@@ -9,11 +9,25 @@ import { useNavigate } from 'react-router-dom'
 function Sidebar() {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
-  const [isHovered, setIsHovered] = useState(false) // state to determine if chat is being hovered over
+  const [hoveredChat, setHoveredChat] = useState(null)
   const [searchTerm, setSearchTerm] = useState('')
+  const [localChats, setLocalChats] = useState([])
 
+  // TODO: pull from browser's local storage
   useEffect(() => {
-    // TODO: filter chats based on search input
+    console.log('Reading local storage')
+    // mock
+    setLocalChats([
+      { id: '4234342', title: 'I love coding' },
+      {
+        id: '11112124',
+        title: 'This is pretty interesting and a long sentence'
+      }
+    ])
+  }, [])
+
+  // TODO: filter chats based on search input
+  useEffect(() => {
     console.log(searchTerm)
   }, [searchTerm])
 
@@ -59,16 +73,6 @@ function Sidebar() {
     fontSize: '16px'
   }
 
-  const listItemStyle = {
-    padding: '5px',
-    color: '#fff',
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    cursor: 'pointer'
-  }
-
   // icon and delete icon. shown when hovered
   // const editChatStyle = {
   //   display: 'flex',
@@ -87,12 +91,12 @@ function Sidebar() {
   // }
 
   // mouse event
-  const handleMouseEnterChat = () => {
-    setIsHovered(true)
+  const handleMouseEnterChat = (index) => {
+    setHoveredChat(index)
   }
 
   const handleMouseLeaveChat = () => {
-    setIsHovered(false)
+    setHoveredChat(null)
   }
 
   const handleMouseEnterSideBar = () => {
@@ -165,47 +169,53 @@ function Sidebar() {
               margin: '15px 0'
             }}
           >
-            <li
-              style={listItemStyle}
-              onMouseEnter={handleMouseEnterChat}
-              onMouseLeave={handleMouseLeaveChat}
-            >
-              <HiOutlineChatBubbleLeft
-                icon={faCircle}
-                style={{
-                  fontSize: '18px',
-                  marginRight: '8px'
-                }}
-              />
-              <p
-                style={{
-                  fontSize: '16px',
-                  overflow: 'hidden',
-                  textOverflow: 'ellipsis',
-                  whiteSpace: 'nowrap',
-                  width: '100%',
-                  margin: '5px 0px'
-                }}
-              >
-                Write me a react component that render 3 icons relavant to help
-                desk
-              </p>
+            {localChats.map((chat, index) => (
+              <div key={chat.id}>
+                <li
+                  style={{
+                    padding: '5px',
+                    color: '#fff',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    backgroundColor:
+                      hoveredChat === index ? '#82868c' : '#202123',
+                    borderRadius: '5px'
+                  }}
+                  onMouseEnter={() => handleMouseEnterChat(index)}
+                  onMouseLeave={() => handleMouseLeaveChat()}
+                >
+                  <HiOutlineChatBubbleLeft
+                    icon={faCircle}
+                    style={{
+                      fontSize: '18px',
+                      marginRight: '8px'
+                    }}
+                  />
+                  <p
+                    style={{
+                      fontSize: '16px',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      width: '100%',
+                      margin: '5px 0px'
+                    }}
+                  >
+                    {chat.title}
+                  </p>
 
-              {/* temp commented out 
+                  {/* temp commented out 
                 TODO: implement edit chat title */}
-              {/* <div style={editChatStyle}>
+                  {/* <div style={editChatStyle}>
                 <FontAwesomeIcon icon={faEdit} style={{ marginRight: '8px' }} />
                 <FontAwesomeIcon icon={faTrash} />
               </div> */}
-            </li>
-            <li style={listItemStyle}>
-              <HiOutlineChatBubbleLeft
-                icon={faCircle}
-                style={{ marginRight: '8px' }}
-              />
-              Write a golang map struct interface that create a document into
-              mongo
-            </li>
+                </li>
+              </div>
+            ))}
           </ul>
         </div>
       )}
