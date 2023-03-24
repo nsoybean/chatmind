@@ -49,10 +49,17 @@ function ActiveChat() {
   useEffect(() => {
     console.log('🚀 ActiveChat ~ sentMessage:', sentMessage)
 
-    // new chat
-    if (!chatID) {
-      if (sentMessage) {
+    // new sent message
+    if (sentMessage) {
+      // prevent re-rendering of child component 'ChatConversation' to pass null 'sendMessage' prop out and getting appended to 'chatConvo' state
+      if (!chatID) {
+        console.log('🚀 ActiveChat ~ its a new chat')
+
         const chatID = uuidv4()
+        console.log(
+          '🚀 ~ file: ActiveChat.jsx:57 ~ useEffect ~ chatID:',
+          chatID
+        )
         const initChat = {
           id: chatID,
           title: 'New Chat',
@@ -62,20 +69,23 @@ function ActiveChat() {
         localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
         // push to chatConvo for render
         setChatConvo([{ role: 'user', content: sentMessage }])
+      } else {
+        console.log('🚀 ActiveChat ~ its an existing chat')
+        // existing chat
+        // push to chat in local storage
+        const chatData = JSON.parse(
+          localStorage.getItem(`mindAI_chat_${chatID}`)
+        )
+        // append new sent message to chatData
+        console.log(
+          '🚀 ~ file: ActiveChat.jsx:71 ~ useEffect ~ chatData:',
+          chatData
+        )
+        chatData.messages.push({ role: 'user', content: sentMessage })
+        localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(chatData))
+        // push to chatConvo for render
+        setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
       }
-    } else {
-      // existing chat
-      // push to chat in local storage
-      const chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`))
-      // append new sent message to chatData
-      console.log(
-        '🚀 ~ file: ActiveChat.jsx:71 ~ useEffect ~ chatData:',
-        chatData
-      )
-      chatData.messages.push({ role: 'user', content: sentMessage })
-      localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(chatData))
-      // push to chatConvo for render
-      setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
     }
   }, [sentMessage])
 
