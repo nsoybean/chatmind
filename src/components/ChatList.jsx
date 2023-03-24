@@ -14,9 +14,13 @@ const ChatList = ({ chats }) => {
   const handleMouseLeaveChat = () => {
     setHoveredChat(null)
   }
+
+  // reverse chats from latest to oldest
+  const reversedChats = chats.slice().reverse()
+
   return (
     <div>
-      {chats.map((chat, index) => (
+      {reversedChats.map((chat, index) => (
         <div key={chat.id}>
           <li
             style={{
