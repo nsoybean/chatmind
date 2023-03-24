@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { HiOutlineChatBubbleLeft } from 'react-icons/hi2'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
 
 const ChatList = ({ chats }) => {
+  const navigate = useNavigate()
+
   // TODO: to prevent this component from re-rendering when a chat is hovered
   const [hoveredChat, setHoveredChat] = useState(null)
-
   // mouse event
   const handleMouseEnterChat = (index) => {
     setHoveredChat(index)
@@ -13,6 +15,10 @@ const ChatList = ({ chats }) => {
 
   const handleMouseLeaveChat = () => {
     setHoveredChat(null)
+  }
+
+  const handleMouseClick = (chatID) => {
+    navigate(`/chat/${chatID}`)
   }
 
   // reverse chats from latest to oldest
@@ -34,6 +40,7 @@ const ChatList = ({ chats }) => {
               backgroundColor: hoveredChat === index ? '#82868c' : '#202123',
               borderRadius: '5px'
             }}
+            onClick={() => handleMouseClick(chat.id)}
             onMouseEnter={() => handleMouseEnterChat(index)}
             onMouseLeave={() => handleMouseLeaveChat()}
           >

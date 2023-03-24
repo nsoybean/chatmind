@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 function ActiveChat() {
@@ -9,16 +9,17 @@ function ActiveChat() {
   const [quote, setQuote] = useState(null)
   const [sentMessage, setSentMessage] = useState(null)
   const [chatConvo, setChatConvo] = useState([])
+  const [chatID, setChatID] = useState(null)
 
-  // get chat ID and get chat message from local storage
-  const location = useLocation()
-  const chatID = new URLSearchParams(location.search).get('id')
+  const { id } = useParams()
 
-  // first render
+  useEffect(() => {
+    setChatID(id)
+  }, [id])
+
   useEffect(() => {
     let chatData = []
 
-    // get chat data if specific chat id is provided in path
     if (chatID) {
       console.log('🚀 ActiveChat ~ chatID:', chatID)
       chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`)) // parse required as data is stored as string
@@ -28,7 +29,10 @@ function ActiveChat() {
       // root directory, init empty chat
       console.log('🚀 ActiveChat ~ /chatID:', chatID)
     }
+  }, [chatID])
 
+  // first render
+  useEffect(() => {
     // get quote of the day
     fetch('https://api.quotable.io/random')
       .then((response) => response.json())

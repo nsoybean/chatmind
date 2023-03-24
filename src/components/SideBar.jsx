@@ -96,7 +96,7 @@ function Sidebar({ chatList, setChatList }) {
     setChatList([...chatList, { id: initChat.id, title: initChat.title }])
 
     // navigate
-    navigate(`/chat?id=${chatID}`)
+    navigate(`/chat/${chatID}`)
   }
 
   const handleInputChange = (event) => {

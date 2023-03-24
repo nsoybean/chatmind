@@ -73,7 +73,7 @@ function App() {
       />
       <Route
         exact
-        path='/chat'
+        path='/chat/:id'
         element={
           <Layout>
             <ActiveChat />
