@@ -13,6 +13,7 @@ function ActiveChat() {
   const [chatID, setChatID] = useState(null) // id of chat
   const [chatList, setChatList] = useState(null) // array of chat list. Only contains chat id and title
   const [chatData, setChatData] = useState(null) // full data of a chat; id, title, and messages
+  const [openAPIToken, setOpenAPIToken] = useState(null) // full data of a chat; id, title, and messages
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -24,7 +25,7 @@ function ActiveChat() {
       const key = localStorage.key(i)
 
       // only extract chat-related data from local storage
-      if (key.includes('mindAI_chat')) {
+      if (key.includes('MA_chat')) {
         const chatDataTemp = JSON.parse(localStorage.getItem(key))
         const chatTitleObj = { id: chatDataTemp.id, title: chatDataTemp.title }
         tempChatList.push(chatTitleObj)
@@ -37,7 +38,7 @@ function ActiveChat() {
       // const chatID = uuidv4()
       // const initChat = { id: chatID, title: 'New Chat', messages: [] }
       // push to local storage
-      // localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
+      // localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
 
       // push to tempChatList for render
       // tempChatList.push(initChat)
@@ -48,6 +49,10 @@ function ActiveChat() {
   }
 
   useEffect(() => {
+    setOpenAPIToken(
+      JSON.parse(localStorage.getItem('MA_chat_openai_token')) ?? null
+    )
+
     fetchAndSetChatList()
 
     // get quote of the day
@@ -77,7 +82,7 @@ function ActiveChat() {
 
     if (chatID) {
       console.log('🚀 Active chatID:', chatID)
-      chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`)) // parse required as data is stored as string
+      chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
       console.log('🚀 ChatData:', chatData)
       setChatData(chatData)
       setChatConvo(chatData?.messages)
@@ -105,7 +110,7 @@ function ActiveChat() {
         console.log('🚀 init new chat:', chatID)
 
         // init on local storage
-        localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
+        localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
 
         navigate(`/chat/${chatID}`) // will re-render
       } else {
@@ -114,7 +119,7 @@ function ActiveChat() {
         // existing chat
         // push to chat in local storage
         // const chatData = JSON.parse(
-        //   localStorage.getItem(`mindAI_chat_${chatID}`)
+        //   localStorage.getItem(`MA_chat_${chatID}`)
         // )
         // // append new sent message to chatData
         // console.log(
@@ -142,7 +147,7 @@ function ActiveChat() {
   // update local storage
   useEffect(() => {
     if (chatData && chatID) {
-      localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(chatData))
+      localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
     }
   }, [chatData])
 

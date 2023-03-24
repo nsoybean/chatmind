@@ -73,7 +73,7 @@ function Sidebar({ chatList, setChatList }) {
     // first check local storage and determine if last chat's conversation is empty. if so, return to prevent users from flooding their local storage
     const chatID = uuidv4()
     const initChat = { id: chatID, title: 'New Chat', messages: [] }
-    localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
+    localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
 
     // re-render
     setChatList([...chatList, { id: initChat.id, title: initChat.title }])

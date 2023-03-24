@@ -38,7 +38,7 @@ const ChatList = ({ chats, setChatList }) => {
   }
   const handleMouseClickChatDelete = (chatID) => {
     console.log(`delete chatID: ${chatID}`)
-    localStorage.removeItem(`mindAI_chat_${chatID}`)
+    localStorage.removeItem(`MA_chat_${chatID}`)
     setChatList(chats.filter((item) => item.id !== chatID))
   }
 
