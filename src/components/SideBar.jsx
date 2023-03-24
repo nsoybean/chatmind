@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
 
-function Sidebar({ chatList }) {
+function Sidebar({ chatList, setChatList }) {
   console.log('🚀 Sidebar Rendered')
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
@@ -87,10 +87,13 @@ function Sidebar({ chatList }) {
   const onClickNewChat = () => {
     console.log('new chat initiated!')
 
-    // init new chat in browser local storage
+    // first check local storage and determine if last chat's conversation is empty. if so, return to prevent users from flooding their local storage
     const chatID = uuidv4()
     const initChat = { id: chatID, title: 'New Chat', messages: [] }
     localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
+
+    // re-render
+    setChatList([...chatList, { id: initChat.id, title: initChat.title }])
 
     // navigate
     navigate(`/chat?id=${chatID}`)

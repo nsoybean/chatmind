@@ -53,7 +53,7 @@ function Layout({ children }) {
         height: '100vh'
       }}
     >
-      <Sidebar chatList={chatList} />
+      <Sidebar chatList={chatList} setChatList={setChatList} />
       {children}
     </div>
   )
