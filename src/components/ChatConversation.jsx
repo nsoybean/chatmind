@@ -33,15 +33,12 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
       style={{
         width: '70%',
         overflow: 'auto',
-        maxHeight: '80vh' // set a height to make sure the div doesn't expand infinitely
+        maxHeight: '80vh', // set a height to make sure the div doesn't expand infinitely
+        flexDirection: 'column-reverse', // this scrolls chat to the bottom by default
+        display: 'flex'
       }}
     >
-      {/* brand */}
-      <MindAiTitle />
-
-      {/* feature list */}
-      <FeatureList />
-
+      {/* !!! components are layed out in reverse as flex-direction is column-reverse */}
       {/* rendering of conversation in text bubbles */}
       {chatConvo.map((chat, index) => (
         <div
@@ -105,6 +102,12 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
           )} */}
         </div>
       ))}
+
+      {/* feature list */}
+      <FeatureList />
+
+      {/* brand */}
+      <MindAiTitle />
     </div>
   )
 }
