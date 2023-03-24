@@ -1,24 +1,45 @@
 import React, { useState } from 'react'
 import { HiOutlineChatBubbleLeft } from 'react-icons/hi2'
-import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import { faCircle, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-const ChatList = ({ chats }) => {
+const ChatList = ({ chats, setChatList }) => {
   const navigate = useNavigate()
 
-  // TODO: to prevent this component from re-rendering when a chat is hovered
-  const [hoveredChat, setHoveredChat] = useState(null)
+  // icon and delete icon. shown when hovered
+  const editChatStyle = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '24px',
+    height: '24px',
+    borderRadius: '50%',
+    color: '#fff',
+    marginRight: '10px'
+  }
+
+  const [hoveredChatIndex, setHoveredChatIndex] = useState(null)
   // mouse event
   const handleMouseEnterChat = (index) => {
-    setHoveredChat(index)
+    setHoveredChatIndex(index)
   }
 
   const handleMouseLeaveChat = () => {
-    setHoveredChat(null)
+    setHoveredChatIndex(null)
   }
 
-  const handleMouseClick = (chatID) => {
+  const handleMouseClickChat = (chatID) => {
     navigate(`/chat/${chatID}`)
+  }
+
+  const handleMouseClickChatEdit = (chatID) => {
+    console.log(`edit chatID: ${chatID}`)
+  }
+  const handleMouseClickChatDelete = (chatID) => {
+    console.log(`delete chatID: ${chatID}`)
+    localStorage.removeItem(`mindAI_chat_${chatID}`)
+    setChatList(chats.filter((item) => item.id !== chatID))
   }
 
   // reverse chats from latest to oldest
@@ -37,10 +58,11 @@ const ChatList = ({ chats }) => {
               justifyContent: 'flex-start',
               alignItems: 'center',
               cursor: 'pointer',
-              backgroundColor: hoveredChat === index ? '#82868c' : '#202123',
+              backgroundColor:
+                hoveredChatIndex === index ? '#82868c' : '#202123',
               borderRadius: '5px'
             }}
-            onClick={() => handleMouseClick(chat.id)}
+            onClick={() => handleMouseClickChat(chat.id)}
             onMouseEnter={() => handleMouseEnterChat(index)}
             onMouseLeave={() => handleMouseLeaveChat()}
           >
@@ -63,13 +85,29 @@ const ChatList = ({ chats }) => {
             >
               {chat.title}
             </p>
-
-            {/* temp commented out 
-          TODO: implement edit chat title */}
-            {/* <div style={editChatStyle}>
-          <FontAwesomeIcon icon={faEdit} style={{ marginRight: '8px' }} />
-          <FontAwesomeIcon icon={faTrash} />
-        </div> */}
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '24px',
+                height: '24px',
+                borderRadius: '50%',
+                color: '#fff',
+                marginRight: '10px',
+                opacity: index === hoveredChatIndex ? 1 : 0
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faEdit}
+                style={{ marginRight: '8px' }}
+                onClick={() => handleMouseClickChatEdit(chat.id)}
+              />
+              <FontAwesomeIcon
+                icon={faTrash}
+                onClick={() => handleMouseClickChatDelete(chat.id)}
+              />
+            </div>
           </li>
         </div>
       ))}

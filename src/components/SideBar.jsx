@@ -59,23 +59,6 @@ function Sidebar({ chatList, setChatList }) {
     fontSize: '16px'
   }
 
-  // icon and delete icon. shown when hovered
-  // const editChatStyle = {
-  //   display: 'flex',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  //   width: '24px',
-  //   height: '24px',
-  //   borderRadius: '50%',
-  //   backgroundColor: 'rgba(0, 0, 0, 0.3)',
-  //   color: '#fff',
-  //   position: 'relative',
-  //   right: '-200px',
-  //   transform: 'translateY(-100%)',
-  //   opacity: isHovered ? 1 : 0,
-  //   transition: 'opacity 0.2s ease-in-out'
-  // }
-
   const handleMouseEnterSideBar = () => {
     setIsOpen(true)
   }
@@ -156,7 +139,7 @@ function Sidebar({ chatList, setChatList }) {
               margin: '15px 0'
             }}
           >
-            <ChatList chats={chatList ?? []} />
+            <ChatList chats={chatList ?? []} setChatList={setChatList} />
           </ul>
         </div>
       )}
