@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo } from 'react'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { v4 as uuidv4 } from 'uuid'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
@@ -7,14 +7,14 @@ import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
 
 function Sidebar({ chatList }) {
-  console.log('🚀 Sidebar render chatList:', chatList)
+  console.log('🚀 Sidebar Rendered')
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
 
   // TODO: filter chats based on search input
   useEffect(() => {
-    console.log('search bar:', searchTerm)
+    console.log('🚀 Sidebar ~ searchTerm:', searchTerm)
   }, [searchTerm])
 
   // function to manage state of sidebar

@@ -1,34 +1,54 @@
 import React, { useState, useEffect } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
-import { useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 
 function ActiveChat() {
-  const [quote, setQuote] = useState('')
+  // const navigate = useNavigate()
+  const [quote, setQuote] = useState(null)
   const [sentMessage, setSentMessage] = useState(null)
-  const [chatConvo, setChatConvo] = useState([])
+  const [chatConvo, setChatConvo] = useState(null)
 
   // get chat ID and get chat message from local storage
   const location = useLocation()
   const chatID = new URLSearchParams(location.search).get('id')
 
-  let chatData = []
-  // if specific chat is queried
-  if (chatID) {
-    console.log('🚀 ActiveChat ~ chatID:', chatID)
-    chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`)) // parse required as data is stored as string
-    setChatConvo(chatData)
-    console.log('🚀 ActiveChat ~ chatData:', chatData)
-  } else {
-    // root directory, init empty chat
-    console.log('🚀 ActiveChat ~ /chatID:', chatID)
-  }
+  // first render
+  useEffect(() => {
+    // get chat data
+    let chatData = []
+    // if specific chat is queried
+    if (chatID) {
+      console.log('🚀 ActiveChat ~ chatID:', chatID)
+      chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`)) // parse required as data is stored as string
+      console.log('🚀 ActiveChat ~ chatData:', chatData)
+      // setChatConvo(chatData.messages)
+      setChatConvo(chatData.messages)
+    } else {
+      // root directory, init empty chat
+      console.log('🚀 ActiveChat ~ /chatID:', chatID)
+    }
+
+    // get quote of the day
+    fetch('https://api.quotable.io/random')
+      .then((response) => response.json())
+      .then((data) => setQuote(`${data.content} - ${data.author}`))
+      .catch((error) => {
+        console.error(
+          'Error fetching random quote from https://api.quotable.io/random:',
+          error
+        )
+        setQuote(
+          'If you cannot do great things, do small things in a great way - Napoleon Hill'
+        )
+      })
+  }, [])
 
   // init a new chat with the sent message if there is no active chat
   // otherwise, push sent message into existing chat conversation
   useEffect(() => {
-    console.log('sent message:', sentMessage)
+    console.log('🚀 ActiveChat ~ sentMessage:', sentMessage)
 
     // new chat
     if (!chatID) {
@@ -49,22 +69,6 @@ function ActiveChat() {
   useEffect(() => {
     console.log('🚀 ActiveChat ~ chatConvo:', chatConvo)
   }, [chatConvo])
-
-  useEffect(() => {
-    // get quote of the day
-    fetch('https://api.quotable.io/random')
-      .then((response) => response.json())
-      .then((data) => setQuote(`${data.content} - ${data.author}`))
-      .catch((error) => {
-        console.error(
-          'Error fetching random quote from https://api.quotable.io/random:',
-          error
-        )
-        setQuote(
-          'If you cannot do great things, do small things in a great way - Napoleon Hill'
-        )
-      })
-  }, [])
 
   return (
     <div

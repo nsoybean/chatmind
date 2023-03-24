@@ -16,8 +16,8 @@ function Layout({ children }) {
   useEffect(() => {
     // fetch all chats from local storage
     let tempChatList = []
+    console.log('🚀 looking through local storage')
     for (let i = 0; i < localStorage.length; i++) {
-      console.log('🚀 looking through local storage')
       const key = localStorage.key(i)
 
       // only extract chat-related data from local storage
@@ -80,7 +80,7 @@ function App() {
           </Layout>
         }
       />
-      <Route
+      {/* <Route
         path='/new_chat'
         element={
           <Layout>
@@ -95,7 +95,7 @@ function App() {
             <Info />
           </Layout>
         }
-      />
+      /> */}
     </Routes>
   )
 }
