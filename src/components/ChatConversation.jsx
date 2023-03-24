@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useMemo } from 'react'
 import { FaUserAlt } from 'react-icons/fa'
 import chatmindLogo from '../assets/chatmind.png'
 import MindAiTitle from '../components/MindAiTitle'

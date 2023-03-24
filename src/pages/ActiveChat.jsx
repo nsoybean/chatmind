@@ -8,7 +8,7 @@ function ActiveChat() {
   // const navigate = useNavigate()
   const [quote, setQuote] = useState(null)
   const [sentMessage, setSentMessage] = useState(null)
-  const [chatConvo, setChatConvo] = useState(null)
+  const [chatConvo, setChatConvo] = useState([])
 
   // get chat ID and get chat message from local storage
   const location = useLocation()
@@ -16,14 +16,13 @@ function ActiveChat() {
 
   // first render
   useEffect(() => {
-    // get chat data
     let chatData = []
-    // if specific chat is queried
+
+    // get chat data if specific chat id is provided in path
     if (chatID) {
       console.log('🚀 ActiveChat ~ chatID:', chatID)
       chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`)) // parse required as data is stored as string
       console.log('🚀 ActiveChat ~ chatData:', chatData)
-      // setChatConvo(chatData.messages)
       setChatConvo(chatData.messages)
     } else {
       // root directory, init empty chat
@@ -54,21 +53,37 @@ function ActiveChat() {
     if (!chatID) {
       if (sentMessage) {
         const chatID = uuidv4()
-        const initChat = { id: chatID, title: 'New Chat', messages: [] }
-        // push to local storage
+        const initChat = {
+          id: chatID,
+          title: 'New Chat',
+          messages: [{ role: 'user', content: sentMessage }]
+        }
+        // init on local storage
         localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(initChat))
-
         // push to chatConvo for render
-        setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
+        setChatConvo([{ role: 'user', content: sentMessage }])
       }
     } else {
       // existing chat
+      // push to chat in local storage
+      const chatData = JSON.parse(localStorage.getItem(`mindAI_chat_${chatID}`))
+      // append new sent message to chatData
+      console.log(
+        '🚀 ~ file: ActiveChat.jsx:71 ~ useEffect ~ chatData:',
+        chatData
+      )
+      chatData.messages.push({ role: 'user', content: sentMessage })
+      localStorage.setItem(`mindAI_chat_${chatID}`, JSON.stringify(chatData))
+      // push to chatConvo for render
+      setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
     }
   }, [sentMessage])
 
-  useEffect(() => {
-    console.log('🚀 ActiveChat ~ chatConvo:', chatConvo)
-  }, [chatConvo])
+  // // update chat in local storage whenever chat convo is updated
+  // useEffect(() => {
+
+  //   console.log('🚀 ActiveChat ~ chatConvo:', chatConvo)
+  // }, [chatConvo])
 
   return (
     <div
