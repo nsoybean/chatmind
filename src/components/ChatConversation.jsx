@@ -40,59 +40,63 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
     >
       {/* !!! components are layed out in reverse as flex-direction is column-reverse */}
       {/* rendering of conversation in text bubbles */}
-      {chatConvo.map((chat, index) => (
-        <div
-          key={index}
-          style={{
-            display: 'flex',
-            // USER AND CHATGPT CHAT RENDERED ON RIGHT AND LEFT RESPECTIVELY
-            justifyContent: chat.role === 'user' ? 'flex-end' : 'flex-start',
-            alignItems: 'start' // vertically align logo and text
-          }}
-          onMouseEnter={() => handleMouseEnter(index)}
-          onMouseLeave={() => handleMouseLeave()}
-        >
-          {chat.role === 'assistant' ? (
-            <img
-              src={chatmindLogo}
-              alt='chatGPT'
-              style={{ margin: '8px 8px', width: '36px', height: '36px' }}
-            />
-          ) : (
-            ''
-          )}
-
-          <p
+      {/* reverse chat as chat convo is col-reverse */}
+      {chatConvo
+        .slice()
+        .reverse()
+        .map((chat, index) => (
+          <div
+            key={index}
             style={{
-              backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
-              color: chat.role === 'user' ? 'white' : 'black',
-              padding: '10px',
-              borderRadius: '15px',
-              // width: 'fit-content',
-              maxWidth: '80%', // chat bubble not taking up full width
-              margin: '8px 0px'
+              display: 'flex',
+              // USER AND CHATGPT CHAT RENDERED ON RIGHT AND LEFT RESPECTIVELY
+              justifyContent: chat.role === 'user' ? 'flex-end' : 'flex-start',
+              alignItems: 'start' // vertically align logo and text
             }}
+            onMouseEnter={() => handleMouseEnter(index)}
+            onMouseLeave={() => handleMouseLeave()}
           >
-            {chat.content}
-          </p>
-          {chat.role === 'user' ? (
-            <div
+            {chat.role === 'assistant' ? (
+              <img
+                src={chatmindLogo}
+                alt='chatGPT'
+                style={{ margin: '8px 8px', width: '36px', height: '36px' }}
+              />
+            ) : (
+              ''
+            )}
+
+            <p
               style={{
-                backgroundColor: '#e5e7eb',
-                borderRadius: '20%',
-                margin: '8px 8px',
-                padding: '8px',
-                display: 'inline-flex',
-                alignItems: 'center'
+                backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
+                color: chat.role === 'user' ? 'white' : 'black',
+                padding: '10px',
+                borderRadius: '15px',
+                // width: 'fit-content',
+                maxWidth: '80%', // chat bubble not taking up full width
+                margin: '8px 0px'
               }}
             >
-              <FaUserAlt size={16} color='#808080' />
-            </div>
-          ) : (
-            ''
-          )}
-          {/* temp comment out edit and delete button */}
-          {/* {hoveredChat === index && (
+              {chat.content}
+            </p>
+            {chat.role === 'user' ? (
+              <div
+                style={{
+                  backgroundColor: '#e5e7eb',
+                  borderRadius: '20%',
+                  margin: '8px 8px',
+                  padding: '8px',
+                  display: 'inline-flex',
+                  alignItems: 'center'
+                }}
+              >
+                <FaUserAlt size={16} color='#808080' />
+              </div>
+            ) : (
+              ''
+            )}
+            {/* temp comment out edit and delete button */}
+            {/* {hoveredChat === index && (
             <div>
               <button onClick={() => handleEdit(index, 'edited message')}>
                 Edit
@@ -100,8 +104,8 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               <button onClick={() => handleDelete(index)}>Delete</button>
             </div>
           )} */}
-        </div>
-      ))}
+          </div>
+        ))}
 
       {/* feature list */}
       <FeatureList />
