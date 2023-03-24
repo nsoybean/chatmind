@@ -85,7 +85,7 @@ function ActiveChat() {
       chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
       console.log('🚀 ChatData:', chatData)
       setChatData(chatData)
-      setChatConvo(chatData?.messages)
+      setChatConvo(chatData?.messages ?? [])
     } else {
       // root directory, init empty chat
       console.log('🚀 No active chat')
