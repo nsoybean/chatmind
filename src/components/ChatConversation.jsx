@@ -4,9 +4,10 @@ import chatmindLogo from '../assets/chatmind.png'
 import MindAiTitle from '../components/MindAiTitle'
 import FeatureList from '../components/FeatureList'
 
-const ChatConversation = ({ messages }) => {
+const ChatConversation = ({ chatConvo, setChatConvo }) => {
+  console.log('🚀 ChatConversation ~ chatConvo:', chatConvo)
   const [hoveredChat, setHoveredChat] = useState(null)
-  const [chatMessages, setChatMessages] = useState(messages)
+  // const [chatMessages, setChatMessages] = useState(messages)
 
   const handleMouseEnter = (index) => {
     setHoveredChat(index)
@@ -17,14 +18,14 @@ const ChatConversation = ({ messages }) => {
   }
 
   const handleEdit = (index, editedMessage) => {
-    const newMessages = [...chatMessages]
+    const newMessages = [...chatConvo]
     newMessages[index] = editedMessage
-    setChatMessages(newMessages)
+    setChatConvo(newMessages)
   }
 
   const handleDelete = (index) => {
-    const newMessages = chatMessages.filter((message, i) => i !== index)
-    setChatMessages(newMessages)
+    const newMessages = chatConvo.filter((message, i) => i !== index)
+    setChatConvo(newMessages)
   }
 
   return (
@@ -42,20 +43,19 @@ const ChatConversation = ({ messages }) => {
       <FeatureList />
 
       {/* rendering of conversation in text bubbles */}
-      {chatMessages.map((message, index) => (
+      {chatConvo.map((chat, index) => (
         <div
           key={index}
           style={{
             display: 'flex',
-            // USERS AND CHATGPT CHAT RENDERED ON RIGHT AND LEFT RESPECTIVELY
-            justifyContent:
-              message.sender === 'USER' ? 'flex-end' : 'flex-start',
+            // USER AND CHATGPT CHAT RENDERED ON RIGHT AND LEFT RESPECTIVELY
+            justifyContent: chat.role === 'user' ? 'flex-end' : 'flex-start',
             alignItems: 'start' // vertically align logo and text
           }}
           onMouseEnter={() => handleMouseEnter(index)}
           onMouseLeave={() => handleMouseLeave()}
         >
-          {message.sender === 'CHATGPT' ? (
+          {chat.role === 'assistant' ? (
             <img
               src={chatmindLogo}
               alt='chatGPT'
@@ -67,8 +67,8 @@ const ChatConversation = ({ messages }) => {
 
           <p
             style={{
-              backgroundColor: message.sender === 'USER' ? '#3b82f6' : 'white',
-              color: message.sender === 'USER' ? 'white' : 'black',
+              backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
+              color: chat.role === 'user' ? 'white' : 'black',
               padding: '10px',
               borderRadius: '15px',
               // width: 'fit-content',
@@ -76,9 +76,9 @@ const ChatConversation = ({ messages }) => {
               margin: '8px 0px'
             }}
           >
-            {message.msg}
+            {chat.content}
           </p>
-          {message.sender === 'USER' ? (
+          {chat.role === 'user' ? (
             <div
               style={{
                 backgroundColor: '#e5e7eb',
