@@ -1,7 +1,9 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import mindAiLogo from '../assets/mindAi.png'
 
 const MindAiTitle = () => {
+  const navigate = useNavigate()
   const styles = {
     title: {
       fontSize: '4rem',
@@ -36,7 +38,11 @@ const MindAiTitle = () => {
           marginTop: '20px',
           marginBottom: '10px',
           width: '250px',
-          height: 'auto'
+          height: 'auto',
+          cursor: 'pointer'
+        }}
+        onClick={() => {
+          navigate('/')
         }}
       />
 
