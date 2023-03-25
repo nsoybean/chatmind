@@ -87,8 +87,11 @@ function ActiveChat() {
       setChatData(chatData)
       setChatConvo(chatData?.messages ?? [])
     } else {
-      // root directory, init empty chat
-      console.log('🚀 No active chat')
+      // if root directory, init empty chat
+      console.log('🚀 NULL chatID')
+      // reset
+      setChatData(null)
+      setChatConvo([])
     }
   }, [chatID])
 
