@@ -99,15 +99,22 @@ function ActiveChat() {
   // otherwise, push sent message into existing chat conversation
   useEffect(() => {
     // new sent message
-    console.log('🚀 You said:', sentMessage)
     if (sentMessage) {
+      // logging purpose
+      if (sentMessage.role === 'user') {
+        console.log('🚀 You said:', sentMessage?.content)
+      } else {
+        console.log('🚀 GPT said:', sentMessage?.content)
+      }
+
+      // if path is root
       // prevent re-rendering of child component 'ChatConversation' to pass null 'sendMessage' prop out and getting appended to 'chatConvo' state
       if (!chatID) {
         const chatID = uuidv4()
         const initChat = {
           id: chatID,
           title: 'New Chat',
-          messages: [{ role: 'user', content: sentMessage }],
+          messages: [sentMessage],
           updatedAt: new Date().toISOString()
         }
         console.log('🚀 init new chat:', chatID)
@@ -115,9 +122,9 @@ function ActiveChat() {
         // init on local storage
         localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
 
-        navigate(`/chat/${chatID}`) // will re-render
+        navigate(`/chat/${chatID}`)
       } else {
-        console.log('🚀 Heard you for chatID:', chatID)
+        // if there is an active chat
 
         // return if chatID is not valid
         if (!localStorage.getItem(`MA_chat_${chatID}`)) {
@@ -127,7 +134,7 @@ function ActiveChat() {
 
         setChatData((prevState) => {
           const messages = [...prevState.messages] // copy previous state
-          messages.push({ role: 'user', content: sentMessage })
+          messages.push(sentMessage)
           return {
             ...prevState,
             messages, // set new state
@@ -135,7 +142,7 @@ function ActiveChat() {
           }
         })
 
-        setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
+        setChatConvo([...chatConvo, sentMessage])
       }
     }
   }, [sentMessage])

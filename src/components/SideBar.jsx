@@ -5,6 +5,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
+import { OpenAiAPI } from '../api/openAiAPI'
 
 function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
@@ -78,8 +79,9 @@ function Sidebar({ chatList, setChatList }) {
     // navigate
     navigate(`/chat/${chatID}`)
   }
-  const onClickNewChat = () => {
-    // create new chat is there is no chats
+
+  async function onClickNewChat() {
+    // // create new chat is there is no chats
     if (chatList.length === 0) {
       createNewChat()
     } else {
