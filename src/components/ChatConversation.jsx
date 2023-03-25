@@ -5,10 +5,7 @@ import MindAiTitle from '../components/MindAiTitle'
 import FeatureList from '../components/FeatureList'
 
 const ChatConversation = ({ chatConvo, setChatConvo }) => {
-  console.log(
-    '🚀 ~ file: ChatConversation.jsx:8 ~ ChatConversation ~ chatConvo:',
-    chatConvo
-  )
+  // console.log('🚀 ChatConversation ~ chatConvo:', chatConvo)
   const [hoveredChat, setHoveredChat] = useState(null)
   // const [chatMessages, setChatMessages] = useState(messages)
 
