@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
-import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Sidebar from '../components/SideBar'
 
@@ -164,15 +164,18 @@ function ActiveChat() {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
         height: '100vh'
       }}
     >
-      <Sidebar chatList={chatList} setChatList={setChatList} />
+      <Sidebar
+        style={{ flex: '0 0 auto', width: '300px' }}
+        chatList={chatList}
+        setChatList={setChatList}
+      />
       <div
         style={{
           display: 'flex',
-          flexGrow: 3,
+          flexGrow: 1,
           flexDirection: 'column',
           justifyContent: 'flex-start', // main axis (vertically)
           alignItems: 'center', // cross axis (horizontally)
@@ -193,7 +196,7 @@ function ActiveChat() {
         >
           <blockquote
             style={{
-              maxWidth: '70%',
+              // maxWidth: '90%',
               overflowY: 'auto',
               maxHeight: '50px',
               padding: '5px 0px'

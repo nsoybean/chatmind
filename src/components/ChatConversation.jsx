@@ -31,11 +31,11 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
   return (
     <div
       style={{
-        width: '70%',
-        overflow: 'auto',
-        maxHeight: '80vh', // set a height to make sure the div doesn't expand infinitely
+        display: 'flex',
         flexDirection: 'column-reverse', // this scrolls chat to the bottom by default
-        display: 'flex'
+        width: '60%',
+        overflow: 'auto',
+        maxHeight: '80vh' // set a height to make sure the div doesn't expand infinitely
       }}
     >
       {/* !!! components are layed out in reverse as flex-direction is column-reverse */}

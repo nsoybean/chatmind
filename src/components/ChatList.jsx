@@ -83,7 +83,7 @@ const ChatList = ({ chats, setChatList }) => {
           style={{
             display: 'flex',
             flexDirection: 'row',
-            justifyContent: 'flex-start',
+            justifyContent: 'space-between',
             alignItems: 'center',
             cursor: 'pointer',
             backgroundColor:
@@ -107,7 +107,7 @@ const ChatList = ({ chats, setChatList }) => {
               flexDirection: 'row',
               justifyContent: 'flex-start',
               alignItems: 'center',
-              paddingRight: '40%'
+              marginRight: '5px'
             }}
             onClick={() => handleMouseClickChat(chat.id)}
           >
@@ -140,7 +140,7 @@ const ChatList = ({ chats, setChatList }) => {
               height: '24px',
               borderRadius: '50%',
               color: '#fff',
-              marginRight: '10px',
+              marginRight: '15px',
               opacity: index === hoveredChatIndex ? 1 : 0
             }}
           >

@@ -21,7 +21,8 @@ function Sidebar({ chatList, setChatList }) {
   const sideBarStyle = {
     backgroundColor: '#202123',
     height: '100vh',
-    width: isOpen ? '250px' : '50px',
+    // width: isOpen ? '250px' : '50px',
+    width: isOpen ? '25%' : '5%',
     // commented out as this caused chatConversation flex-grow to not work
     // position: 'fixed',
     top: '0',

@@ -38,8 +38,8 @@ const ChatInputBar = ({ setSentMessage }) => {
       style={{
         position: 'fixed',
         bottom: 0,
-        maxWidth: '60%',
-        width: '70%',
+        maxWidth: '50%',
+        width: '50%',
         marginTop: '15px',
         marginBottom: '25px',
         display: 'flex',
