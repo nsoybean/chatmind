@@ -27,7 +27,11 @@ function ActiveChat() {
       // only extract chat-related data from local storage
       if (key.includes('MA_chat')) {
         const chatDataTemp = JSON.parse(localStorage.getItem(key))
-        const chatTitleObj = { id: chatDataTemp.id, title: chatDataTemp.title }
+        const chatTitleObj = {
+          id: chatDataTemp.id,
+          title: chatDataTemp.title,
+          updatedAt: chatDataTemp.updatedAt
+        }
         tempChatList.push(chatTitleObj)
       }
     }
@@ -45,13 +49,17 @@ function ActiveChat() {
     }
 
     // navigate(`/chat?id=${tempChatList[0].id}`)
+    // sort tempChatList according to chat's updatedAt timestamp
+    tempChatList.sort((a, b) => {
+      return new Date(b.updatedAt) - new Date(a.updatedAt)
+    })
     setChatList(tempChatList)
   }
 
   useEffect(() => {
-    setOpenAPIToken(
-      JSON.parse(localStorage.getItem('MA_chat_openai_token')) ?? null
-    )
+    // setOpenAPIToken(
+    // JSON.parse(localStorage.getItem('MA_chat_openai_token')) ?? null
+    // )
 
     fetchAndSetChatList()
 
@@ -76,7 +84,7 @@ function ActiveChat() {
   }, [id])
 
   useEffect(() => {
-    fetchAndSetChatList()
+    // fetchAndSetChatList() // not needed as data is alr fetched upon first render
 
     let chatData = []
 
@@ -108,7 +116,8 @@ function ActiveChat() {
         const initChat = {
           id: chatID,
           title: 'New Chat',
-          messages: [{ role: 'user', content: sentMessage }]
+          messages: [{ role: 'user', content: sentMessage }],
+          updatedAt: new Date().toISOString()
         }
         console.log('🚀 init new chat:', chatID)
 
@@ -119,25 +128,13 @@ function ActiveChat() {
       } else {
         console.log('🚀 push msg to active chat', chatID)
 
-        // existing chat
-        // push to chat in local storage
-        // const chatData = JSON.parse(
-        //   localStorage.getItem(`MA_chat_${chatID}`)
-        // )
-        // // append new sent message to chatData
-        // console.log(
-        //   '🚀 ~ file: ActiveChat.jsx:71 ~ useEffect ~ chatData:',
-        //   chatData
-        // )
-
-        // setChatData(...chatData, chatData.messages.push())
-
         setChatData((prevState) => {
           const messages = [...prevState.messages] // copy previous state
           messages.push({ role: 'user', content: sentMessage })
           return {
             ...prevState,
-            messages // set new state
+            messages, // set new state
+            updatedAt: new Date().toISOString()
           }
         })
 
@@ -147,12 +144,17 @@ function ActiveChat() {
     }
   }, [sentMessage])
 
-  // update local storage
+  // update local storage and re-render chat list
   useEffect(() => {
     if (chatData && chatID) {
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
+      fetchAndSetChatList()
     }
   }, [chatData])
+
+  useEffect(() => {
+    console.log('🚀 ActiveChat ~ chatList:', chatList)
+  }, [chatList])
 
   return (
     <div

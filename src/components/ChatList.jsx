@@ -40,14 +40,12 @@ const ChatList = ({ chats, setChatList }) => {
     console.log(`delete chatID: ${chatID}`)
     localStorage.removeItem(`MA_chat_${chatID}`)
     setChatList(chats.filter((item) => item.id !== chatID))
+    navigate('/')
   }
-
-  // reverse chats from latest to oldest
-  const reversedChats = chats.slice().reverse()
 
   return (
     <div>
-      {reversedChats.map((chat, index) => (
+      {chats.map((chat, index) => (
         <div key={chat.id}>
           <li
             style={{
