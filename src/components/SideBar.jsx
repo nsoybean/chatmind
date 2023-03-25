@@ -68,18 +68,30 @@ function Sidebar({ chatList, setChatList }) {
   }
 
   const onClickNewChat = () => {
-    console.log('new chat initiated!')
+    // get latest chat id
+    // check local storage if messages are empty
+    // if so, prevent user from creating new chats (spam)
+    const latestChatID = chatList[0].id
+    const chatDataMessage = JSON.parse(
+      localStorage.getItem(`MA_chat_${latestChatID}`)
+    ).messages
 
-    // first check local storage and determine if last chat's conversation is empty. if so, return to prevent users from flooding their local storage
-    const chatID = uuidv4()
-    const initChat = { id: chatID, title: 'New Chat', messages: [] }
-    localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
+    if (chatDataMessage.length === 0) {
+      console.log('🚀 You already have an empty chat!')
+    } else {
+      const chatID = uuidv4()
+      const initChat = {
+        id: chatID,
+        title: 'New Chat',
+        messages: [],
+        updatedAt: new Date().toISOString()
+      }
+      localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
+      console.log('🚀 New chat initiated:', chatID)
 
-    // re-render
-    setChatList([...chatList, { id: initChat.id, title: initChat.title }])
-
-    // navigate
-    navigate(`/chat/${chatID}`)
+      // navigate
+      navigate(`/chat/${chatID}`)
+    }
   }
 
   const handleInputChange = (event) => {
