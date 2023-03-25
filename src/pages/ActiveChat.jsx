@@ -124,9 +124,7 @@ function ActiveChat() {
 
         navigate(`/chat/${chatID}`)
       } else {
-        // if there is an active chat
-
-        // return if chatID is not valid
+        // check and return if chatID is not valid
         if (!localStorage.getItem(`MA_chat_${chatID}`)) {
           console.log('🚀 Invalid ChatID')
           return
