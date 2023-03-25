@@ -2,11 +2,12 @@ import React, { useState } from 'react'
 import { HiOutlineChatBubbleLeft } from 'react-icons/hi2'
 import { faCircle, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 const ChatList = ({ chats, setChatList }) => {
   const [hoveredChatIndex, setHoveredChatIndex] = useState(null)
   const navigate = useNavigate()
+  const { id } = useParams()
 
   // icon and delete icon. shown when hovered
   const editChatStyle = {
@@ -85,8 +86,14 @@ const ChatList = ({ chats, setChatList }) => {
             justifyContent: 'flex-start',
             alignItems: 'center',
             cursor: 'pointer',
-            backgroundColor: hoveredChatIndex === index ? '#82868c' : '#202123',
-            borderRadius: '5px'
+            backgroundColor:
+              chat.id === id // black if active
+                ? 'black'
+                : hoveredChatIndex === index // light grey when hovered
+                ? '#82868c'
+                : '#202123',
+            borderRadius: '5px',
+            marginBottom: '5px'
           }}
           onMouseEnter={() => handleMouseEnterChat(index)}
           onMouseLeave={() => handleMouseLeaveChat()}
