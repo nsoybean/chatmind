@@ -4,6 +4,7 @@ import ChatInputBar from '../components/ChatInputBar'
 import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Sidebar from '../components/SideBar'
+import { OpenAiAPI } from '../api/openAiAPI'
 
 function ActiveChat() {
   // const navigate = useNavigate()
@@ -16,6 +17,24 @@ function ActiveChat() {
   const [openAPIToken, setOpenAPIToken] = useState(null) // full data of a chat; id, title, and messages
   const { id } = useParams()
   const navigate = useNavigate()
+
+  async function sendChatToOpenAI(chatDataArr, model) {
+    // extract token from local
+    const token = JSON.parse(localStorage.getItem('MA_openai_token'))
+
+    const requestBody = {
+      model: model, // 'gpt-3.5-turbo',
+      messages: chatDataArr,
+      stream: false,
+      max_tokens: 250
+    }
+
+    // call openAI API
+    const responseRaw = await OpenAiAPI.postChatCompletion(requestBody, token)
+    const responseObj = responseRaw.data.choices[0].message
+    // setSentMessage(responseObj)
+    return responseObj
+  }
 
   function fetchAndSetChatList() {
     // fetch all chats from local storage
@@ -86,7 +105,7 @@ function ActiveChat() {
       chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
       setChatData(chatData)
       // console.log('🚀 chatData:', chatData)
-      setChatConvo(chatData?.messages ?? [])
+      // setChatConvo(chatData?.messages ?? [])
     } else {
       // if root directory, init empty chat
       // reset
@@ -98,59 +117,93 @@ function ActiveChat() {
   // init a new chat with the sent message if there is no active chat
   // otherwise, push sent message into existing chat conversation
   useEffect(() => {
-    // new sent message
-    if (sentMessage) {
-      // logging purpose
-      if (sentMessage.role === 'user') {
-        console.log('🚀 You said:', sentMessage?.content)
-      } else {
-        console.log('🚀 GPT said:', sentMessage?.content)
-      }
-
-      // if path is root
+    async function processMsgInput() {
       // prevent re-rendering of child component 'ChatConversation' to pass null 'sendMessage' prop out and getting appended to 'chatConvo' state
-      if (!chatID) {
-        const chatID = uuidv4()
-        const initChat = {
-          id: chatID,
-          title: 'New Chat',
-          messages: [sentMessage],
-          updatedAt: new Date().toISOString()
-        }
-        console.log('🚀 init new chat:', chatID)
-
-        // init on local storage
-        localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
-
-        navigate(`/chat/${chatID}`)
-      } else {
-        // check and return if chatID is not valid
-        if (!localStorage.getItem(`MA_chat_${chatID}`)) {
-          console.log('🚀 Invalid ChatID')
-          return
+      if (sentMessage) {
+        // logging purpose
+        if (sentMessage.role === 'user') {
+          console.log('🚀 You said:', sentMessage?.content)
         }
 
-        setChatData((prevState) => {
-          const messages = [...prevState.messages] // copy previous state
-          messages.push(sentMessage)
-          return {
-            ...prevState,
-            messages, // set new state
+        // if path is root
+        if (!chatID) {
+          const chatID = uuidv4()
+          const initChat = {
+            id: chatID,
+            title: 'New Chat',
+            messages: [sentMessage],
             updatedAt: new Date().toISOString()
           }
-        })
+          console.log('🚀 init new chat:', chatID)
 
-        setChatConvo([...chatConvo, sentMessage])
+          // init on local storage
+          localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
+
+          navigate(`/chat/${chatID}`)
+        } else {
+          // check and return if chatID is not valid
+          // get chat data
+          const chatDataTemp = JSON.parse(
+            localStorage.getItem(`MA_chat_${chatID}`)
+          )
+
+          // return if nil found
+          if (!chatDataTemp) {
+            console.log('🚀 Invalid ChatID')
+            return
+          }
+
+          // append input msg to chat data
+          chatDataTemp.messages.push(sentMessage)
+
+          setChatData((prevState) => {
+            const messages = [...prevState.messages] // copy previous state
+            messages.push(sentMessage)
+            return {
+              ...prevState,
+              messages: messages, // set new state
+              updatedAt: new Date().toISOString()
+            }
+          })
+
+          // call API
+          const responseMessage = await sendChatToOpenAI(
+            chatDataTemp.messages,
+            'gpt-3.5-turbo'
+          )
+
+          console.log('🚀 GPT said:', responseMessage)
+
+          chatDataTemp.messages.push(responseMessage)
+
+          setChatData((prevState) => {
+            const messages = [...prevState.messages] // copy previous state
+            messages.push(responseMessage)
+            return {
+              ...prevState,
+              messages: messages, // set new state
+              updatedAt: new Date().toISOString()
+            }
+          })
+
+          setChatConvo([...chatConvo, sentMessage])
+        }
       }
     }
+
+    // take msg input, call API and update state
+    processMsgInput()
   }, [sentMessage])
 
   // update local storage and re-render chatlist
   useEffect(() => {
+    console.log('🚀 ActiveChat ~ chatData:', chatData)
     // make sure all data is present
-    if (chatData && chatID && sentMessage) {
+    if (chatData && chatID) {
       // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
+
+      setChatConvo(chatData?.messages ?? [])
 
       // fetch chat list from local storage if current active chatID is not at the top of chat list
       if (chatList[0].id !== chatID) {

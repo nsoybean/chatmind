@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { FaPaperPlane } from 'react-icons/fa' // import send icon
-import { OpenAiAPI } from '../api/openAiAPI'
 
 const ChatInputBar = ({ setSentMessage }) => {
   const [input, setInput] = useState('') // define state for message input
@@ -9,23 +8,6 @@ const ChatInputBar = ({ setSentMessage }) => {
     const messageObj = { role: 'user', content: input }
     setSentMessage(messageObj)
     setInput('') // clear input after sending
-
-    // call openAI API
-    const token = JSON.parse(localStorage.getItem('MA_openai_token'))
-    const data = {
-      model: 'gpt-3.5-turbo',
-      messages: [
-        {
-          role: 'user',
-          content: input
-        }
-      ],
-      stream: false,
-      max_tokens: 250
-    }
-    const responseRaw = await OpenAiAPI.postChatCompletion(data, token)
-    const responseObj = responseRaw.data.choices[0].message
-    setSentMessage(responseObj)
   }
 
   const handleKeyDown = (event) => {
