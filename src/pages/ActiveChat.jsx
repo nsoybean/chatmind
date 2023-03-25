@@ -119,6 +119,12 @@ function ActiveChat() {
       } else {
         console.log('🚀 Heard you for chatID:', chatID)
 
+        // return if chatID is not valid
+        if (!localStorage.getItem(`MA_chat_${chatID}`)) {
+          console.log('🚀 Invalid ChatID')
+          return
+        }
+
         setChatData((prevState) => {
           const messages = [...prevState.messages] // copy previous state
           messages.push({ role: 'user', content: sentMessage })
