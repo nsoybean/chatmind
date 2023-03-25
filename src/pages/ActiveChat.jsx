@@ -36,6 +36,43 @@ function ActiveChat() {
     return responseObj
   }
 
+  const createNewChat = () => {
+    const chatID = uuidv4()
+    const initChat = {
+      id: chatID,
+      title: 'New Chat',
+      messages: [],
+      updatedAt: new Date().toISOString()
+    }
+    localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
+    console.log('🚀 New chat initiated:', chatID)
+
+    // navigate
+    navigate(`/chat/${chatID}`)
+  }
+
+  async function onClickNewChat() {
+    // create new chat is there is no chats
+    if (chatList.length === 0) {
+      createNewChat()
+    } else {
+      // else determine if latest chat is empty
+      const latestChatID = chatList[0].id
+      const latestChatConvo = JSON.parse(
+        localStorage.getItem(`MA_chat_${latestChatID}`)
+      ).messages
+
+      // if so, do not create chat
+      if (latestChatConvo.length === 0) {
+        console.log('🚀 You already have an empty chat!')
+        navigate(`/chat/${latestChatID}`)
+      } else {
+        // otherwise, create chat
+        createNewChat()
+      }
+    }
+  }
+
   function fetchAndSetChatList() {
     // fetch all chats from local storage
     let tempChatList = []
@@ -125,79 +162,62 @@ function ActiveChat() {
           console.log('🚀 You said:', sentMessage?.content)
         }
 
-        // if path is root
-        if (!chatID) {
-          const chatID = uuidv4()
-          const initChat = {
-            id: chatID,
-            title: 'New Chat',
-            messages: [sentMessage],
+        // check and return if chatID is not valid
+        // get chat data
+        const tempChatData = JSON.parse(
+          localStorage.getItem(`MA_chat_${chatID}`)
+        )
+
+        // return if nil found
+        if (!tempChatData) {
+          console.log('🚀 Invalid ChatID')
+          return
+        }
+        // append input msg to chat data
+        tempChatData.messages.push(sentMessage)
+
+        setChatData((prevState) => {
+          let messages = []
+          if (chatID) {
+            messages = [...prevState.messages] // copy previous state
+          }
+          messages.push(sentMessage)
+          return {
+            ...prevState,
+            messages: messages, // set new state
             updatedAt: new Date().toISOString()
           }
-          console.log('🚀 init new chat:', chatID)
+        })
 
-          // init on local storage
-          localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
+        // call API
+        const responseMessage = await sendChatToOpenAI(
+          tempChatData.messages,
+          'gpt-3.5-turbo'
+        )
 
-          navigate(`/chat/${chatID}`)
-        } else {
-          // check and return if chatID is not valid
-          // get chat data
-          const chatDataTemp = JSON.parse(
-            localStorage.getItem(`MA_chat_${chatID}`)
-          )
+        console.log('🚀 GPT said:', responseMessage)
 
-          // return if nil found
-          if (!chatDataTemp) {
-            console.log('🚀 Invalid ChatID')
-            return
+        tempChatData.messages.push(responseMessage)
+
+        setChatData((prevState) => {
+          const messages = [...prevState.messages] // copy previous state
+          messages.push(responseMessage)
+          return {
+            ...prevState,
+            messages: messages, // set new state
+            updatedAt: new Date().toISOString()
           }
+        })
 
-          // append input msg to chat data
-          chatDataTemp.messages.push(sentMessage)
-
-          setChatData((prevState) => {
-            const messages = [...prevState.messages] // copy previous state
-            messages.push(sentMessage)
-            return {
-              ...prevState,
-              messages: messages, // set new state
-              updatedAt: new Date().toISOString()
-            }
-          })
-
-          // call API
-          const responseMessage = await sendChatToOpenAI(
-            chatDataTemp.messages,
-            'gpt-3.5-turbo'
-          )
-
-          console.log('🚀 GPT said:', responseMessage)
-
-          chatDataTemp.messages.push(responseMessage)
-
-          setChatData((prevState) => {
-            const messages = [...prevState.messages] // copy previous state
-            messages.push(responseMessage)
-            return {
-              ...prevState,
-              messages: messages, // set new state
-              updatedAt: new Date().toISOString()
-            }
-          })
-
-          setChatConvo([...chatConvo, sentMessage])
-        }
+        setChatConvo([...chatConvo, sentMessage])
       }
     }
 
-    // take msg input, call API and update state
     processMsgInput()
   }, [sentMessage])
 
   // update local storage and re-render chatlist
   useEffect(() => {
-    console.log('🚀 ActiveChat ~ chatData:', chatData)
     // make sure all data is present
     if (chatData && chatID) {
       // update local storage
@@ -266,7 +286,24 @@ function ActiveChat() {
         />
 
         {/* input text bar */}
-        <ChatInputBar setSentMessage={setSentMessage} />
+        {!chatID && (
+          <button
+            style={{
+              padding: '0.8rem 2rem',
+              backgroundColor: '#0033aa',
+              color: 'white',
+              border: 'none',
+              borderRadius: '0.5rem',
+              fontSize: '1.2rem',
+              marginTop: '5rem',
+              cursor: 'pointer'
+            }}
+            onClick={onClickNewChat}
+          >
+            New Chat
+          </button>
+        )}
+        {chatID && <ChatInputBar setSentMessage={setSentMessage} />}
       </div>
     </div>
   )
