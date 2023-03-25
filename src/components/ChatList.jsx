@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 
 const ChatList = ({ chats, setChatList }) => {
+  const [hoveredChatIndex, setHoveredChatIndex] = useState(null)
   const navigate = useNavigate()
 
   // icon and delete icon. shown when hovered
@@ -19,7 +20,36 @@ const ChatList = ({ chats, setChatList }) => {
     marginRight: '10px'
   }
 
-  const [hoveredChatIndex, setHoveredChatIndex] = useState(null)
+  function fetchAndSetChatList() {
+    // fetch all chats from local storage
+    let tempChatList = []
+    console.log('🚀 fetching chats from storage')
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i)
+
+      // only extract chat-related data from local storage
+      if (key.includes('MA_chat')) {
+        const chatDataTemp = JSON.parse(localStorage.getItem(key))
+        const chatTitleObj = {
+          id: chatDataTemp.id,
+          title: chatDataTemp.title,
+          updatedAt: chatDataTemp.updatedAt
+        }
+        tempChatList.push(chatTitleObj)
+      }
+    }
+
+    // if there are no chats or no data in local storage
+    if (tempChatList.length === 0 || localStorage.length === 0) {
+      console.log('🚀 no chat found in local storage')
+    }
+
+    // sort tempChatList according to chat's updatedAt timestamp
+    tempChatList.sort((a, b) => {
+      return new Date(b.updatedAt) - new Date(a.updatedAt)
+    })
+    setChatList(tempChatList)
+  }
   // mouse event
   const handleMouseEnterChat = (index) => {
     setHoveredChatIndex(index)
@@ -38,10 +68,11 @@ const ChatList = ({ chats, setChatList }) => {
     navigate(`/chat/${chatID}`)
   }
   const handleMouseClickChatDelete = (chatID) => {
+    // first navigate there before deleting
     localStorage.removeItem(`MA_chat_${chatID}`)
     console.log(`🚀 delete chatID: ${chatID}`)
+    setChatList(chats.filter((item) => item.id !== chatID)) // remove from chatlist, applicable when path is already at '/', as re-rendering wont happen
     navigate(`/`)
-    // setChatList(chats.filter((item) => item.id !== chatID))
   }
 
   return (

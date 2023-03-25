@@ -39,16 +39,8 @@ function ActiveChat() {
     // if there are no chats or no data in local storage
     if (tempChatList.length === 0 || localStorage.length === 0) {
       console.log('🚀 no chat found in local storage')
-      // const chatID = uuidv4()
-      // const initChat = { id: chatID, title: 'New Chat', messages: [] }
-      // push to local storage
-      // localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
-
-      // push to tempChatList for render
-      // tempChatList.push(initChat)
     }
 
-    // navigate(`/chat?id=${tempChatList[0].id}`)
     // sort tempChatList according to chat's updatedAt timestamp
     tempChatList.sort((a, b) => {
       return new Date(b.updatedAt) - new Date(a.updatedAt)
