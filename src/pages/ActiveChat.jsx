@@ -20,7 +20,7 @@ function ActiveChat() {
   function fetchAndSetChatList() {
     // fetch all chats from local storage
     let tempChatList = []
-    console.log('🚀 looking through local storage')
+    console.log('🚀 fetching chats from storage')
     for (let i = 0; i < localStorage.length; i++) {
       const key = localStorage.key(i)
 
@@ -84,19 +84,15 @@ function ActiveChat() {
   }, [id])
 
   useEffect(() => {
-    // fetchAndSetChatList() // not needed as data is alr fetched upon first render
-
     let chatData = []
 
     if (chatID) {
-      console.log('🚀 Active chatID:', chatID)
+      console.log('🚀 chatID:', chatID)
       chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
-      console.log('🚀 ChatData:', chatData)
       setChatData(chatData)
       setChatConvo(chatData?.messages ?? [])
     } else {
       // if root directory, init empty chat
-      console.log('🚀 NULL chatID')
       // reset
       setChatData(null)
       setChatConvo([])
@@ -106,10 +102,9 @@ function ActiveChat() {
   // init a new chat with the sent message if there is no active chat
   // otherwise, push sent message into existing chat conversation
   useEffect(() => {
-    console.log('🚀 ActiveChat ~ sentMessage:', sentMessage)
-
     // new sent message
     if (sentMessage) {
+      console.log('🚀 You said:', sentMessage)
       // prevent re-rendering of child component 'ChatConversation' to pass null 'sendMessage' prop out and getting appended to 'chatConvo' state
       if (!chatID) {
         const chatID = uuidv4()
@@ -126,7 +121,7 @@ function ActiveChat() {
 
         navigate(`/chat/${chatID}`) // will re-render
       } else {
-        console.log('🚀 push msg to active chat', chatID)
+        console.log('🚀 Heard you for chatID:', chatID)
 
         setChatData((prevState) => {
           const messages = [...prevState.messages] // copy previous state
@@ -137,24 +132,25 @@ function ActiveChat() {
             updatedAt: new Date().toISOString()
           }
         })
-
-        // re-render convo
-        setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
       }
     }
   }, [sentMessage])
 
-  // update local storage and re-render chat list
+  // update local storage and re-render chatlist and convo
   useEffect(() => {
     if (chatData && chatID) {
+      // re-render convo
+      setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
+
+      // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
-      fetchAndSetChatList()
+
+      // fetch chat list from local storage if current active chatID is not at the top of chat list
+      if (chatList[0].id !== chatID) {
+        fetchAndSetChatList()
+      }
     }
   }, [chatData])
-
-  useEffect(() => {
-    console.log('🚀 ActiveChat ~ chatList:', chatList)
-  }, [chatList])
 
   return (
     <div

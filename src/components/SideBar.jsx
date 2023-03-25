@@ -7,15 +7,12 @@ import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
 
 function Sidebar({ chatList, setChatList }) {
-  console.log('🚀 Sidebar Rendered')
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
 
   // TODO: filter chats based on search input
-  useEffect(() => {
-    console.log('🚀 Sidebar ~ searchTerm:', searchTerm)
-  }, [searchTerm])
+  useEffect(() => {}, [searchTerm])
 
   // function to manage state of sidebar
   const toggleSidebar = () => {
