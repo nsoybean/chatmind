@@ -64,30 +64,38 @@ function Sidebar({ chatList, setChatList }) {
     setIsOpen(false)
   }
 
+  const createNewChat = () => {
+    const chatID = uuidv4()
+    const initChat = {
+      id: chatID,
+      title: 'New Chat',
+      messages: [],
+      updatedAt: new Date().toISOString()
+    }
+    localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
+    console.log('🚀 New chat initiated:', chatID)
+
+    // navigate
+    navigate(`/chat/${chatID}`)
+  }
   const onClickNewChat = () => {
-    // get latest chat id
-    // check local storage if messages are empty
-    // if so, prevent user from creating new chats (spam)
-    const latestChatID = chatList[0].id
-    const chatDataMessage = JSON.parse(
-      localStorage.getItem(`MA_chat_${latestChatID}`)
-    ).messages
-
-    if (chatDataMessage.length === 0) {
-      console.log('🚀 You already have an empty chat!')
+    // create new chat is there is no chats
+    if (chatList.length === 0) {
+      createNewChat()
     } else {
-      const chatID = uuidv4()
-      const initChat = {
-        id: chatID,
-        title: 'New Chat',
-        messages: [],
-        updatedAt: new Date().toISOString()
-      }
-      localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
-      console.log('🚀 New chat initiated:', chatID)
+      // else determine if latest chat is empty
+      const latestChatID = chatList[0].id
+      const latestChatConvo = JSON.parse(
+        localStorage.getItem(`MA_chat_${latestChatID}`)
+      ).messages
 
-      // navigate
-      navigate(`/chat/${chatID}`)
+      // if so, do not create chat
+      if (latestChatConvo.length === 0) {
+        console.log('🚀 You already have an empty chat!')
+      } else {
+        // otherwise, create chat
+        createNewChat()
+      }
     }
   }
 

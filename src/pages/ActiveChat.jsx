@@ -60,7 +60,7 @@ function ActiveChat() {
     // setOpenAPIToken(
     // JSON.parse(localStorage.getItem('MA_chat_openai_token')) ?? null
     // )
-
+    console.log('first render')
     fetchAndSetChatList()
 
     // get quote of the day
@@ -79,17 +79,21 @@ function ActiveChat() {
   }, [])
 
   // intermediary state to prevent endless render bug
+  // goes to useEffect for 'chatID'
   useEffect(() => {
     setChatID(id)
   }, [id])
 
   useEffect(() => {
+    fetchAndSetChatList() // required when path goes from / to /:id (useEffect for first render wont run)
+
     let chatData = []
 
     if (chatID) {
       console.log('🚀 chatID:', chatID)
       chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
       setChatData(chatData)
+      // console.log('🚀 chatData:', chatData)
       setChatConvo(chatData?.messages ?? [])
     } else {
       // if root directory, init empty chat
@@ -103,8 +107,8 @@ function ActiveChat() {
   // otherwise, push sent message into existing chat conversation
   useEffect(() => {
     // new sent message
+    console.log('🚀 You said:', sentMessage)
     if (sentMessage) {
-      console.log('🚀 You said:', sentMessage)
       // prevent re-rendering of child component 'ChatConversation' to pass null 'sendMessage' prop out and getting appended to 'chatConvo' state
       if (!chatID) {
         const chatID = uuidv4()
@@ -132,16 +136,16 @@ function ActiveChat() {
             updatedAt: new Date().toISOString()
           }
         })
+
+        setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
       }
     }
   }, [sentMessage])
 
-  // update local storage and re-render chatlist and convo
+  // update local storage and re-render chatlist
   useEffect(() => {
-    if (chatData && chatID) {
-      // re-render convo
-      setChatConvo([...chatConvo, { role: 'user', content: sentMessage }])
-
+    // make sure all data is present
+    if (chatData && chatID && sentMessage) {
       // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
 

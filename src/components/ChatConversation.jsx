@@ -5,6 +5,10 @@ import MindAiTitle from '../components/MindAiTitle'
 import FeatureList from '../components/FeatureList'
 
 const ChatConversation = ({ chatConvo, setChatConvo }) => {
+  console.log(
+    '🚀 ~ file: ChatConversation.jsx:8 ~ ChatConversation ~ chatConvo:',
+    chatConvo
+  )
   const [hoveredChat, setHoveredChat] = useState(null)
   // const [chatMessages, setChatMessages] = useState(messages)
 
@@ -40,6 +44,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
       {/* !!! components are layed out in reverse as flex-direction is column-reverse */}
       {/* rendering of conversation in text bubbles */}
       {/* reverse chat as chat convo is col-reverse */}
+
       {chatConvo
         .slice()
         .reverse()
