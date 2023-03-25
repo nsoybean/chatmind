@@ -55,14 +55,12 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
             onMouseEnter={() => handleMouseEnter(index)}
             onMouseLeave={() => handleMouseLeave()}
           >
-            {chat.role === 'assistant' ? (
+            {chat.role === 'assistant' && (
               <img
                 src={chatmindLogo}
                 alt='chatGPT'
                 style={{ margin: '8px 8px', width: '36px', height: '36px' }}
               />
-            ) : (
-              ''
             )}
 
             <p
@@ -78,7 +76,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
             >
               {chat.content}
             </p>
-            {chat.role === 'user' ? (
+            {chat.role === 'user' && (
               <div
                 style={{
                   backgroundColor: '#e5e7eb',
@@ -91,8 +89,6 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               >
                 <FaUserAlt size={16} color='#808080' />
               </div>
-            ) : (
-              ''
             )}
             {/* temp comment out edit and delete button */}
             {/* {hoveredChat === index && (
