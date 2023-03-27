@@ -22,35 +22,37 @@ function Sidebar({ chatList, setChatList }) {
     backgroundColor: '#202123',
     height: '100vh',
     // width: isOpen ? '250px' : '50px',
-    width: isOpen ? '25%' : '5%',
+    // width: isOpen ? '15%' : '3%',
+    // width: isOpen ? '250px' : '20px',
     // commented out as this caused chatConversation flex-grow to not work
     // position: 'fixed',
     top: '0',
     left: '0',
     // overflowX: 'scroll',
     padding: '0 10px',
-    transition: 'all 0.2s ease-in-out'
+    transition: 'all 0.3s ease-in-out'
   }
 
   const newChatStyle = {
+    display: 'flex',
     fontFamily: 'Arial',
     backgroundColor: 'transparent',
     color: 'white',
     padding: '10px',
     borderRadius: '5px',
     width: '100%',
-    margin: '5px 0',
+    margin: '10px 0',
     fontSize: '16px',
     border: '0.5px solid #ccc',
     cursor: 'pointer'
   }
 
   const searchBarStyle = {
-    fontFamily: 'Arial', // add font-family property
+    display: 'flex',
     backgroundColor: '#ececf1',
     width: '100%',
     padding: '10px',
-    margin: '5px 0',
+    margin: '10px 0',
     boxSizing: 'border-box',
     border: '0.5px solid #ccc',
     borderRadius: '5px',
@@ -81,7 +83,7 @@ function Sidebar({ chatList, setChatList }) {
   }
 
   async function onClickNewChat() {
-    // // create new chat is there is no chats
+    // create new chat is there is currently no chats
     if (chatList.length === 0) {
       createNewChat()
     } else {
@@ -116,16 +118,20 @@ function Sidebar({ chatList, setChatList }) {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          margin: '5px 5px'
+          margin: '5px 0px'
         }}
       >
         <button
           style={{
+            display: 'flex',
             backgroundColor: 'transparent',
             border: 'none',
             fontSize: '30px',
             cursor: 'pointer',
-            color: '#fff'
+            color: '#fff',
+            width: '100%',
+            // padding: '10px',
+            margin: '5px 0'
           }}
           //   temp commented out as toggling is based on hovering over sidebar
           //   onClick={toggleSidebar} // Add onClick event handler to toggle sidebar
@@ -139,27 +145,39 @@ function Sidebar({ chatList, setChatList }) {
         <div></div>
       </div>
       {isOpen && (
-        <div>
-          <input
-            type='text'
-            placeholder='Search Chat...'
-            style={searchBarStyle}
-            onChange={handleInputChange}
-          />
-          <button onClick={onClickNewChat} style={newChatStyle}>
-            <FontAwesomeIcon icon={faComment} style={{ marginRight: '8px' }} />
-            <span>New chat</span>
-          </button>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start', // main axis (vertically)
+            alignItems: 'center' // cross axis (horizontally) }}>
+          }}
+        >
+          <div>
+            <input
+              type='text'
+              placeholder='Search Chat...'
+              style={searchBarStyle}
+              onChange={handleInputChange}
+            />
+            <button onClick={onClickNewChat} style={newChatStyle}>
+              <FontAwesomeIcon
+                icon={faComment}
+                style={{ marginRight: '8px' }}
+              />
+              <span>New chat</span>
+            </button>
 
-          <ul
-            style={{
-              listStyleType: 'none',
-              padding: '0px',
-              margin: '15px 0'
-            }}
-          >
-            <ChatList chats={chatList ?? []} setChatList={setChatList} />
-          </ul>
+            <ul
+              style={{
+                listStyleType: 'none',
+                padding: '0px',
+                margin: '10px 0'
+              }}
+            >
+              <ChatList chats={chatList ?? []} setChatList={setChatList} />
+            </ul>
+          </div>
         </div>
       )}
     </div>
