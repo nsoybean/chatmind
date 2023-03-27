@@ -9,7 +9,7 @@ import { OpenAiAPI } from '../api/openAiAPI'
 function ActiveChat() {
   // const navigate = useNavigate()
   const [quote, setQuote] = useState(null)
-  const [sentMessage, setSentMessage] = useState(null) // input msg bar
+  const [inputMessage, setInputMessage] = useState(null) // input msg bar
   const [chatConvo, setChatConvo] = useState([]) // array of chat msgs between user and assistant
   const [chatID, setChatID] = useState(null) // id of chat
   const [chatList, setChatList] = useState(null) // array of chat list. Only contains chat id and title
@@ -32,7 +32,7 @@ function ActiveChat() {
     // call openAI API
     const responseRaw = await OpenAiAPI.postChatCompletion(requestBody, token)
     const responseObj = responseRaw.data.choices[0].message
-    // setSentMessage(responseObj)
+    // setInputMessage(responseObj)
     return responseObj
   }
 
@@ -104,11 +104,20 @@ function ActiveChat() {
     setChatList(tempChatList)
   }
 
+  function appendMessageToChatData(inputMessage) {
+    setChatData((prevState) => {
+      const messages = [...prevState.messages] // copy previous state
+      messages.push(inputMessage)
+      return {
+        ...prevState,
+        messages: messages, // set new state
+        updatedAt: new Date().toISOString()
+      }
+    })
+  }
+
   useEffect(() => {
-    // setOpenAPIToken(
-    // JSON.parse(localStorage.getItem('MA_chat_openai_token')) ?? null
-    // )
-    console.log('first render')
+    console.log('🚀🚀 first render')
     fetchAndSetChatList()
 
     // get quote of the day
@@ -133,21 +142,14 @@ function ActiveChat() {
   }, [id])
 
   useEffect(() => {
-    fetchAndSetChatList() // required when path goes from / to /:id (useEffect for first render wont run)
-
+    // fetchAndSetChatList() // required when path goes from / to /:id (useEffect for first render wont run)
     let chatData = []
 
     if (chatID) {
       console.log('🚀 chatID:', chatID)
       chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
       setChatData(chatData)
-      // console.log('🚀 chatData:', chatData)
       // setChatConvo(chatData?.messages ?? [])
-    } else {
-      // if root directory, init empty chat
-      // reset
-      setChatData(null)
-      setChatConvo([])
     }
   }, [chatID])
 
@@ -155,14 +157,13 @@ function ActiveChat() {
   // otherwise, push sent message into existing chat conversation
   useEffect(() => {
     async function processMsgInput() {
-      // prevent re-rendering of child component 'ChatConversation' to pass null 'sendMessage' prop out and getting appended to 'chatConvo' state
-      if (sentMessage) {
+      // ensure input message is non-null
+      if (inputMessage) {
         // logging purpose
-        if (sentMessage.role === 'user') {
-          console.log('🚀 You said:', sentMessage?.content)
+        if (inputMessage.role === 'user') {
+          console.log('🚀 You said:', inputMessage?.content)
         }
 
-        // check and return if chatID is not valid
         // get chat data
         const tempChatData = JSON.parse(
           localStorage.getItem(`MA_chat_${chatID}`)
@@ -173,21 +174,12 @@ function ActiveChat() {
           console.log('🚀 Invalid ChatID')
           return
         }
-        // append input msg to chat data
-        tempChatData.messages.push(sentMessage)
 
-        setChatData((prevState) => {
-          let messages = []
-          if (chatID) {
-            messages = [...prevState.messages] // copy previous state
-          }
-          messages.push(sentMessage)
-          return {
-            ...prevState,
-            messages: messages, // set new state
-            updatedAt: new Date().toISOString()
-          }
-        })
+        // append input msg to chat data
+        tempChatData.messages.push(inputMessage)
+        appendMessageToChatData(inputMessage)
+
+        tempChatData.messages.push(inputMessage)
 
         // call API
         const responseMessage = await sendChatToOpenAI(
@@ -196,38 +188,34 @@ function ActiveChat() {
         )
 
         console.log('🚀 GPT said:', responseMessage)
-
         tempChatData.messages.push(responseMessage)
+        appendMessageToChatData(responseMessage)
 
-        setChatData((prevState) => {
-          const messages = [...prevState.messages] // copy previous state
-          messages.push(responseMessage)
-          return {
-            ...prevState,
-            messages: messages, // set new state
-            updatedAt: new Date().toISOString()
-          }
-        })
-
-        setChatConvo([...chatConvo, sentMessage])
+        setChatConvo([...chatConvo, inputMessage])
       }
     }
 
     processMsgInput()
-  }, [sentMessage])
+  }, [inputMessage])
 
   // update local storage and re-render chatlist
   useEffect(() => {
     // make sure all data is present
     if (chatData && chatID) {
+      console.log(
+        '🚀 ~ file: ActiveChat.jsx:203 ~ ActiveChat ~ chatData:',
+        chatData
+      )
       // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
 
       setChatConvo(chatData?.messages ?? [])
 
-      // fetch chat list from local storage if current active chatID is not at the top of chat list
-      if (chatList[0].id !== chatID) {
-        fetchAndSetChatList()
+      // fetch chat list if active chat is not the most recent
+      if (chatList.length > 0) {
+        if (chatList[0].id !== chatID) {
+          fetchAndSetChatList()
+        }
       }
     }
   }, [chatData])
@@ -313,7 +301,7 @@ function ActiveChat() {
               New Chat
             </button>
           )}
-          {chatID && <ChatInputBar setSentMessage={setSentMessage} />}
+          {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
         </div>
       </div>
     </div>
