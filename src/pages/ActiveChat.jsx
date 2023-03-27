@@ -117,7 +117,6 @@ function ActiveChat() {
   }
 
   useEffect(() => {
-    console.log('🚀🚀 first render')
     fetchAndSetChatList()
 
     // get quote of the day
@@ -190,8 +189,6 @@ function ActiveChat() {
         console.log('🚀 GPT said:', responseMessage)
         tempChatData.messages.push(responseMessage)
         appendMessageToChatData(responseMessage)
-
-        setChatConvo([...chatConvo, inputMessage])
       }
     }
 
@@ -202,10 +199,6 @@ function ActiveChat() {
   useEffect(() => {
     // make sure all data is present
     if (chatData && chatID) {
-      console.log(
-        '🚀 ~ file: ActiveChat.jsx:203 ~ ActiveChat ~ chatData:',
-        chatData
-      )
       // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
 
