@@ -138,12 +138,9 @@ function Home() {
         >
           <blockquote
             style={{
-              display: 'flex',
-              justifyContent: 'center',
-              maxWidth: '70%',
-              margin: '0px 0px',
               overflowY: 'auto',
               maxHeight: '50px',
+              maxWidth: '70%',
               padding: '5px 0px'
             }}
           >

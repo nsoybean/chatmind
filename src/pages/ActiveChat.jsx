@@ -263,15 +263,15 @@ function ActiveChat() {
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            height: '70px',
+            height: '10%',
             boxShadow: '0 5px 5px -5px rgba(0, 0, 0, 0.25)'
           }}
         >
           <blockquote
             style={{
-              // maxWidth: '90%',
               overflowY: 'auto',
               maxHeight: '50px',
+              maxWidth: '70%',
               padding: '5px 0px'
             }}
           >
@@ -279,31 +279,42 @@ function ActiveChat() {
           </blockquote>
         </div>
 
-        {/* chat conversation text bubbles */}
-        <ChatConversation
-          chatConvo={chatConvo.length === 0 ? [] : chatConvo}
-          setchatConvo={setChatConvo}
-        />
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'flex-start', // main axis (vertically)
+            alignItems: 'center', // cross axis (horizontally)
+            height: '100%',
+            width: '100%'
+          }}
+        >
+          {/* chat conversation text bubbles */}
+          <ChatConversation
+            chatConvo={chatConvo.length === 0 ? [] : chatConvo}
+            setchatConvo={setChatConvo}
+          />
 
-        {/* input text bar */}
-        {!chatID && (
-          <button
-            style={{
-              padding: '0.8rem 2rem',
-              backgroundColor: '#0033aa',
-              color: 'white',
-              border: 'none',
-              borderRadius: '0.5rem',
-              fontSize: '1.2rem',
-              marginTop: '5rem',
-              cursor: 'pointer'
-            }}
-            onClick={onClickNewChat}
-          >
-            New Chat
-          </button>
-        )}
-        {chatID && <ChatInputBar setSentMessage={setSentMessage} />}
+          {/* input text bar */}
+          {!chatID && (
+            <button
+              style={{
+                padding: '0.8rem 2rem',
+                backgroundColor: '#0033aa',
+                color: 'white',
+                border: 'none',
+                borderRadius: '0.5rem',
+                fontSize: '1.2rem',
+                marginTop: '5rem',
+                cursor: 'pointer'
+              }}
+              onClick={onClickNewChat}
+            >
+              New Chat
+            </button>
+          )}
+          {chatID && <ChatInputBar setSentMessage={setSentMessage} />}
+        </div>
       </div>
     </div>
   )
