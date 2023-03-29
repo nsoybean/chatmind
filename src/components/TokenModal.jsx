@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   MDBBtn,
   MDBModal,
@@ -12,9 +12,18 @@ import {
 } from 'mdb-react-ui-kit'
 export default function App() {
   const [centredModal, setCentredModal] = useState(false)
+  const [token, setToken] = useState(null)
+
+  useEffect(() => {
+    console.log('token', token)
+  }, [token])
 
   const toggleShow = () => setCentredModal(!centredModal)
 
+  const saveToken = () => {
+    localStorage.setItem(`MA_openai_token`, JSON.stringify(token))
+    toggleShow()
+  }
   return (
     <>
       <MDBBtn onClick={toggleShow}>Enter API Key</MDBBtn>
@@ -33,10 +42,9 @@ export default function App() {
             <MDBModalBody>
               <MDBInput
                 label='Key'
-                // id='form1'
-                onFocus={true}
                 type='text'
                 placeholder='sk-XXXXXXXXXXXXXXX'
+                onChange={(e) => setToken(e.target.value)}
               />
               <div style={{ margin: '10px 0px' }}>
                 <a
@@ -60,7 +68,7 @@ export default function App() {
               {/* <MDBBtn color='secondary' onClick={toggleShow}>
                 Close
               </MDBBtn> */}
-              <MDBBtn>Save</MDBBtn>
+              <MDBBtn onClick={saveToken}>Save</MDBBtn>
             </MDBModalFooter>
           </MDBModalContent>
         </MDBModalDialog>
