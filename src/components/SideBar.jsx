@@ -5,6 +5,7 @@ import { faComment } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
+import TokenModal from '../components/TokenModal'
 
 function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
@@ -19,6 +20,10 @@ function Sidebar({ chatList, setChatList }) {
     setIsOpen(!isOpen)
   }
   const sideBarStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
     backgroundColor: '#202123',
     height: '100vh',
     top: '0',
@@ -110,7 +115,9 @@ function Sidebar({ chatList, setChatList }) {
       <div
         style={{
           display: 'flex',
-          justifyContent: 'space-between',
+          // flexDirection: 'column',
+          // justifyContent: 'space-between',
+          // justifyContent: 'flex-start',
           alignItems: 'center',
           margin: '5px 0px'
         }}
@@ -136,7 +143,6 @@ function Sidebar({ chatList, setChatList }) {
 
           {/* Render hamburger icon based on isOpen state */}
         </button>
-        <div></div>
       </div>
       {isOpen && (
         <div
@@ -157,7 +163,7 @@ function Sidebar({ chatList, setChatList }) {
             <button onClick={onClickNewChat} style={newChatStyle}>
               <FontAwesomeIcon
                 icon={faComment}
-                style={{ marginRight: '8px' }}
+                style={{ marginRight: '8px', marginTop: '5px' }}
               />
               <span>New chat</span>
             </button>
@@ -173,6 +179,7 @@ function Sidebar({ chatList, setChatList }) {
             >
               <ChatList chats={chatList ?? []} setChatList={setChatList} />
             </ul>
+            <TokenModal style={{ marginTop: 'auto' }} />
           </div>
         </div>
       )}

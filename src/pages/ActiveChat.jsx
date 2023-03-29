@@ -5,7 +5,6 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Sidebar from '../components/SideBar'
 import { OpenAiAPI } from '../api/openAiAPI'
-
 function ActiveChat() {
   // const navigate = useNavigate()
   const [quote, setQuote] = useState(null)
