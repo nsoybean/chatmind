@@ -172,7 +172,9 @@ function Sidebar({ chatList, setChatList }) {
               style={{
                 listStyleType: 'none',
                 padding: '0px',
-                margin: '10px 0'
+                margin: '10px 0',
+                overflow: 'auto',
+                maxHeight: '60vh'
               }}
             >
               <ChatList chats={chatList ?? []} setChatList={setChatList} />
