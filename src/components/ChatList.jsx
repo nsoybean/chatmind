@@ -132,6 +132,7 @@ const ChatList = ({ chats, setChatList }) => {
           }}
           onMouseEnter={() => handleMouseEnterChat(index)}
           onMouseLeave={() => handleMouseLeaveChat()}
+          onClick={() => handleMouseClickChat(chat.id)}
           key={chat.id}
         >
           <li
@@ -145,7 +146,6 @@ const ChatList = ({ chats, setChatList }) => {
               marginRight: '5px',
               maxWidth: '100%'
             }}
-            onClick={() => handleMouseClickChat(chat.id)}
           >
             <HiOutlineChatBubbleLeft
               icon={faCircle}
