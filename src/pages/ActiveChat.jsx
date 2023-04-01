@@ -170,51 +170,53 @@ function ActiveChat() {
     async function processMsgInput() {
       // ensure input message is non-null
       if (inputMessage) {
-        // logging purpose
-        if (inputMessage.role === 'user') {
-          console.log('🚀 You said:', inputMessage?.content)
+        if (inputMessage.content.trim() !== '') {
+          if (inputMessage.role === 'user') {
+            // logging purpose
+            console.log('🚀 You said:', inputMessage?.content)
+          }
+
+          // get chat data
+          const tempChatData = JSON.parse(
+            localStorage.getItem(`MA_chat_${chatID}`)
+          )
+
+          // return if nil found
+          if (!tempChatData) {
+            console.log('🚀 Invalid ChatID')
+            return
+          }
+
+          // append input msg to chat data
+          tempChatData.messages.push(inputMessage)
+          appendMessageToChatData(inputMessage)
+
+          tempChatData.messages.push(inputMessage)
+
+          // call API
+          const { data: responseMessage, error } = await general.awaitWrap(
+            sendChatToOpenAI(tempChatData.messages, 'gpt-3.5-turbo')
+          )
+
+          if (error) {
+            console.log(error)
+            toast.error('Invalid OpenAI API Key!', {
+              position: 'bottom-right',
+              autoClose: 4000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'dark'
+            })
+            return
+          }
+
+          console.log('🚀 GPT said:', responseMessage)
+          tempChatData.messages.push(responseMessage)
+          appendMessageToChatData(responseMessage)
         }
-
-        // get chat data
-        const tempChatData = JSON.parse(
-          localStorage.getItem(`MA_chat_${chatID}`)
-        )
-
-        // return if nil found
-        if (!tempChatData) {
-          console.log('🚀 Invalid ChatID')
-          return
-        }
-
-        // append input msg to chat data
-        tempChatData.messages.push(inputMessage)
-        appendMessageToChatData(inputMessage)
-
-        tempChatData.messages.push(inputMessage)
-
-        // call API
-        const { data: responseMessage, error } = await general.awaitWrap(
-          sendChatToOpenAI(tempChatData.messages, 'gpt-3.5-turbo')
-        )
-
-        if (error) {
-          console.log(error)
-          toast.error('Invalid OpenAI API Key!', {
-            position: 'bottom-right',
-            autoClose: 4000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: 'dark'
-          })
-          return
-        }
-
-        console.log('🚀 GPT said:', responseMessage)
-        tempChatData.messages.push(responseMessage)
-        appendMessageToChatData(responseMessage)
       }
     }
 
