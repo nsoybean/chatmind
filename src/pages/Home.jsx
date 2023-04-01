@@ -5,6 +5,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Sidebar from '../components/SideBar'
 import { OpenAiAPI } from '../api/openAiAPI'
+import { AwesomeButton } from 'react-awesome-button'
+import AwesomeButtonStyles from 'react-awesome-button/dist/styles.css'
 
 function Home() {
   const [quote, setQuote] = useState(null)
@@ -163,9 +165,8 @@ function Home() {
             chatConvo={chatConvo.length === 0 ? [] : chatConvo}
             setchatConvo={setChatConvo}
           />
-
           {/* new chat button */}
-          {!chatID && (
+          {/* {!chatID && (
             <button
               style={{
                 alignItems: 'center',
@@ -182,7 +183,20 @@ function Home() {
             >
               New Chat
             </button>
+            // <AwesomeButtonShare type='messenger' sharer={{ user: '@username' }}>
+            //   Messenger
+            // </AwesomeButtonShare>
           )}
+           */}
+          <AwesomeButton
+            cssModule={AwesomeButtonStyles}
+            type='primary'
+            onPress={() => {
+              // do something
+            }}
+          >
+            New Chat
+          </AwesomeButton>
         </div>
       </div>
     </div>
