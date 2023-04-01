@@ -33,7 +33,7 @@
     "eject": "react-scripts eject",
     "uploadS3": "aws s3 sync ./build/ s3://mind-ai/ --profile private",
     "deployCloudFront": "aws cloudfront create-invalidation --distribution-id ERIAOGIO9ZMPD --paths '/*' --profile private --no-verify-ssl",
-    "deploy": "npm run build & npm run uploadS3 & npm run deployCloudFront"
+    "deploy": "npm run build && npm run uploadS3 && npm run deployCloudFront"
   },
   "eslintConfig": {
     "extends": [
