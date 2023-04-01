@@ -60,6 +60,7 @@ function ActiveChat() {
     console.log('🚀 New chat initiated:', chatID)
 
     // navigate
+    window.location.reload(false)
     navigate(`/chat/${chatID}`)
   }
 
@@ -305,23 +306,6 @@ function ActiveChat() {
           />
 
           {/* input text bar */}
-          {!chatID && (
-            <button
-              style={{
-                padding: '0.8rem 2rem',
-                backgroundColor: '#0033aa',
-                color: 'white',
-                border: 'none',
-                borderRadius: '0.5rem',
-                fontSize: '1.2rem',
-                marginTop: '5rem',
-                cursor: 'pointer'
-              }}
-              onClick={onClickNewChat}
-            >
-              New Chat
-            </button>
-          )}
           {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
         </div>
       </div>
