@@ -220,7 +220,8 @@ function Sidebar({ chatList, setChatList }) {
               style={{
                 fontSize: '14px',
                 color: '#fff',
-                margin: '5px 0px'
+                margin: '5px 0px',
+                fontWeight: 'bold'
               }}
             >
               OpenAI API KEY
