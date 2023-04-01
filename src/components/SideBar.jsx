@@ -195,7 +195,8 @@ function Sidebar({ chatList, setChatList }) {
               padding: '0px',
               margin: '10px 0',
               overflow: 'auto',
-              maxHeight: '60vh'
+              maxHeight: '60vh',
+              width: '100%'
             }}
           >
             <ChatList
