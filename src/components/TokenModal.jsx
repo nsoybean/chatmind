@@ -103,7 +103,10 @@ export default function TokenModal() {
   }
   return (
     <>
-      <MDBBtn onClick={toggleShow}>Enter API Key</MDBBtn>
+      <MDBBtn onClick={toggleShow}>
+        {' '}
+        {validatedToken ? maskString(validatedToken, 3, 4) : 'Enter Here'}{' '}
+      </MDBBtn>
 
       <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
         <MDBModalDialog centered>

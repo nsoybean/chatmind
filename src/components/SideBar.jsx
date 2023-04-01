@@ -56,7 +56,7 @@ function Sidebar({ chatList, setChatList }) {
     padding: '10px',
     borderRadius: '5px',
     width: '100%',
-    margin: '10px 0',
+    margin: '5px 0',
     fontSize: '16px',
     border: '0.5px solid #ccc',
     cursor: 'pointer'
@@ -139,7 +139,6 @@ function Sidebar({ chatList, setChatList }) {
       <div
         style={{
           display: 'flex',
-          alignItems: 'center',
           margin: '5px 0px'
         }}
       >
@@ -152,7 +151,6 @@ function Sidebar({ chatList, setChatList }) {
             cursor: 'pointer',
             color: '#fff',
             width: '100%',
-            // padding: '10px',
             margin: '5px 0'
           }}
           //   temp commented out as toggling is based on hovering over sidebar
@@ -168,44 +166,65 @@ function Sidebar({ chatList, setChatList }) {
       {isOpen && (
         <div
           style={{
+            flex: 1,
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start', // main axis (vertically)
-            alignItems: 'center' // cross axis (horizontally) }}>
+            alignItems: 'flex-start' // cross axis (horizontally) }}>
           }}
         >
-          <div>
-            <input
-              type='text'
-              placeholder='Search Chat...'
-              style={searchBarStyle}
-              value={searchTerm}
-              onKeyDown={handleSearchKeyDown}
-              onChange={handleInputChange}
+          <input
+            type='text'
+            placeholder='Search Chat...'
+            style={searchBarStyle}
+            value={searchTerm}
+            onKeyDown={handleSearchKeyDown}
+            onChange={handleInputChange}
+          />
+          <button onClick={onClickNewChat} style={newChatStyle}>
+            <FontAwesomeIcon
+              icon={faComment}
+              style={{ marginRight: '8px', marginTop: '5px' }}
             />
-            <button onClick={onClickNewChat} style={newChatStyle}>
-              <FontAwesomeIcon
-                icon={faComment}
-                style={{ marginRight: '8px', marginTop: '5px' }}
-              />
-              <span>New chat</span>
-            </button>
+            <span>New chat</span>
+          </button>
 
-            <ul
+          <ul
+            style={{
+              listStyleType: 'none',
+              padding: '0px',
+              margin: '10px 0',
+              overflow: 'auto',
+              maxHeight: '60vh'
+            }}
+          >
+            <ChatList
+              chats={filteredChatList ? filteredChatList : chatList}
+              setChatList={setChatList}
+            />
+          </ul>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+              width: '100%',
+              marginTop: 'auto', // flushed to the bottom
+              marginLeft: '5px',
+              marginBottom: '20px'
+            }}
+          >
+            <div
               style={{
-                listStyleType: 'none',
-                padding: '0px',
-                margin: '10px 0',
-                overflow: 'auto',
-                maxHeight: '60vh'
+                fontSize: '14px',
+                color: '#fff',
+                margin: '5px 0px'
               }}
             >
-              <ChatList
-                chats={filteredChatList ? filteredChatList : chatList}
-                setChatList={setChatList}
-              />
-            </ul>
-            <TokenModal style={{ marginTop: 'auto' }} />
+              OpenAI API KEY
+            </div>
+            <TokenModal stye={{ margin: '5px 0px' }} />
           </div>
         </div>
       )}

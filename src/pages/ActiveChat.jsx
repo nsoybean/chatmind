@@ -250,7 +250,7 @@ function ActiveChat() {
       }}
     >
       <Sidebar
-        style={{ flex: 1, width: '300px' }} // flex:1 makes it fixed
+        style={{ flex: 1 }} // flex:1 makes it fixed
         chatList={chatList}
         setChatList={setChatList}
       />
