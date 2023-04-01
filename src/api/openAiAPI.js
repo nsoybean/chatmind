@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import general from '../helper/general'
 export class OpenAiAPI {
   static async postChatCompletion(data, bearerToken) {
     let config = {

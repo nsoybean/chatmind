@@ -5,6 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import Sidebar from '../components/SideBar'
 import { OpenAiAPI } from '../api/openAiAPI'
+import general from '../helper/general'
+import { toast } from 'react-toastify'
+
 function ActiveChat() {
   // const navigate = useNavigate()
   const [quote, setQuote] = useState(null)
@@ -29,7 +32,17 @@ function ActiveChat() {
     }
 
     // call openAI API
-    const responseRaw = await OpenAiAPI.postChatCompletion(requestBody, token)
+    const { data: responseRaw, error } = await general.awaitWrap(
+      OpenAiAPI.postChatCompletion(requestBody, token)
+    )
+
+    if (error) {
+      if (error.code === 'ERR_BAD_REQUEST' && error.response.status === 401) {
+        throw new Error('INVALID_TOKEN_ERR')
+      } else {
+        throw new Error(error.msg)
+      }
+    }
     const responseObj = responseRaw.data.choices[0].message
     // setInputMessage(responseObj)
     return responseObj
@@ -144,7 +157,7 @@ function ActiveChat() {
     let chatData = []
 
     if (chatID) {
-      console.log('🚀 chatID:', chatID)
+      // console.log('🚀 chatID:', chatID)
       chatData = JSON.parse(localStorage.getItem(`MA_chat_${chatID}`)) // parse required as data is stored as string
       setChatData(chatData)
       // setChatConvo(chatData?.messages ?? [])
@@ -180,10 +193,24 @@ function ActiveChat() {
         tempChatData.messages.push(inputMessage)
 
         // call API
-        const responseMessage = await sendChatToOpenAI(
-          tempChatData.messages,
-          'gpt-3.5-turbo'
+        const { data: responseMessage, error } = await general.awaitWrap(
+          sendChatToOpenAI(tempChatData.messages, 'gpt-3.5-turbo')
         )
+
+        if (error) {
+          console.log(error)
+          toast.error('Invalid OpenAI API Key!', {
+            position: 'bottom-right',
+            autoClose: 4000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'dark'
+          })
+          return
+        }
 
         console.log('🚀 GPT said:', responseMessage)
         tempChatData.messages.push(responseMessage)
