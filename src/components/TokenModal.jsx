@@ -17,7 +17,7 @@ import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
 
-export default function App() {
+export default function TokenModal() {
   const [centredModal, setCentredModal] = useState(false)
   const [inputToken, setInputToken] = useState('')
   const [validatedToken, setValidatedToken] = useState(null)
