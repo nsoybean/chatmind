@@ -213,7 +213,7 @@ function ActiveChat() {
             return
           }
 
-          console.log('🚀 GPT said:', responseMessage)
+          console.log('🚀 GPT said:', responseMessage?.content)
           tempChatData.messages.push(responseMessage)
           appendMessageToChatData(responseMessage)
         }
@@ -250,7 +250,7 @@ function ActiveChat() {
       }}
     >
       <Sidebar
-        style={{ flex: '0 0 auto', width: '300px' }}
+        style={{ flex: 1, width: '300px' }} // flex:1 makes it fixed
         chatList={chatList}
         setChatList={setChatList}
       />

@@ -11,9 +11,25 @@ function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
+  const [filteredChatList, setFilteredChatList] = useState([]) // array of chat list. Only contains chat id and title
 
   // TODO: filter chats based on search input
-  useEffect(() => {}, [searchTerm])
+  useEffect(() => {
+    setFilteredChatList(chatList)
+  }, [])
+
+  useEffect(() => {
+    if (searchTerm === '') {
+      setFilteredChatList(chatList)
+    } else {
+      const filteredArray = chatList.filter((chat) => {
+        return chat.title
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase().trim())
+      })
+      setFilteredChatList(filteredArray)
+    }
+  }, [searchTerm])
 
   // function to manage state of sidebar
   const toggleSidebar = () => {
@@ -64,6 +80,12 @@ function Sidebar({ chatList, setChatList }) {
 
   const handleMouseLeaveSideBar = () => {
     setIsOpen(false)
+  }
+
+  const handleSearchKeyDown = (event) => {
+    if (event.key === 'Escape') {
+      setSearchTerm('')
+    }
   }
 
   const createNewChat = () => {
@@ -158,6 +180,8 @@ function Sidebar({ chatList, setChatList }) {
               type='text'
               placeholder='Search Chat...'
               style={searchBarStyle}
+              value={searchTerm}
+              onKeyDown={handleSearchKeyDown}
               onChange={handleInputChange}
             />
             <button onClick={onClickNewChat} style={newChatStyle}>
@@ -177,7 +201,10 @@ function Sidebar({ chatList, setChatList }) {
                 maxHeight: '60vh'
               }}
             >
-              <ChatList chats={chatList ?? []} setChatList={setChatList} />
+              <ChatList
+                chats={filteredChatList ? filteredChatList : chatList}
+                setChatList={setChatList}
+              />
             </ul>
             <TokenModal style={{ marginTop: 'auto' }} />
           </div>
