@@ -16,6 +16,7 @@ import { FaCheck } from 'react-icons/fa'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
+import ConfettiExplosion from 'react-confetti-explosion'
 
 export default function TokenModal() {
   const [centredModal, setCentredModal] = useState(false)
@@ -66,6 +67,7 @@ export default function TokenModal() {
         setShowConfettiUponAuthToken(true)
         setTokenInvalidated(false)
         setValidatedToken(trimmedInput)
+        toggleShow() // close modal
       } else if (error.code === 'ERR_BAD_REQUEST') {
         setVerifyingTokenMsg('❗ Invalid Token')
         localStorage.setItem(`MA_openai_token`, JSON.stringify(''))
@@ -73,6 +75,8 @@ export default function TokenModal() {
         setTokenInvalidated(true)
         setInputToken('') // clear text input
       }
+      // reset
+      // setShowConfettiUponAuthToken(false)
     }
   }
 
@@ -103,104 +107,106 @@ export default function TokenModal() {
   }
   return (
     <>
+      {showConfettiUponAuthToken && <ConfettiExplosion />}
       <MDBBtn onClick={toggleShow}>
-        {' '}
         {validatedToken ? maskString(validatedToken, 3, 4) : 'Enter Here'}{' '}
       </MDBBtn>
 
-      <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
-        <MDBModalDialog centered>
-          <MDBModalContent>
-            <MDBModalHeader>
-              <MDBModalTitle> 🔐 Enter OpenAI API Key</MDBModalTitle>
-              <MDBBtn
-                className='btn-close'
-                color='none'
-                onClick={toggleShow}
-              ></MDBBtn>
-            </MDBModalHeader>
-            <MDBModalBody>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  margin: '2px 0px'
-                }}
-              >
-                <a
-                  href='https://platform.openai.com/account/api-keys'
+      <div>
+        <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
+          <MDBModalDialog centered>
+            <MDBModalContent>
+              <MDBModalHeader>
+                <MDBModalTitle> 🔐 Enter OpenAI API Key</MDBModalTitle>
+                <MDBBtn
+                  className='btn-close'
+                  color='none'
+                  onClick={toggleShow}
+                ></MDBBtn>
+              </MDBModalHeader>
+              <MDBModalBody>
+                <div
                   style={{
-                    color: '#1F51FF' // neon blue
+                    display: 'flex',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    margin: '2px 0px'
                   }}
-                  target='_blank'
-                  rel='noreferrer'
                 >
-                  → Get your API key from OpenAI
-                </a>
-              </div>
-              <p style={{ margin: '5px 0px' }}>
-                API key is stored locally in your browser and not sent to any
-                server.
-              </p>
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center'
-                  // position: 'absolute'
-                }}
-              >
-                <TextField
-                  id='outlined-helperText'
-                  label='Key'
-                  variant={validatedToken ? 'filled' : 'standard'}
-                  disabled={validatedToken ? true : false}
-                  value={
-                    validatedToken
-                      ? maskString(validatedToken, 3, 4)
-                      : inputToken
-                  }
-                  placeholder='sk-XXXXXXXXXXXXXXXXXXXXXXXXXXX'
-                  onChange={(e) => setInputToken(e.target.value)}
-                  onKeyDown={handleKeyDown}
-                  // style={{ flexGrow: 1 }}
-                  // style={{ flex: '100%' }}
-                  fullWidth
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        {validatedToken ? (
-                          <IconButton
-                            edge='end'
-                            aria-label='change'
-                            onClick={() => changeToken()}
-                          >
-                            ✏️
-                          </IconButton>
-                        ) : (
-                          ''
-                        )}
-                      </InputAdornment>
-                    )
+                  <a
+                    href='https://platform.openai.com/account/api-keys'
+                    style={{
+                      color: '#1F51FF' // neon blue
+                    }}
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    → Get your API key from OpenAI
+                  </a>
+                </div>
+                <p style={{ margin: '5px 0px' }}>
+                  API key is stored locally in your browser and not sent to any
+                  server.
+                </p>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center'
+                    // position: 'absolute'
                   }}
-                />
-              </div>
-              <div style={{ marginTop: '10px' }}>
-                {clickedValidateToken ? verifyTokenMsg : ''}
-              </div>
-            </MDBModalBody>
-            <MDBModalFooter>
-              {validatedToken ? (
-                <MDBBtn onClick={toggleShow}>Close</MDBBtn>
-              ) : (
-                <MDBBtn onClick={validateToken}>Save</MDBBtn>
-              )}
-            </MDBModalFooter>
-          </MDBModalContent>
-        </MDBModalDialog>
-      </MDBModal>
+                >
+                  <TextField
+                    id='outlined-helperText'
+                    label='Key'
+                    variant={validatedToken ? 'filled' : 'standard'}
+                    disabled={validatedToken ? true : false}
+                    value={
+                      validatedToken
+                        ? maskString(validatedToken, 3, 4)
+                        : inputToken
+                    }
+                    placeholder='sk-XXXXXXXXXXXXXXXXXXXXXXXXXXX'
+                    onChange={(e) => setInputToken(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                    // style={{ flexGrow: 1 }}
+                    // style={{ flex: '100%' }}
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          {validatedToken ? (
+                            <IconButton
+                              edge='end'
+                              aria-label='change'
+                              onClick={() => changeToken()}
+                            >
+                              ✏️
+                            </IconButton>
+                          ) : (
+                            ''
+                          )}
+                        </InputAdornment>
+                      )
+                    }}
+                  />
+                </div>
+                <div style={{ marginTop: '10px' }}>
+                  {clickedValidateToken ? verifyTokenMsg : ''}
+                </div>
+              </MDBModalBody>
+              <MDBModalFooter>
+                {validatedToken ? (
+                  <MDBBtn onClick={toggleShow}>Close</MDBBtn>
+                ) : (
+                  <MDBBtn onClick={validateToken}>Save</MDBBtn>
+                )}
+              </MDBModalFooter>
+            </MDBModalContent>
+          </MDBModalDialog>
+        </MDBModal>
+      </div>
     </>
   )
 }

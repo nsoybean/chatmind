@@ -133,8 +133,8 @@ function Sidebar({ chatList, setChatList }) {
   return (
     <div
       style={sideBarStyle}
-      onMouseEnter={handleMouseEnterSideBar}
-      onMouseLeave={handleMouseLeaveSideBar}
+      // onMouseEnter={handleMouseEnterSideBar}
+      // onMouseLeave={handleMouseLeaveSideBar}
     >
       <div
         style={{
