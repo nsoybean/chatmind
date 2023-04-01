@@ -99,6 +99,8 @@ function Sidebar({ chatList, setChatList }) {
     localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
     console.log('🚀 New chat initiated:', chatID)
 
+    // reset any search
+    setSearchTerm('')
     // navigate
     navigate(`/chat/${chatID}`)
   }
