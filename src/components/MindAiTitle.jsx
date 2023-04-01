@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import mindAiLogo from '../assets/mindAi.png'
+import { MDBBtn } from 'mdb-react-ui-kit'
 
 const MindAiTitle = () => {
   const navigate = useNavigate()
@@ -45,6 +46,25 @@ const MindAiTitle = () => {
           navigate('/')
         }}
       />
+      <MDBBtn
+        style={{
+          background:
+            'linear-gradient(to right, rgba(102, 126, 234, 0.5), rgba(118, 75, 162, 0.5))',
+          cursor: 'default',
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          height: '30px',
+          width: '60px',
+          fontSize: '14px',
+          // relative position
+          top: '-85px',
+          right: '-160px',
+          relative: '20px'
+        }}
+      >
+        Beta
+      </MDBBtn>
 
       <h2 style={styles.slogan}>
         Maximize the power of ChatGPT with better UI
