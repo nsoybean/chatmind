@@ -27,9 +27,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "npm run build",
+    "uploadS3": "aws s3 sync ./build/ s3://mind-ai/ --profile private",
+    "deployCloudFront": "aws cloudfront create-invalidation --distribution-id ERIAOGIO9ZMPD --paths '/*' --profile private --no-verify-ssl",
+    "deploy": "npm run build & npm run uploadS3 & npm run deployCloudFront"
   },
   "eslintConfig": {
     "extends": [
