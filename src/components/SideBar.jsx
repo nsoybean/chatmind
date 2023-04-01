@@ -67,7 +67,7 @@ function Sidebar({ chatList, setChatList }) {
     backgroundColor: '#ececf1',
     width: '100%',
     padding: '10px',
-    margin: '10px 0',
+    margin: '5px 0',
     boxSizing: 'border-box',
     border: '0.5px solid #ccc',
     borderRadius: '5px',
@@ -139,9 +139,6 @@ function Sidebar({ chatList, setChatList }) {
       <div
         style={{
           display: 'flex',
-          // flexDirection: 'column',
-          // justifyContent: 'space-between',
-          // justifyContent: 'flex-start',
           alignItems: 'center',
           margin: '5px 0px'
         }}
