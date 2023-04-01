@@ -75,7 +75,7 @@ const ChatList = ({ chats, setChatList }) => {
   const handleMouseClickChatDelete = (chatID) => {
     console.log(`🚀 delete chatID: ${chatID}`)
     localStorage.removeItem(`MA_chat_${chatID}`)
-    setChatList(chats.filter((item) => item.id !== chatID)) // remove from chatlist, applicable when path is already at '/', as re-rendering wont happen
+    // setChatList(chats.filter((item) => item.id !== chatID)) // remove from chatlist, applicable when path is already at '/', as re-rendering wont happen
     // navgiate to root
     navigate(`/`)
   }
@@ -132,7 +132,6 @@ const ChatList = ({ chats, setChatList }) => {
           }}
           onMouseEnter={() => handleMouseEnterChat(index)}
           onMouseLeave={() => handleMouseLeaveChat()}
-          onClick={() => handleMouseClickChat(chat.id)}
           key={chat.id}
         >
           <li
@@ -146,6 +145,7 @@ const ChatList = ({ chats, setChatList }) => {
               marginRight: '5px',
               maxWidth: '100%'
             }}
+            onClick={() => handleMouseClickChat(chat.id)}
           >
             <HiOutlineChatBubbleLeft
               icon={faCircle}

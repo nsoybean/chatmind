@@ -24,8 +24,8 @@ function App() {
         theme='light'
       />
       <Routes>
+        <Route path='/chat/:id' element={<ActiveChat />} />
         <Route exact path='/' element={<Home />} />
-        <Route exact path='/chat/:id' element={<ActiveChat />} />
       </Routes>
     </div>
   )
