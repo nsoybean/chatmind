@@ -154,47 +154,36 @@ function Home() {
           style={{
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'space-evenly', // main axis (vertically)
+            justifyContent: 'flex-start', // main axis (vertically)
             alignItems: 'center', // cross axis (horizontally)
             height: '100%',
             width: '100%'
           }}
         >
           {/* chat conversation text bubbles */}
-          <ChatConversation
-            chatConvo={chatConvo.length === 0 ? [] : chatConvo}
-            setchatConvo={setChatConvo}
-          />
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              width: '100%',
+              marginTop: '5%'
+            }}
+          >
+            <ChatConversation
+              chatConvo={chatConvo.length === 0 ? [] : chatConvo}
+              setchatConvo={setChatConvo}
+            />
+          </div>
           {/* new chat button */}
-          {/* {!chatID && (
-            <button
-              style={{
-                alignItems: 'center',
-                padding: '0.8rem 2rem',
-                backgroundColor: '#0033aa',
-                color: 'white',
-                border: 'none',
-                borderRadius: '0.5rem',
-                fontSize: '1.2rem',
-                margin: '1rem',
-                cursor: 'pointer'
-              }}
-              onClick={onClickNewChat}
+          <div style={{ marginTop: '5%' }}>
+            <AwesomeButton
+              cssModule={AwesomeButtonStyles}
+              type='primary'
+              onPress={onClickNewChat}
             >
               New Chat
-            </button>
-            // <AwesomeButtonShare type='messenger' sharer={{ user: '@username' }}>
-            //   Messenger
-            // </AwesomeButtonShare>
-          )}
-           */}
-          <AwesomeButton
-            cssModule={AwesomeButtonStyles}
-            type='primary'
-            onPress={onClickNewChat}
-          >
-            New Chat
-          </AwesomeButton>
+            </AwesomeButton>
+          </div>
         </div>
       </div>
     </div>
