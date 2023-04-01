@@ -6,9 +6,6 @@ import { v4 as uuidv4 } from 'uuid'
 import Sidebar from '../components/SideBar'
 import { OpenAiAPI } from '../api/openAiAPI'
 import { AwesomeButton } from 'react-awesome-button'
-// import myAwesomeButtonStyles from '../style/awesomeButton/mystyle.module.css'
-// import AwesomeButtonStyles from 'react-awesome-button/dist/styles.css'
-// import AwesomeButtonStyles from '../style/awesomeButton/styles.css'
 import '../styles/awesomeButton/styles.css'
 
 function Home() {
