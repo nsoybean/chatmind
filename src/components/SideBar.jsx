@@ -35,6 +35,7 @@ function Sidebar({ chatList, setChatList }) {
   const toggleSidebar = () => {
     setIsOpen(!isOpen)
   }
+
   const sideBarStyle = {
     display: 'flex',
     flexDirection: 'column',
@@ -153,6 +154,7 @@ function Sidebar({ chatList, setChatList }) {
             width: '100%',
             margin: '5px 0'
           }}
+          onClick={toggleSidebar}
           //   temp commented out as toggling is based on hovering over sidebar
           //   onClick={toggleSidebar} // Add onClick event handler to toggle sidebar
         >
