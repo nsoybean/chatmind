@@ -32,14 +32,12 @@ export default function App() {
     const token = JSON.parse(localStorage.getItem('MA_openai_token'))
     // if token already exist
     if (token) {
-      console.log('token exist, setValidatedToken: true')
       setValidatedToken(token)
     }
   }, [])
 
-  useEffect(() => {
-    console.log('input', inputToken)
-  }, [inputToken])
+  // uncomment for log
+  // useEffect(() => {}, [inputToken])
 
   const toggleShow = () => setCentredModal(!centredModal)
 
@@ -57,7 +55,6 @@ export default function App() {
       // to show validate msg
       setClickedValidateToken(true)
       setVerifyingTokenMsg('Verifying token...')
-      console.log('🚀 validating token')
       const { data, error } = await general.awaitWrap(
         OpenAiAPI.verifyToken(trimmedInput)
       )
@@ -65,7 +62,6 @@ export default function App() {
       // if successful
       if (data) {
         setVerifyingTokenMsg('✅ Token Verified')
-        console.log('Token is valid!')
         localStorage.setItem(`MA_openai_token`, JSON.stringify(trimmedInput))
         setShowConfettiUponAuthToken(true)
         setTokenInvalidated(false)
