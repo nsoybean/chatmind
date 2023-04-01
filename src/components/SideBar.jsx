@@ -16,7 +16,7 @@ function Sidebar({ chatList, setChatList }) {
   // TODO: filter chats based on search input
   useEffect(() => {
     setFilteredChatList(chatList)
-  }, [])
+  }, [chatList])
 
   useEffect(() => {
     if (searchTerm === '') {
