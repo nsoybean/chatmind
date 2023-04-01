@@ -48,7 +48,7 @@ function Home() {
 
       // navigate to unsed chat
       if (latestChatConvo.length === 0) {
-        console.log('🚀 You already have an empty chat!')
+        console.log('🚀 From /, You already have an empty chat!')
         navigate(`/chat/${latestChatID}`)
       } else {
         // otherwise, create chat

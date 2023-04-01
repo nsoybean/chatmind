@@ -64,28 +64,6 @@ function ActiveChat() {
     navigate(`/chat/${chatID}`)
   }
 
-  async function onClickNewChat() {
-    // create new chat is there is no chats
-    if (chatList.length === 0) {
-      createNewChat()
-    } else {
-      // else determine if latest chat is empty
-      const latestChatID = chatList[0].id
-      const latestChatConvo = JSON.parse(
-        localStorage.getItem(`MA_chat_${latestChatID}`)
-      ).messages
-
-      // if so, do not create chat
-      if (latestChatConvo.length === 0) {
-        console.log('🚀 You already have an empty chat!')
-        navigate(`/chat/${latestChatID}`)
-      } else {
-        // otherwise, create chat
-        createNewChat()
-      }
-    }
-  }
-
   function fetchAndSetChatList() {
     // fetch all chats from local storage
     let tempChatList = []
