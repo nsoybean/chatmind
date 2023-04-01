@@ -75,7 +75,7 @@ const ChatList = ({ chats, setChatList }) => {
   const handleMouseClickChatDelete = (chatID) => {
     console.log(`🚀 delete chatID: ${chatID}`)
     localStorage.removeItem(`MA_chat_${chatID}`)
-    // setChatList(chats.filter((item) => item.id !== chatID)) // remove from chatlist, applicable when path is already at '/', as re-rendering wont happen
+    setChatList(chats.filter((item) => item.id !== chatID)) // remove from chatlist, applicable when path is already at '/', as re-rendering wont happen
     // navgiate to root
     navigate(`/`)
   }
