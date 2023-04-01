@@ -29,8 +29,8 @@
   "scripts": {
     "start": "react-scripts start",
     "test": "react-scripts test",
+    "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "build": "npm run build",
     "uploadS3": "aws s3 sync ./build/ s3://mind-ai/ --profile private",
     "deployCloudFront": "aws cloudfront create-invalidation --distribution-id ERIAOGIO9ZMPD --paths '/*' --profile private --no-verify-ssl",
     "deploy": "npm run build & npm run uploadS3 & npm run deployCloudFront"
