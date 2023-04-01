@@ -83,7 +83,7 @@ function Sidebar({ chatList, setChatList }) {
   }
 
   const handleSearchKeyDown = (event) => {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' || event.key === 'Enter') {
       setSearchTerm('')
     }
   }
