@@ -70,7 +70,7 @@ function Sidebar({ chatList, setChatList }) {
     const chatID = uuidv4()
     const initChat = {
       id: chatID,
-      title: 'New Chat',
+      title: 'MindAI Chat',
       messages: [],
       updatedAt: new Date().toISOString()
     }
