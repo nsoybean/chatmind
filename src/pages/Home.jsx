@@ -191,9 +191,7 @@ function Home() {
           <AwesomeButton
             cssModule={AwesomeButtonStyles}
             type='primary'
-            onPress={() => {
-              // do something
-            }}
+            onPress={onClickNewChat}
           >
             New Chat
           </AwesomeButton>
