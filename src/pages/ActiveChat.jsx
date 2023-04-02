@@ -267,24 +267,35 @@ function ActiveChat() {
           </blockquote>
         </div>
 
+        {/* Conversation scroll window */}
         <div
           style={{
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'flex-start', // main axis (vertically)
             alignItems: 'center', // cross axis (horizontally)
-            height: '100%',
+            height: '90%',
             width: '100%'
           }}
         >
-          {/* chat conversation text bubbles */}
           <ChatConversation
             chatConvo={chatConvo.length === 0 ? [] : chatConvo}
             setchatConvo={setChatConvo}
           />
 
-          {/* input text bar */}
-          {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
+          {/* chat input text bar */}
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'flex-end',
+              alignSelf: 'flex-end',
+              margin: '10px 0px',
+              width: '100%'
+            }}
+          >
+            {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
+          </div>
         </div>
       </div>
     </div>
