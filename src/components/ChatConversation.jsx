@@ -65,19 +65,21 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               />
             )}
 
-            <p
+            <span
               style={{
                 backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
                 color: chat.role === 'user' ? 'white' : 'black',
                 padding: '10px',
                 borderRadius: '15px',
                 // width: 'fit-content',
-                maxWidth: '80%', // chat bubble not taking up full width
-                margin: '8px 0px'
+                maxWidth: '400px', // chat bubble not taking up full width
+                margin: '8px 0px',
+                overflow: 'scroll',
+                overflowWrap: 'break-word'
               }}
             >
               {chat.content}
-            </p>
+            </span>
             {chat.role === 'user' && (
               <div
                 style={{

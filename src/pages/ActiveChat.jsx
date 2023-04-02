@@ -225,7 +225,8 @@ function ActiveChat() {
       style={{
         display: 'flex',
         flexDirection: 'row',
-        height: '100vh'
+        height: '100vh',
+        width: '100vw'
       }}
     >
       <Sidebar
@@ -274,7 +275,7 @@ function ActiveChat() {
             flexDirection: 'column',
             justifyContent: 'flex-start', // main axis (vertically)
             alignItems: 'center', // cross axis (horizontally)
-            height: '90%',
+            height: '100%',
             width: '100%'
           }}
         >
@@ -290,7 +291,9 @@ function ActiveChat() {
               justifyContent: 'center',
               alignItems: 'flex-end',
               alignSelf: 'flex-end',
-              margin: '10px 0px',
+              marginTop: 'auto',
+              marginBottom: '20px',
+              // margin: '10px 0px',
               width: '100%'
             }}
           >
