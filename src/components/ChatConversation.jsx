@@ -3,6 +3,19 @@ import { FaUserAlt } from 'react-icons/fa'
 import chatmindLogo from '../assets/chatmind.png'
 import MindAiTitle from '../components/MindAiTitle'
 import FeatureList from '../components/FeatureList'
+import ReactMarkdown from 'react-markdown'
+import ReactDom from 'react-dom'
+import remarkGfm from 'remark-gfm'
+import remarkMath from 'remark-math'
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+
+// test table markdown
+// const tableStruct = `
+//   | heading | b  |  c |  d  |
+//   | - | :- | -: | :-: |
+//   | cell 1 | cell 2 | 3 | 4 |
+//   `
 
 const ChatConversation = ({ chatConvo, setChatConvo }) => {
   // console.log('🚀 ChatConversation ~ chatConvo:', chatConvo)
@@ -41,7 +54,6 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
       {/* !!! components are layed out in reverse as flex-direction is column-reverse */}
       {/* rendering of conversation in text bubbles */}
       {/* reverse chat as chat convo is col-reverse */}
-
       {chatConvo
         .slice()
         .reverse()
@@ -65,21 +77,65 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               />
             )}
 
-            <span
-              style={{
-                backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
-                color: chat.role === 'user' ? 'white' : 'black',
-                padding: '10px',
-                borderRadius: '15px',
-                // width: 'fit-content',
-                maxWidth: '400px', // chat bubble not taking up full width
-                margin: '8px 0px',
-                overflow: 'scroll',
-                overflowWrap: 'break-word'
-              }}
-            >
-              {chat.content}
-            </span>
+            {/* {chat.content} */}
+            {chat.role === 'assistant' ? (
+              <div
+                style={{
+                  backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
+                  color: chat.role === 'user' ? 'white' : 'black',
+                  padding: '10px',
+                  borderRadius: '15px',
+                  maxWidth: '600px', // chat bubble not taking up full width
+                  margin: '8px 0px',
+                  overflowWrap: 'break-word'
+                  // overflow: 'scroll',
+                }}
+              >
+                {/* version 1 */}
+                <ReactMarkdown
+                  children={chat.content}
+                  remarkPlugins={[remarkGfm]}
+                />
+                {/* version 2 */}
+                {/* <ReactMarkdown
+                  children={chat.content}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || '')
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          children={String(children).replace(/\n$/, '')}
+                          style={dark}
+                          language={match[1]}
+                          PreTag='div'
+                          {...props}
+                        />
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      )
+                    }
+                  }}
+                /> */}
+              </div>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
+                  color: chat.role === 'user' ? 'white' : 'black',
+                  padding: '10px',
+                  borderRadius: '15px',
+                  // width: 'fit-content',
+                  maxWidth: '600px', // chat bubble not taking up full width
+                  margin: '8px 0px',
+                  overflow: 'scroll',
+                  overflowWrap: 'break-word'
+                }}
+              >
+                {chat.content}
+              </span>
+            )}
             {chat.role === 'user' && (
               <div
                 style={{
