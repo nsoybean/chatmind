@@ -10,20 +10,31 @@ import remarkMath from 'remark-math'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
+import styles from '../styles/markdown/markdown.css'
+// import '../styles/awesomeButton/styles.css'
+
 // import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark'
 // test table markdown
-// const tableStruct = `
-//   | heading | b  |  c |  d  |
-//   | - | :- | -: | :-: |
-//   | cell 1 | cell 2 | 3 | 4 |
-//   `
-
 const markdownTable = `
-| S/N | Pet | Image |
-|--|--|--|
-| 1 | Cat |![A cat looking at you](https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=68615bab04be2077a471009ffc236509) |
-| 2 | Dog |![A dog looking at you](https://ichef.bbci.co.uk/news/976/cpsprodpb/17638/production/_124800859_gettyimages-817514614.jpg)|
-`
+**Reponse**
+
+| Caso                  | Status | Respuesta                                          |
+| --------------------- | ------ | -------------------------------------------------- |
+| Success               | 200    | {payload}                                          |
+| Bad Request           | 400    | { "status": 400, "message": "Bad Request" }        |
+| Invalid Credentials   | 401    | { "status": 401,"message": "Invalid redentials"}   |
+| Not Found Exception   | 404    | { "status": 404,"message": "Resource not Found"}   |
+| Method Not Allowed    | 405    | { "status": 405, "message": "Method Not Allowed" } |
+| Conflict Exception    | 409    | { "status": 409, "message": Conflict Exception" }  |
+| Internar Server Error | 500    | { "status": 500,"message": Internar Server Error"} |
+  `
+
+// const markdownTable = `
+// | S/N | Pet | Image |
+// |--|--|--|
+// | 1 | Cat |![A cat looking at you](https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=68615bab04be2077a471009ffc236509) |
+// | 2 | Dog |![A dog looking at you](https://ichef.bbci.co.uk/news/976/cpsprodpb/17638/production/_124800859_gettyimages-817514614.jpg)|
+// `
 
 const markdownTaskList = `
   - [ ] Task list 1
@@ -114,6 +125,16 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
 
   return (
     <>
+      {/* <ReactMarkdown
+        className={styles.markdown}
+        children={markdownTable}
+        remarkPlugins={[remarkGfm]}
+      ></ReactMarkdown> */}
+      {/* <ReactMarkdown
+        className='markdown'
+        children={markdownTable}
+        remarkPlugins={[remarkGfm]}
+      /> */}
       {/* <ReactMarkdown
         children={markdownTable}
         remarkPlugins={[remarkGfm]}
