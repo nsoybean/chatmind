@@ -40,6 +40,7 @@ const ChatInputBar = ({ setInputMessage }) => {
         fullWidth
         size='small'
         value={input}
+        autoFocus={true}
         onChange={(e) => setInput(e.target.value)} // update message input state on change event
         onKeyDown={handleKeyDown} // add onKeyDown event listener to input field
         sx={{
