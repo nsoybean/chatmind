@@ -36,7 +36,7 @@ export default function TokenModal({ text }) {
   function resetConfettiAfterDelay() {
     setTimeout(() => {
       setShowConfetti(null)
-    }, 3000) // 3 seconds
+    }, 1000) // 3 seconds
   }
 
   // validate input token upon clicking save
