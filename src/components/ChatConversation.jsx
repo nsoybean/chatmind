@@ -222,7 +222,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                   style={{
                     backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
                     color: chat.role === 'user' ? 'white' : 'black',
-                    padding: '10px',
+                    padding: '15px',
                     borderRadius: '15px',
                     maxWidth: '600px', // chat bubble not taking up full width
                     margin: '8px 0px',
