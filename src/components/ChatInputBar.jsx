@@ -46,14 +46,14 @@ const ChatInputBar = ({ setInputMessage }) => {
         sx={{
           '& .MuiOutlinedInput-root': {
             '& fieldset': {
-              borderRadius: '15px',
-              borderColor: '#5b5b5b'
+              borderRadius: '5x',
+              borderColor: '2px #0b5fe9'
             },
             '&:hover fieldset': {
-              borderColor: '#0033aa'
+              borderColor: '2px #0b5fe9'
             },
             '&.Mui-focused fieldset': {
-              borderColor: '#0033aa'
+              borderColor: '2px #0b5fe9'
             }
           }
         }}
