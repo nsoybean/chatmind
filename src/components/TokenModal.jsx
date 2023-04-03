@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import {
   MDBBtn,
   MDBModal,
@@ -16,31 +16,28 @@ import { FaCheck } from 'react-icons/fa'
 import TextField from '@mui/material/TextField'
 import InputAdornment from '@mui/material/InputAdornment'
 import IconButton from '@mui/material/IconButton'
-import ConfettiExplosion from 'react-confetti-explosion'
+import { AwesomeButton } from 'react-awesome-button'
+import '../styles/awesomeButton/styles.css'
+import { Context } from '../context/token'
 
-export default function TokenModal() {
+export default function TokenModal({ text }) {
   const [centredModal, setCentredModal] = useState(false)
   const [inputToken, setInputToken] = useState('')
-  const [validatedToken, setValidatedToken] = useState(null)
   const [clickedValidateToken, setClickedValidateToken] = useState(null)
   const [verifyTokenMsg, setVerifyingTokenMsg] = useState(null)
   const [tokenInvalidated, setTokenInvalidated] = useState(true)
-  const [showConfettiUponAuthToken, setShowConfettiUponAuthToken] =
-    useState(null)
 
-  // retrieve token
-  useEffect(() => {
-    const token = JSON.parse(localStorage.getItem('MA_openai_token'))
-    // if token already exist
-    if (token) {
-      setValidatedToken(token)
-    }
-  }, [])
-
-  // uncomment for log
-  // useEffect(() => {}, [inputToken])
+  // retrieve token from useContext
+  const { openAiToken, setOpenAiToken, setShowConfetti } = useContext(Context)
 
   const toggleShow = () => setCentredModal(!centredModal)
+
+  // reset confetti after delay, cannot be immmediate otherwise initial confetti wont show
+  function resetConfettiAfterDelay() {
+    setTimeout(() => {
+      setShowConfetti(null)
+    }, 3000) // 3 seconds
+  }
 
   // validate input token upon clicking save
   async function validateToken() {
@@ -64,19 +61,19 @@ export default function TokenModal() {
       if (data) {
         setVerifyingTokenMsg('✅ Token Verified')
         localStorage.setItem(`MA_openai_token`, JSON.stringify(trimmedInput))
-        setShowConfettiUponAuthToken(true)
+        setShowConfetti(true)
         setTokenInvalidated(false)
-        setValidatedToken(trimmedInput)
+        setOpenAiToken(trimmedInput)
+        setInputToken('') // clear text input
         toggleShow() // close modal
+        resetConfettiAfterDelay() // reset confetti after 3 seconds
       } else if (error.code === 'ERR_BAD_REQUEST') {
         setVerifyingTokenMsg('❗ Invalid Token')
         localStorage.setItem(`MA_openai_token`, JSON.stringify(''))
-        setValidatedToken(null) // reset token
+        setOpenAiToken(null) // reset token
         setTokenInvalidated(true)
         setInputToken('') // clear text input
       }
-      // reset
-      // setShowConfettiUponAuthToken(false)
     }
   }
 
@@ -103,13 +100,13 @@ export default function TokenModal() {
   }
 
   function changeToken() {
-    setValidatedToken(null)
+    setOpenAiToken(null)
+    setInputToken('')
   }
   return (
     <>
-      {showConfettiUponAuthToken && <ConfettiExplosion />}
       <MDBBtn onClick={toggleShow}>
-        {validatedToken ? maskString(validatedToken, 3, 4) : 'Enter Here'}{' '}
+        {openAiToken ? maskString(openAiToken, 3, 4) : text}{' '}
       </MDBBtn>
 
       <div>
@@ -136,7 +133,8 @@ export default function TokenModal() {
                   <a
                     href='https://platform.openai.com/account/api-keys'
                     style={{
-                      color: '#1F51FF' // neon blue
+                      color: '#1F51FF', // neon blue
+                      textDecoration: 'underline'
                     }}
                     target='_blank'
                     rel='noreferrer'
@@ -160,12 +158,11 @@ export default function TokenModal() {
                   <TextField
                     id='outlined-helperText'
                     label='Key'
-                    variant={validatedToken ? 'filled' : 'standard'}
-                    disabled={validatedToken ? true : false}
+                    variant={openAiToken ? 'filled' : 'standard'}
+                    disabled={openAiToken ? true : false}
+                    autoComplete='off'
                     value={
-                      validatedToken
-                        ? maskString(validatedToken, 3, 4)
-                        : inputToken
+                      openAiToken ? maskString(openAiToken, 3, 4) : inputToken
                     }
                     placeholder='sk-XXXXXXXXXXXXXXXXXXXXXXXXXXX'
                     onChange={(e) => setInputToken(e.target.value)}
@@ -176,7 +173,7 @@ export default function TokenModal() {
                     InputProps={{
                       endAdornment: (
                         <InputAdornment position='end'>
-                          {validatedToken ? (
+                          {openAiToken ? (
                             <IconButton
                               edge='end'
                               aria-label='change'
@@ -197,7 +194,7 @@ export default function TokenModal() {
                 </div>
               </MDBModalBody>
               <MDBModalFooter>
-                {validatedToken ? (
+                {openAiToken ? (
                   <MDBBtn onClick={toggleShow}>Close</MDBBtn>
                 ) : (
                   <MDBBtn onClick={validateToken}>Save</MDBBtn>

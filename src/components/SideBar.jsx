@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { v4 as uuidv4 } from 'uuid'
 import { faComment } from '@fortawesome/free-solid-svg-icons'
@@ -6,12 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate } from 'react-router-dom'
 import ChatList from '../components/ChatList'
 import TokenModal from '../components/TokenModal'
+import ConfettiExplosion from 'react-confetti-explosion'
+import { Context } from '../context/token'
 
 function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredChatList, setFilteredChatList] = useState([]) // array of chat list. Only contains chat id and title
+
+  const { showConfetti } = useContext(Context)
 
   // TODO: filter chats based on search input
   useEffect(() => {
@@ -228,7 +232,8 @@ function Sidebar({ chatList, setChatList }) {
             >
               OpenAI API KEY
             </div>
-            <TokenModal stye={{ margin: '5px 0px' }} />
+            {showConfetti && <ConfettiExplosion />}
+            <TokenModal stye={{ margin: '5px 0px' }} text='Enter Here' />
           </div>
         </div>
       )}

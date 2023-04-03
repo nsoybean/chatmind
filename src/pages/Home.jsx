@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -7,6 +7,8 @@ import Sidebar from '../components/SideBar'
 import { OpenAiAPI } from '../api/openAiAPI'
 import { AwesomeButton } from 'react-awesome-button'
 import '../styles/awesomeButton/styles.css'
+import TokenModal from '../components/TokenModal'
+import { Context } from '../context/token'
 
 function Home() {
   const [quote, setQuote] = useState(null)
@@ -15,7 +17,9 @@ function Home() {
   const [chatID, setChatID] = useState(null) // id of chat
   const [chatList, setChatList] = useState(null) // array of chat list. Only contains chat id and title
   const [chatData, setChatData] = useState(null) // full data of a chat; id, title, and messages
+  const [validatedToken, setValidatedToken] = useState(null)
   const navigate = useNavigate()
+  const { openAiToken } = useContext(Context)
 
   const createNewChat = () => {
     const chatID = uuidv4()
@@ -175,14 +179,19 @@ function Home() {
             />
           </div>
           {/* new chat button */}
+
           <div style={{ marginTop: '5%' }}>
-            <AwesomeButton
-              size='medium'
-              type='primary'
-              onPress={onClickNewChat}
-            >
-              New Chat
-            </AwesomeButton>
+            {openAiToken ? (
+              <AwesomeButton
+                size='medium'
+                type='primary'
+                onPress={onClickNewChat}
+              >
+                New Chat
+              </AwesomeButton>
+            ) : (
+              <TokenModal text='Enter OpenAI API Key' />
+            )}
           </div>
         </div>
       </div>
