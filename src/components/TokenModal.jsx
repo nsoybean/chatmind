@@ -133,8 +133,8 @@ export default function TokenModal({ text }) {
                   <a
                     href='https://platform.openai.com/account/api-keys'
                     style={{
-                      color: '#1F51FF', // neon blue
-                      textDecoration: 'underline'
+                      color: '#1F51FF' // neon blue
+                      // textDecoration: 'underline'
                     }}
                     target='_blank'
                     rel='noreferrer'
