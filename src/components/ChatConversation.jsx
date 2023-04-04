@@ -89,30 +89,6 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
   // const [chatMessages, setChatMessages] = useState(messages)
   const [markdownCheatSheets, setMarkdownCheatSheets] = useState(null)
 
-  function handleCopyClick() {
-    console.log('copying code...!')
-  }
-
-  // get the list of all highlight code blocks
-  // const highlights = document.querySelectorAll('code.language-javascript')
-  const highlights = document.querySelectorAll('[class*=language]')
-  // console.log('🚀 ~ file: ChatConversation.jsx:20 ~ highlights:', highlights)
-
-  highlights.forEach((div) => {
-    // create the copy button
-    const copy = document.createElement('button')
-    copy.classList.add('copyCodeButton')
-    copy.innerHTML = 'Copy'
-    // add the event listener to each click
-    copy.addEventListener('click', handleCopyClick)
-    // append the copy button to each code block
-    div.append(copy)
-    // console.log(
-    //   '🚀 ~ file: ChatConversation.jsx:107 ~ highlights.forEach ~ code:',
-    //   div
-    // )
-  })
-
   const handleMouseEnter = (index) => {
     setHoveredChat(index)
   }
