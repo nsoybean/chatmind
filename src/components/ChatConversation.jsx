@@ -6,14 +6,13 @@ import FeatureList from '../components/FeatureList'
 import ReactMarkdown from 'react-markdown'
 import ReactDom from 'react-dom'
 import remarkGfm from 'remark-gfm'
+import rehypeRaw from 'rehype-raw'
 import remarkMath from 'remark-math'
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
-import { dark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import styles from '../styles/markdown/markdown.css'
-// import '../styles/awesomeButton/styles.css'
+import CodeCopyBtn from './CodeCopyBtn'
 
-// import { atomOneDark } from 'react-syntax-highlighter/dist/cjs/styles/hljs/atom-one-dark'
 // test table markdown
 const markdownTable = `
 **Reponse**
@@ -90,19 +89,29 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
   // const [chatMessages, setChatMessages] = useState(messages)
   const [markdownCheatSheets, setMarkdownCheatSheets] = useState(null)
 
-  // useEffect(() => {
-  //   fetch('https://www.markdownguide.org/api/v1/cheat-sheet.json')
-  //     .then((res) => res.json())
-  //     .then(({ cheat_sheet }) => {
-  //       setMarkdownCheatSheets([
-  //         ...cheat_sheet[0]?.basic_syntax,
-  //         ...cheat_sheet[1]?.extended_syntax
-  //       ])
-  //     })
-  //     .catch((err) => {
-  //       console.log(err)
-  //     })
-  // }, [])
+  function handleCopyClick() {
+    console.log('copying code...!')
+  }
+
+  // get the list of all highlight code blocks
+  // const highlights = document.querySelectorAll('code.language-javascript')
+  const highlights = document.querySelectorAll('[class*=language]')
+  // console.log('🚀 ~ file: ChatConversation.jsx:20 ~ highlights:', highlights)
+
+  highlights.forEach((div) => {
+    // create the copy button
+    const copy = document.createElement('button')
+    copy.classList.add('copyCodeButton')
+    copy.innerHTML = 'Copy'
+    // add the event listener to each click
+    copy.addEventListener('click', handleCopyClick)
+    // append the copy button to each code block
+    div.append(copy)
+    // console.log(
+    //   '🚀 ~ file: ChatConversation.jsx:107 ~ highlights.forEach ~ code:',
+    //   div
+    // )
+  })
 
   const handleMouseEnter = (index) => {
     setHoveredChat(index)
@@ -122,6 +131,14 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
     const newMessages = chatConvo.filter((message, i) => i !== index)
     setChatConvo(newMessages)
   }
+
+  // Add the CodeCopyBtn component to our PRE element
+  const Pre = ({ children }) => (
+    <pre className='code-pre'>
+      <CodeCopyBtn>{children}</CodeCopyBtn>
+      {children}
+    </pre>
+  )
 
   return (
     <>
@@ -293,19 +310,29 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     </div>
                   )} */}
                   <ReactMarkdown
-                    children={chat.content}
+                    className='post-markdown'
+                    linkTarget='_blank'
+                    rehypePlugins={[rehypeRaw]}
                     remarkPlugins={[remarkGfm]}
                     components={{
-                      code({ node, inline, className, children, ...props }) {
+                      pre: Pre,
+                      code({
+                        node,
+                        inline,
+                        className = 'blog-code',
+                        children,
+                        ...props
+                      }) {
                         const match = /language-(\w+)/.exec(className || '')
                         return !inline && match ? (
                           <SyntaxHighlighter
-                            children={String(children).replace(/\n$/, '')}
-                            style={a11yDark} // theme
+                            style={a11yDark}
                             language={match[1]}
-                            PreTag='section' // parent tag
+                            PreTag='div'
                             {...props}
-                          />
+                          >
+                            {String(children).replace(/\n$/, '')}
+                          </SyntaxHighlighter>
                         ) : (
                           <code className={className} {...props}>
                             {children}
@@ -313,7 +340,9 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                         )
                       }
                     }}
-                  />
+                  >
+                    {chat.content}
+                  </ReactMarkdown>
                 </div>
               ) : (
                 <span

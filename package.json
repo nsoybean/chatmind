@@ -26,6 +26,7 @@
     "react-toastify": "^9.1.2",
     "react-tooltip": "^5.10.0",
     "reactjs-popup": "^2.0.5",
+    "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "remark-math": "^5.1.1",
     "uuid": "^9.0.0",

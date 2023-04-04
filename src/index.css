@@ -15,3 +15,34 @@ code {
   font-family: 'system-ui', 'ui-sans-serif', source-code-pro, Menlo, Monaco,
     Consolas, 'Courier New', monospace;
 }
+
+code.language {
+  display: block;
+  position: relative;
+  border: 1px solid #cccccc;
+  padding: 10px;
+  margin: 10px 0;
+  background-color: #f5f5f5;
+}
+
+code.language:before {
+  content: attr(class);
+  display: block;
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+code.language:after {
+  content: '\f0c5';
+  font-family: 'Font Awesome 5 Free';
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 1.2em;
+  cursor: pointer;
+}
+
+code.language:after:hover {
+  color: #4183c4;
+}
