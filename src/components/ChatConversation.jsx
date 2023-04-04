@@ -224,7 +224,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     color: chat.role === 'user' ? 'white' : 'black',
                     padding: '15px',
                     borderRadius: '15px',
-                    maxWidth: '600px', // chat bubble not taking up full width
+                    maxWidth: '650px', // chat bubble not taking up full width
                     margin: '8px 0px',
                     overflowWrap: 'break-word'
                     // overflow: 'scroll',
