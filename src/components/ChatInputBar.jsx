@@ -12,7 +12,7 @@ const ChatInputBar = ({ setInputMessage }) => {
   }
 
   const handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === 'Enter' && !event.key === 'Shift') {
       handleSend()
     }
   }
