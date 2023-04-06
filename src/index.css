@@ -16,7 +16,7 @@ code {
     Consolas, 'Courier New', monospace;
 }
 
-code.language {
+/* code.language {
   display: block;
   position: relative;
   border: 1px solid #cccccc;
@@ -45,4 +45,4 @@ code.language:after {
 
 code.language:after:hover {
   color: #4183c4;
-}
+} */
