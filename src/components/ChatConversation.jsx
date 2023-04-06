@@ -223,68 +223,6 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     // overflow: 'scroll',
                   }}
                 >
-                  {/* version 1 */}
-                  {/* <ReactMarkdown
-                    children={chat.content}
-                    remarkPlugins={[remarkGfm]}
-                  /> */}
-                  {/* version 2 */}
-                  {/* <ReactMarkdown
-                  children={chat.content}
-                  components={{
-                    code({ node, inline, className, children, ...props }) {
-                      const match = /language-(\w+)/.exec(className || '')
-                      return !inline && match ? (
-                        <SyntaxHighlighter
-                          children={String(children).replace(/\n$/, '')}
-                          style={dark}
-                          language={match[1]}
-                          PreTag='div'
-                          {...props}
-                        />
-                      ) : (
-                        <code className={className} {...props}>
-                          {children}
-                        </code>
-                      )
-                    }
-                  }}
-                /> */}
-                  {/* version 3 (dynamic) */}
-                  {/* {markdownCheatSheets && (
-                    <div>
-                      {markdownCheatSheets?.map(({ element, syntax }) => {
-                        return (
-                          <div key={element}>
-                            <h1>{element}</h1>
-                            <p>{syntax}</p>
-                            <div>
-                              <h3>Examples</h3>
-                              <ReactMarkdown
-                                children={syntax}
-                                remarkPlugins={[remarkGfm]}
-                                components={{
-                                  code({ children, ...props }) {
-                                    return (
-                                      <SyntaxHighlighter
-                                        children={String(children).replace(
-                                          /\n$/,
-                                          ''
-                                        )}
-                                        style={dark}
-                                        PreTag='section'
-                                        {...props}
-                                      />
-                                    )
-                                  }
-                                }}
-                              />
-                            </div>
-                          </div>
-                        )
-                      })}
-                    </div>
-                  )} */}
                   <ReactMarkdown
                     className='post-markdown'
                     linkTarget='_blank'
