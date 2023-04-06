@@ -7,6 +7,8 @@ import Sidebar from '../components/SideBar'
 import { OpenAiAPI } from '../api/openAiAPI'
 import general from '../helper/general'
 import { toast } from 'react-toastify'
+import ConfigureChatButton from '../components/ConfigureChatButton'
+import PromptButton from '../components/PromptButton'
 
 function ActiveChat() {
   // const navigate = useNavigate()
@@ -27,8 +29,8 @@ function ActiveChat() {
     const requestBody = {
       model: model, // 'gpt-3.5-turbo',
       messages: chatDataArr,
-      stream: false,
-      max_tokens: 250
+      stream: false
+      // max_tokens: 250
     }
 
     // call openAI API
@@ -283,6 +285,21 @@ function ActiveChat() {
             chatConvo={chatConvo.length === 0 ? [] : chatConvo}
             setchatConvo={setChatConvo}
           />
+
+          {/* chat settings */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '30%',
+              justifyContent: 'space-evenly',
+              alignItems: 'center',
+              marginBottom: '5px'
+            }}
+          >
+            <ConfigureChatButton />
+            <PromptButton />
+          </div>
 
           {/* chat input text bar */}
           <div
