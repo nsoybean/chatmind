@@ -312,8 +312,11 @@ function ActiveChat() {
                 // marginBottom: '5px'
               }}
             >
-              <ConfigureChatButton />
-              <PromptButton />
+              <ConfigureChatButton
+                chatData={chatData}
+                setChatData={setChatData}
+              />
+              {/* <PromptButton /> */}
             </div>
 
             {/*  chat input text bar  */}

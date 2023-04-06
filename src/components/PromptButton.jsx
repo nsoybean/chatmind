@@ -38,8 +38,8 @@ const PromptButton = () => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 9999
+            justifyContent: 'center'
+            // zIndex: 9999
           }}
           onClick={() => setShowModal(false)}
         >
