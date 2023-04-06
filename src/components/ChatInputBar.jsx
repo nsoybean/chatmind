@@ -8,12 +8,13 @@ const ChatInputBar = ({ setInputMessage }) => {
   async function handleSend() {
     const messageObj = { role: 'user', content: input }
     setInputMessage(messageObj)
-    setInput('') // clear input after sending
   }
 
-  const handleKeyDown = (event) => {
-    if (event.key === 'Enter' && !event.key === 'Shift') {
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13 && !e.shiftKey) {
+      e.preventDefault()
       handleSend()
+      setInput('') // clear input after sending
     }
   }
 
