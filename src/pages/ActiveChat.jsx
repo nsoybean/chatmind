@@ -286,35 +286,50 @@ function ActiveChat() {
             setchatConvo={setChatConvo}
           />
 
-          {/* chat settings */}
+          {/* chat input text bar and chat configuration buttons*/}
           <div
             style={{
               display: 'flex',
-              flexDirection: 'row',
-              width: '30%',
-              justifyContent: 'space-evenly',
+              flexDirection: 'column',
+              justifyContent: 'flex-end',
               alignItems: 'center',
-              marginBottom: '5px'
-            }}
-          >
-            <ConfigureChatButton />
-            <PromptButton />
-          </div>
-
-          {/* chat input text bar */}
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'flex-end',
-              alignSelf: 'flex-end',
               marginTop: 'auto',
-              marginBottom: '20px',
-              // margin: '10px 0px',
+              marginBottom: '10px',
               width: '100%'
             }}
           >
-            {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
+            {/* model and prompt buttons */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '30%',
+                justifyContent: 'space-evenly',
+                // justifyContent: 'flex-start',
+                alignItems: 'center',
+                margin: '5px 0px'
+                // marginBottom: '10px'
+                // marginBottom: '5px'
+              }}
+            >
+              <ConfigureChatButton />
+              <PromptButton />
+            </div>
+
+            {/*  chat input text bar  */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'flex-end',
+                alignSelf: 'flex-end',
+                marginBottom: '10px',
+                width: '100%'
+              }}
+            >
+              {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
+            </div>
           </div>
         </div>
       </div>
