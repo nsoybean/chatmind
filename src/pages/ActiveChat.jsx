@@ -22,15 +22,16 @@ function ActiveChat() {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  async function sendChatToOpenAI(chatDataArr, model) {
+  async function sendChatToOpenAI(chatData) {
     // extract token from local
     const token = JSON.parse(localStorage.getItem('MA_openai_token'))
 
     const requestBody = {
-      model: model, // 'gpt-3.5-turbo',
-      messages: chatDataArr,
+      model: chatData.model,
+      messages: chatData.messages,
+      temperature: chatData.temperature,
       stream: false
-      // max_tokens: 250
+      // max_tokens: chatData.maxToken //empty
     }
 
     // call openAI API
@@ -39,6 +40,10 @@ function ActiveChat() {
     )
 
     if (error) {
+      console.log(
+        '🚀 ~ file: ActiveChat.jsx:43 ~ sendChatToOpenAI ~ error:',
+        error
+      )
       if (error.code === 'ERR_BAD_REQUEST' && error.response.status === 401) {
         throw new Error('INVALID_TOKEN_ERR')
       } else {
@@ -48,22 +53,6 @@ function ActiveChat() {
     const responseObj = responseRaw.data.choices[0].message
     // setInputMessage(responseObj)
     return responseObj
-  }
-
-  const createNewChat = () => {
-    const chatID = uuidv4()
-    const initChat = {
-      id: chatID,
-      title: 'New Chat',
-      messages: [],
-      updatedAt: new Date().toISOString()
-    }
-    localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
-    console.log('🚀 New chat initiated:', chatID)
-
-    // navigate
-    window.location.reload(false)
-    navigate(`/chat/${chatID}`)
   }
 
   function fetchAndSetChatList() {
@@ -176,7 +165,7 @@ function ActiveChat() {
 
           // call API
           const { data: responseMessage, error } = await general.awaitWrap(
-            sendChatToOpenAI(tempChatData.messages, 'gpt-3.5-turbo')
+            sendChatToOpenAI(tempChatData)
           )
 
           if (error) {
@@ -208,6 +197,9 @@ function ActiveChat() {
   useEffect(() => {
     // make sure all data is present
     if (chatData && chatID) {
+      // uncomment for debugging
+      console.log('🚀 ActiveChat ~ chatData:', chatData)
+
       // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
 

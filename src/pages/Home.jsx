@@ -27,7 +27,10 @@ function Home() {
       id: chatID,
       title: 'MindAI Chat',
       messages: [],
-      updatedAt: new Date().toISOString()
+      updatedAt: new Date().toISOString(),
+      model: 'gpt-3.5-turbo', // default
+      temperature: 0.7, // default
+      maxToken: 4096
     }
     localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(initChat))
     console.log('🚀 New chat initiated:', chatID)

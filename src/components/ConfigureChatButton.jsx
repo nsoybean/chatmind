@@ -49,10 +49,12 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
 
   function handleApplyChatConfig() {
     // set chat's modal and token
-    console.log('chosen model:', model)
-    console.log('chosen temperature:', temperature)
-    console.log('current chatData:', chatData)
-    setChatData({ ...chatData, model, temperature })
+    setChatData({
+      ...chatData,
+      model,
+      temperature,
+      maxToken: tokenModelMappingTable[model]
+    })
     // close modal
     setShowModal(false)
   }
@@ -139,7 +141,7 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
                   <Slider
                     size='medium'
                     aria-label='Temperature'
-                    defaultValue={0.7}
+                    defaultValue={chatData.temperature}
                     valueLabelDisplay='auto'
                     step={0.1}
                     marks={temperatureSliderMarks}
