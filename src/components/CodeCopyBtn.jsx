@@ -3,7 +3,7 @@ import React from 'react'
 export default function CodeCopyBtn({ children }) {
   const [copyOk, setCopyOk] = React.useState(false)
 
-  const iconColor = copyOk ? '#22c55e' : '#ddd'
+  const iconColor = copyOk ? '#3CCF4E' : '#ddd'
   const icon = copyOk ? 'fa-circle-check' : 'fa-copy'
 
   const handleClick = (e) => {
