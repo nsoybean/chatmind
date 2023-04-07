@@ -278,6 +278,27 @@ function ActiveChat() {
             setchatConvo={setChatConvo}
           />
 
+          {/* model config buttons, shown only at the start of an empty chat */}
+          {chatData?.messages.length === 0 && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                width: '30%',
+                justifyContent: 'space-evenly',
+                // justifyContent: 'flex-start',
+                alignItems: 'center',
+                // margin: '5px 0px',
+                marginTop: '20px'
+              }}
+            >
+              <ConfigureChatButton
+                chatData={chatData}
+                setChatData={setChatData}
+              />
+            </div>
+          )}
+
           {/* chat input text bar and chat configuration buttons*/}
           <div
             style={{
@@ -290,27 +311,6 @@ function ActiveChat() {
               width: '100%'
             }}
           >
-            {/* model and prompt buttons */}
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                width: '30%',
-                justifyContent: 'space-evenly',
-                // justifyContent: 'flex-start',
-                alignItems: 'center',
-                margin: '5px 0px'
-                // marginBottom: '10px'
-                // marginBottom: '5px'
-              }}
-            >
-              <ConfigureChatButton
-                chatData={chatData}
-                setChatData={setChatData}
-              />
-              {/* <PromptButton /> */}
-            </div>
-
             {/*  chat input text bar  */}
             <div
               style={{

@@ -9,10 +9,11 @@ import Slider, {
   SliderThumb,
   SliderValueLabelProps
 } from '@mui/material/Slider'
-import { styled } from '@mui/material/styles'
+import { styled, css } from '@mui/material/styles'
 import Typography from '@mui/material/Typography'
 import { MDBBtn } from 'mdb-react-ui-kit'
 import { useEffect } from 'react'
+import '../styles/modelConfigButton/styles.css'
 
 const ConfigureChatButton = ({ chatData, setChatData }) => {
   const [showModal, setShowModal] = useState('')
@@ -61,23 +62,38 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
   return (
     <div style={{ position: 'relative' }}>
       <div
+        className='gear-icon-container' // css selector will determine if 'gear-icon-container' is hovered
         style={{
-          borderRadius: '20px',
-          width: '120px',
-          height: '40px',
+          borderRadius: '5px',
+          width: '190px',
+          height: '80px',
           display: 'flex',
-          alignItems: 'center',
           justifyContent: 'center',
-          // backgroundColor: '#FFFFFF',
+          alignItems: 'center',
           color: '#fff',
-          backgroundColor: '#8F43EE',
+          backgroundColor: '#f8f7fe',
           border: '1px solid #CCCCCC',
           cursor: 'pointer'
+          // transition: 'background-color .2s, border .2s'// Add the following styles for hover
+        }}
+        onMouseOver={(e) => {
+          e.currentTarget.style.border = '2px solid #0b5fe9'
+        }}
+        onMouseOut={(e) => {
+          e.currentTarget.style.border = '1px solid #CCCCCC'
         }}
         onClick={handleButtonClick}
       >
-        <div className='fas fa-cog' style={{ marginRight: '5px' }}></div>
-        <div> Model </div>
+        <i
+          className='fas fa-cog fa-lg gear-icon' // css selector will rotate 'gear-icon'
+          style={{ color: '#3D3C42', marginRight: '15px' }}
+        ></i>
+        <div>
+          <Typography style={{ color: '#3D3C42' }}>
+            <strong>Model: GPT-3.5 </strong> <br />
+            Temperature: {chatData?.temperature}
+          </Typography>
+        </div>
       </div>
       {showModal && (
         <div
@@ -108,7 +124,6 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
               <FormControl fullWidth>
                 <div style={{ marginBottom: '20px' }}>
                   <Typography gutterBottom>
-                    {' '}
                     <strong>Model</strong>
                   </Typography>
                   <Select
@@ -118,15 +133,21 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
                     onChange={handleModelChange}
                   >
                     <MenuItem value={'gpt-3.5-turbo'}>
-                      {' '}
-                      gpt-3.5 (Default){' '}
+                      gpt-3.5 (Default)
                     </MenuItem>
                     {/* <MenuItem value={'gpt-3.5'}> gpt-3.5 </MenuItem> */}
                   </Select>
                 </div>
 
                 <Typography gutterBottom>
-                  <strong>Temperature</strong>
+                  <strong>Temperature</strong> <br />
+                  <Typography style={{ fontSize: '14px' }}>
+                    {' '}
+                    Controls the level of randomness or "creativity" in the
+                    generated text. <br />
+                    Higher temperatures result in more diverse and unpredictable
+                    output.
+                  </Typography>
                 </Typography>
                 <div
                   style={{
@@ -153,11 +174,12 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
               </FormControl>
               <div
                 style={{
+                  display: 'flex',
+                  alignItems: 'center',
                   borderRadius: '5px',
                   backgroundColor: '#dcfce7',
                   width: '100%',
                   height: '80px'
-                  // opacity: '80%'
                 }}
               >
                 <Typography style={{ padding: '10px' }}>

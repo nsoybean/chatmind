@@ -1,0 +1,21 @@
+.gear-icon-container {
+  display: inline-block;
+}
+
+/* Define the animation */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Apply the animation on hover */
+.gear-icon-container:hover .gear-icon {
+  animation: spin 1s linear infinite;
+}
+
+/* Style the gear icon */
+.gear-icon-container:hover .gear-icon {
+  color: #3d3c42;
+  margin-right: 15px;
+}
