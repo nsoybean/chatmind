@@ -9,6 +9,7 @@ import general from '../helper/general'
 import { toast } from 'react-toastify'
 import ConfigureChatButton from '../components/ConfigureChatButton'
 import PromptButton from '../components/PromptButton'
+import CancelAPIButton from '../components/CancelAPI'
 
 function ActiveChat() {
   // const navigate = useNavigate()
@@ -214,6 +215,10 @@ function ActiveChat() {
     }
   }, [chatData])
 
+  function onCancelAPI() {
+    console.log('cancelling API call')
+  }
+
   return (
     <div
       style={{
@@ -311,6 +316,9 @@ function ActiveChat() {
               width: '100%'
             }}
           >
+            <div>
+              {/* <CancelAPIButton pending={true} onCancel={onCancelAPI} /> */}
+            </div>
             {/*  chat input text bar  */}
             <div
               style={{

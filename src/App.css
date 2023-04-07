@@ -164,3 +164,21 @@ COPY CODE BUTTON
   color: rgb(162, 8, 8);
   border-radius: 10px;
 }
+
+/* cancel API button */
+@keyframes pulsing {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
