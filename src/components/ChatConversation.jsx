@@ -118,61 +118,6 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
 
   return (
     <>
-      {/* <ReactMarkdown
-        className={styles.markdown}
-        children={markdownTable}
-        remarkPlugins={[remarkGfm]}
-      ></ReactMarkdown> */}
-      {/* <ReactMarkdown
-        className='markdown'
-        children={markdownTable}
-        remarkPlugins={[remarkGfm]}
-      /> */}
-      {/* <ReactMarkdown
-        children={markdownTable}
-        remarkPlugins={[remarkGfm]}
-        escapeHtml={true}
-      /> */}
-      {/* <ReactMarkdown
-        children={cssMarkdownCodeblock}
-        components={{
-          code({ node, inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || '')
-            return !inline && match ? (
-              <SyntaxHighlighter
-                children={String(children).replace(/\n$/, '')}
-                language={match[1]}
-                {...props}
-              />
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            )
-          }
-        }}
-      /> */}
-      {/* <ReactMarkdown
-        children={javaScriptMarkdownCodeblock}
-        components={{
-          code({ node, inline, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || '')
-            return !inline && match ? (
-              <SyntaxHighlighter
-                children={String(children).replace(/\n$/, '')}
-                style={dark} // theme
-                language={match[1]}
-                PreTag='section' // parent tag
-                {...props}
-              />
-            ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
-            )
-          }
-        }}
-      /> */}
       <div
         style={{
           display: 'flex',
@@ -303,6 +248,9 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
           )} */}
             </div>
           ))}
+
+        {/* chat config */}
+        {/* <ConfigureChatButton chatData={chatData} setChatData={setChatData} /> */}
 
         {/* feature list */}
         <FeatureList />
