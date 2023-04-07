@@ -71,7 +71,7 @@ const ChatInputBar = ({ setInputMessage }) => {
           backgroundColor: '#0b5fe9', // blue background color
           color: 'white', // white text color
           border: 'none', // remove border
-          borderRadius: '15px', // rounded radius to match text input
+          borderRadius: '5px', // rounded radius to match text input
           padding: '12px', // add some padding
           display: 'flex', // make sure send icon is aligned with text input
           alignItems: 'center', // vertically center send icon
