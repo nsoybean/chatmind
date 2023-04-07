@@ -8,7 +8,7 @@ import ChatList from '../components/ChatList'
 import TokenModal from '../components/TokenModal'
 import ConfettiExplosion from 'react-confetti-explosion'
 import { Context } from '../context/token'
-// import Darkmode from 'darkmode-js'
+import Darkmode from 'darkmode-js'
 
 function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
@@ -140,25 +140,27 @@ function Sidebar({ chatList, setChatList }) {
   }
 
   // temp comment out dark-mode
-  // const darkLightModeOption = {
-  //   bottom: '2%', // default: '32px'
-  //   right: '2%', // default: '32px'
-  //   left: 'unset', // default: 'unset'
-  //   time: '0.5s', // default: '0.3s'
-  //   mixColor: '#fff', // default: '#fff'
-  //   backgroundColor: '#FF0000', // default: '#fff'
-  //   buttonColorDark: '#100f2c', // default: '#100f2c'
-  //   buttonColorLight: '#fff', // default: '#fff'
-  //   saveInCookies: false, // default: true,
-  //   label: '🌓', // default: ''
-  //   autoMatchOsTheme: true // default: true
-  // }
+  const darkLightModeOption = {
+    bottom: '2%', // default: '32px'
+    right: '2%', // default: '32px'
+    left: 'unset', // default: 'unset'
+    time: '0.5s', // default: '0.3s'
+    mixColor: '#fff', // default: '#fff'
+    backgroundColor: '#FF0000', // default: '#fff'
+    // backgroundColor: '#343541', // default: '#fff'
+    buttonColorDark: '#100f2c', // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    saveInCookies: false, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+  }
 
   // const darkmode = new Darkmode(darkLightModeOption)
   // darkmode.showWidget()
 
   return (
     <div
+      className='darkmode-ignore'
       style={sideBarStyle}
       // onMouseEnter={handleMouseEnterSideBar}
       // onMouseLeave={handleMouseLeaveSideBar}

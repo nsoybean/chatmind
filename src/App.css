@@ -154,3 +154,13 @@ COPY CODE BUTTON
   transform: scale(1.2);
   opacity: 1;
 }
+
+/* dark mode */
+.darkmode--activated .assistant-content {
+  padding: 20px;
+  margin-bottom: 2em !important;
+  position: relative;
+  background-color: red;
+  color: rgb(162, 8, 8);
+  border-radius: 10px;
+}

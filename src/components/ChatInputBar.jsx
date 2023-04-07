@@ -34,6 +34,7 @@ const ChatInputBar = ({ setInputMessage }) => {
       }}
     >
       <TextField
+        className='darkmode-ignore'
         id='outlined-multiline-flexible'
         placeholder='Type your message here'
         multiline
@@ -65,6 +66,7 @@ const ChatInputBar = ({ setInputMessage }) => {
 
       {/* send button */}
       <button
+        className='darkmode-ignore'
         type='button'
         onClick={handleSend} // call handleSend function on send button click
         style={{

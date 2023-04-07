@@ -12,12 +12,21 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import styles from '../styles/markdown/markdown.css'
 import CodeCopyBtn from './CodeCopyBtn'
+import Darkmode from 'darkmode-js'
 
 const ChatConversation = ({ chatConvo, setChatConvo }) => {
   // console.log('🚀 ChatConversation ~ chatConvo:', chatConvo)
   const [hoveredChat, setHoveredChat] = useState(null)
   // const [chatMessages, setChatMessages] = useState(messages)
   const [markdownCheatSheets, setMarkdownCheatSheets] = useState(null)
+
+  // const darkmode = new Darkmode()
+  // darkmode.toggle()
+  // console.log(darkmode.isActivated())
+  // console.log(
+  //   '🚀 ~ file: ChatConversation.jsx:26 ~ ChatConversation ~ darkmode.isActivated():',
+  //   darkmode.isActivated()
+  // )
 
   const handleMouseEnter = (index) => {
     setHoveredChat(index)
@@ -88,6 +97,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               {/* {assistant's content} */}
               {chat.role === 'assistant' ? (
                 <div
+                  className='assistant-content darkmode-ignore'
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
@@ -95,10 +105,10 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     alignItems: 'center',
                     backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
                     color: chat.role === 'user' ? 'white' : 'black',
-                    padding: '10px',
+                    padding: '20px',
                     borderRadius: '15px',
                     maxWidth: '100%', // chat bubble not taking up full width
-                    width: '580px', // chat bubble not taking up full width
+                    // width: '580px', // chat bubble not taking up full width
                     margin: '8px 0px',
                     overflowWrap: 'break-word',
                     overflow: 'auto'
@@ -142,6 +152,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               ) : (
                 // user's content
                 <div
+                  className='user-content darkmode-ignore'
                   style={{
                     backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
                     color: chat.role === 'user' ? 'white' : 'black',
