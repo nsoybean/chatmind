@@ -13,76 +13,6 @@ import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism'
 import styles from '../styles/markdown/markdown.css'
 import CodeCopyBtn from './CodeCopyBtn'
 
-// test table markdown
-const markdownTable = `
-**Reponse**
-
-| Caso                  | Status | Respuesta                                          |
-| --------------------- | ------ | -------------------------------------------------- |
-| Success               | 200    | {payload}                                          |
-| Bad Request           | 400    | { "status": 400, "message": "Bad Request" }        |
-| Invalid Credentials   | 401    | { "status": 401,"message": "Invalid redentials"}   |
-| Not Found Exception   | 404    | { "status": 404,"message": "Resource not Found"}   |
-| Method Not Allowed    | 405    | { "status": 405, "message": "Method Not Allowed" } |
-| Conflict Exception    | 409    | { "status": 409, "message": Conflict Exception" }  |
-| Internar Server Error | 500    | { "status": 500,"message": Internar Server Error"} |
-  `
-
-// const markdownTable = `
-// | S/N | Pet | Image |
-// |--|--|--|
-// | 1 | Cat |![A cat looking at you](https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=465&quality=45&auto=format&fit=max&dpr=2&s=68615bab04be2077a471009ffc236509) |
-// | 2 | Dog |![A dog looking at you](https://ichef.bbci.co.uk/news/976/cpsprodpb/17638/production/_124800859_gettyimages-817514614.jpg)|
-// `
-
-const markdownTaskList = `
-  - [ ] Task list 1
-  - [ ] Pending task list 2
-  - [x] Completed task list 3
-  - [x] Completed task list 4 
-`
-
-const cssMarkdownCodeblock = `CSS code example:
- 
-~~~css
-.container{
-  max-width: 100%;
-  margin: 0 auto;
-  padding: 0;
-}
- 
-.child-1{
-  background-color: red;
-}
- 
-.child-2{
-  background-color: blue;
-}
- 
-~~~
-`
-
-const javaScriptMarkdownCodeblock = `JavaScript code example:
- 
-~~~javascript
-// function that adds "2 numbers" together
-const sumTwoNumbers = (num1, num2) => num1 + num2;
- 
-// call the function
-console.log(sumTwoNumbers(1, 2)); // 3
- 
-// array of users
-const users = [
-  { name: "John", age: 30 },
-  { name: "Jane", age: 28 },
-  { name: "Bob", age: 25 },
-];
- 
-// print out the users age 
-console.log(users.map(user => user.age)); // [30, 28, 25]
-~~~
-`
-
 const ChatConversation = ({ chatConvo, setChatConvo }) => {
   // console.log('🚀 ChatConversation ~ chatConvo:', chatConvo)
   const [hoveredChat, setHoveredChat] = useState(null)
@@ -159,6 +89,10 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               {chat.role === 'assistant' ? (
                 <div
                   style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    // justifyContent: 'center',
+                    alignItems: 'center',
                     backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
                     color: chat.role === 'user' ? 'white' : 'black',
                     padding: '10px',
