@@ -201,6 +201,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave()}
             >
+              {/* assistant icon */}
               {chat.role === 'assistant' && (
                 <img
                   src={chatmindLogo}
@@ -209,7 +210,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                 />
               )}
 
-              {/* {chat.content} */}
+              {/* {assistant's content} */}
               {chat.role === 'assistant' ? (
                 <div
                   style={{
@@ -217,10 +218,11 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     color: chat.role === 'user' ? 'white' : 'black',
                     padding: '10px',
                     borderRadius: '15px',
-                    maxWidth: '650px', // chat bubble not taking up full width
+                    maxWidth: '100%', // chat bubble not taking up full width
+                    width: '580px', // chat bubble not taking up full width
                     margin: '8px 0px',
-                    overflowWrap: 'break-word'
-                    // overflow: 'scroll',
+                    overflowWrap: 'break-word',
+                    overflow: 'auto'
                   }}
                 >
                   <ReactMarkdown
@@ -259,7 +261,8 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                   </ReactMarkdown>
                 </div>
               ) : (
-                <span
+                // user's content
+                <div
                   style={{
                     backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
                     color: chat.role === 'user' ? 'white' : 'black',
@@ -268,13 +271,13 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     // width: 'fit-content',
                     maxWidth: '600px', // chat bubble not taking up full width
                     margin: '8px 0px',
-                    overflow: 'scroll',
                     overflowWrap: 'break-word'
                   }}
                 >
                   {chat.content}
-                </span>
+                </div>
               )}
+              {/* user icon */}
               {chat.role === 'user' && (
                 <div
                   style={{
