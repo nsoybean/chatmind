@@ -38,6 +38,7 @@ function App() {
           pauseOnHover
           theme='light'
         />
+        {/* more specific paths to less specific paths, this is so you won't need to specify the exact */}
         <Routes>
           <Route path='/chat/:id' element={<ActiveChat />} />
           <Route exact path='/' element={<Home />} />
