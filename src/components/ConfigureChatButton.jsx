@@ -122,6 +122,18 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
           >
             <Box sx={{ minWidth: 400 }}>
               <FormControl fullWidth>
+                <Typography
+                  variant='h6'
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: '5px'
+                    // fontSize: 'large',
+                    // fontWeight: 'bold'
+                  }}
+                >
+                  Model Settings
+                </Typography>
                 <div style={{ marginBottom: '20px' }}>
                   <Typography gutterBottom>
                     <strong>Model</strong>
