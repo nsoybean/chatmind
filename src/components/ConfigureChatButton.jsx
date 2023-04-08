@@ -73,8 +73,8 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
           color: '#fff',
           backgroundColor: '#f8f7fe',
           border: '1px solid #CCCCCC',
-          cursor: 'pointer'
-          // transition: 'background-color .2s, border .2s'// Add the following styles for hover
+          cursor: 'pointer',
+          zIndex: 2
         }}
         onMouseOver={(e) => {
           e.currentTarget.style.border = '2px solid #0b5fe9'
@@ -106,8 +106,8 @@ const ConfigureChatButton = ({ chatData, setChatData }) => {
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
-            // zIndex: 9999 // lol, to ensure its most in front
+            justifyContent: 'center',
+            zIndex: 3 // lol, to ensure its most in front
           }}
           onClick={() => setShowModal(false)}
         >

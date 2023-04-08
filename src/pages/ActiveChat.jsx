@@ -8,7 +8,7 @@ import { OpenAiAPI } from '../api/openAiAPI'
 import general from '../helper/general'
 import { toast } from 'react-toastify'
 import ConfigureChatButton from '../components/ConfigureChatButton'
-import PromptButton from '../components/PromptButton'
+import PromptLibButton from '../components/PromptLibButton'
 import CancelAPIButton from '../components/CancelAPIButton'
 import axios from 'axios'
 
@@ -311,6 +311,7 @@ function ActiveChat() {
                 alignItems: 'center',
                 // margin: '5px 0px',
                 marginTop: '20px'
+                // zIndex: 2
               }}
             >
               <ConfigureChatButton
@@ -337,6 +338,10 @@ function ActiveChat() {
                 <CancelAPIButton pending={true} onCancel={onCancelAPI} />
               </div>
             )}
+
+            <div style={{ marginBottom: '5px', zIndex: 1 }}>
+              <PromptLibButton />
+            </div>
 
             {/*  chat input text bar  */}
             <div
