@@ -1,12 +1,36 @@
 import { useState } from 'react'
 import Typography from '@mui/material/Typography'
+import { faker } from '@faker-js/faker'
+import { Container, InputAdornment, TextField } from '@mui/material'
+import SearchIcon from '@mui/icons-material/Search'
+import PromptCardColumn from '../components/PromptCardColumn'
 
 const PromptLibButton = () => {
   const [showModal, setShowModal] = useState(false)
+  const [searchTerm, setSearchTerm] = useState('')
 
+  const handleSearchChange = (event) => {
+    console.log('🚀 Searching for prompt:', event.target.value)
+    setSearchTerm(event.target.value)
+  }
   function handleButtonClick() {
     setShowModal(true)
   }
+
+  const promptLibrary = []
+
+  function createRandomUser() {
+    return {
+      field: faker.music.genre(),
+      title: faker.internet.userName(),
+      prompt: faker.lorem.paragraph(),
+      source: faker.internet.userName()
+    }
+  }
+
+  Array.from({ length: 10 }).forEach(() => {
+    promptLibrary.push(createRandomUser())
+  })
 
   return (
     <div style={{ position: 'relative' }}>
@@ -40,7 +64,6 @@ const PromptLibButton = () => {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
-            // zIndex: 1
           }}
           onClick={() => setShowModal(false)}
         >
@@ -53,20 +76,41 @@ const PromptLibButton = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
+            {/* title */}
             <Typography
               variant='h6'
               style={{
                 display: 'flex',
                 justifyContent: 'center',
                 marginBottom: '5px'
-                // fontSize: 'large',
-                // fontWeight: 'bold'
               }}
             >
               Prompt Library
             </Typography>
-            <p style={{ fontWeight: 'bold', marginBottom: '10px' }}>Settings</p>
-            <p>Some content goes here...</p>
+
+            <Container maxWidth='md' sx={{ my: '20px' }}>
+              {/* search bar */}
+              <TextField
+                id='search'
+                type='search'
+                label='Search'
+                value={searchTerm}
+                onChange={handleSearchChange}
+                sx={{ width: '100%', paddingBottom: '10px' }}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <SearchIcon />
+                    </InputAdornment>
+                  )
+                }}
+              />
+
+              {/* prompt cards */}
+              <div>
+                <PromptCardColumn cards={promptLibrary} />
+              </div>
+            </Container>
           </div>
         </div>
       )}
