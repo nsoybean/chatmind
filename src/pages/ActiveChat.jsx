@@ -9,7 +9,8 @@ import general from '../helper/general'
 import { toast } from 'react-toastify'
 import ConfigureChatButton from '../components/ConfigureChatButton'
 import PromptButton from '../components/PromptButton'
-import CancelAPIButton from '../components/CancelAPI'
+import CancelAPIButton from '../components/CancelAPIButton'
+import axios from 'axios'
 
 function ActiveChat() {
   // const navigate = useNavigate()
@@ -20,6 +21,7 @@ function ActiveChat() {
   const [chatList, setChatList] = useState(null) // array of chat list. Only contains chat id and title
   const [chatData, setChatData] = useState(null) // full data of a chat; id, title, and messages
   const [openAPIToken, setOpenAPIToken] = useState(null) // full data of a chat; id, title, and messages
+  const [cancelToken, setCancelToken] = useState(null)
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -36,19 +38,20 @@ function ActiveChat() {
     }
 
     // call openAI API
+    let tempCancelToken = axios.CancelToken.source()
+    setCancelToken(tempCancelToken)
     const { data: responseRaw, error } = await general.awaitWrap(
-      OpenAiAPI.postChatCompletion(requestBody, token)
+      OpenAiAPI.postChatCompletion(requestBody, token, tempCancelToken)
     )
 
     if (error) {
-      console.log(
-        '🚀 ~ file: ActiveChat.jsx:43 ~ sendChatToOpenAI ~ error:',
-        error
-      )
-      if (error.code === 'ERR_BAD_REQUEST' && error.response.status === 401) {
+      if (
+        error.code === 'ERR_BAD_REQUEST' &&
+        error.message === 'Request failed with status code 401'
+      ) {
         throw new Error('INVALID_TOKEN_ERR')
       } else {
-        throw new Error(error.msg)
+        throw new Error(error.message)
       }
     }
     const responseObj = responseRaw.data.choices[0].message
@@ -169,18 +172,25 @@ function ActiveChat() {
             sendChatToOpenAI(tempChatData)
           )
 
+          // set cancel to false if API completes
+          setCancelToken(null)
+
           if (error) {
-            console.log(error)
-            toast.error('Invalid OpenAI API Key!', {
-              position: 'bottom-right',
-              autoClose: 4000,
-              hideProgressBar: false,
-              closeOnClick: true,
-              pauseOnHover: true,
-              draggable: true,
-              progress: undefined,
-              theme: 'dark'
-            })
+            // show toast only for invalid API token
+            if (error.message === 'INVALID_TOKEN_ERR') {
+              toast.error('Invalid OpenAI API Key!', {
+                position: 'bottom-right',
+                autoClose: 4000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: 'dark'
+              })
+            }
+
+            // return for all errors
             return
           }
 
@@ -199,7 +209,7 @@ function ActiveChat() {
     // make sure all data is present
     if (chatData && chatID) {
       // uncomment for debugging
-      console.log('🚀 ActiveChat ~ chatData:', chatData)
+      // console.log('🚀 ActiveChat ~ chatData:', chatData)
 
       // update local storage
       localStorage.setItem(`MA_chat_${chatID}`, JSON.stringify(chatData))
@@ -215,8 +225,14 @@ function ActiveChat() {
     }
   }, [chatData])
 
+  // set cancel to false if user initiated API cancel
   function onCancelAPI() {
-    console.log('cancelling API call')
+    // only allow if there is an ongoing API
+    if (cancelToken) {
+      cancelToken.cancel('Cancelled API Request') // err msg in promise's error.message
+    }
+    // reset (so that 'stop' button will not show)
+    setCancelToken(null)
   }
 
   return (
@@ -316,9 +332,12 @@ function ActiveChat() {
               width: '100%'
             }}
           >
-            <div>
-              {/* <CancelAPIButton pending={true} onCancel={onCancelAPI} /> */}
-            </div>
+            {cancelToken && (
+              <div>
+                <CancelAPIButton pending={true} onCancel={onCancelAPI} />
+              </div>
+            )}
+
             {/*  chat input text bar  */}
             <div
               style={{
