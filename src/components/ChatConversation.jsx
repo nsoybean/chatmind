@@ -61,7 +61,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
         style={{
           display: 'flex',
           flexDirection: 'column-reverse', // this scrolls chat to the bottom by default
-          width: '60%',
+          width: '70%',
           overflow: 'auto',
           maxHeight: '80vh' // set a height to make sure the div doesn't expand infinitely
         }}
@@ -107,7 +107,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     color: chat.role === 'user' ? 'white' : 'black',
                     padding: '20px',
                     borderRadius: '15px',
-                    maxWidth: '100%', // chat bubble not taking up full width
+                    maxWidth: '90%', // chat bubble not taking up full width
                     // width: '580px', // chat bubble not taking up full width
                     margin: '8px 0px',
                     overflowWrap: 'break-word',
@@ -159,7 +159,8 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     padding: '10px',
                     borderRadius: '15px',
                     // width: 'fit-content',
-                    maxWidth: '600px', // chat bubble not taking up full width
+                    maxWidth: '90%',
+                    // maxWidth: '600px', // chat bubble not taking up full width
                     margin: '8px 0px',
                     overflowWrap: 'break-word'
                   }}
