@@ -79,8 +79,7 @@ const PromptCardColumn = ({ cards }) => {
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span>Apply</span>
                   <span style={{ fontSize: '20px', marginLeft: '5px' }}>
-                    {' '}
-                    👉{' '}
+                    👉
                   </span>
                 </div>
               </MDBBtn>
