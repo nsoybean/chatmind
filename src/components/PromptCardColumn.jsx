@@ -4,8 +4,8 @@ import React from 'react'
 import { MDBBtn } from 'mdb-react-ui-kit'
 
 const PromptCardColumn = ({ cards }) => {
-  function applyPrompt(index) {
-    console.log(`chosen propmpt index: ${index}`)
+  function applyPrompt(id) {
+    console.log(`applying prompt id: ${id}`)
   }
 
   return (
@@ -24,18 +24,40 @@ const PromptCardColumn = ({ cards }) => {
               justifyContent: 'space-between',
               alignItems: 'center',
               margin: '10px 0px',
-              padding: '10px',
+              padding: '15px',
               border: '1px solid #D8D8D8'
             }}
           >
-            <div>
+            <div
+              style={{
+                maxWidth: '80%'
+              }}
+            >
+              {/* field */}
               <div className={`field ${card.field.toLowerCase()}`}>
                 <span style={{ backgroundColor: '#a7ffa7' }}>{card.field}</span>
               </div>
+
+              {/* field */}
               <Typography className='title' variant='h6'>
                 {card.title}
               </Typography>
-              <div className='prompt'>{truncateText(card.prompt)}</div>
+
+              {/* prompt */}
+              {/* <div className='prompt'>{truncateText(card.prompt)}</div> */}
+              <div
+                className='prompt'
+                style={{
+                  overflow: 'hidden',
+                  whiteSpace: 'nowrap',
+                  textOverflow: 'ellipsis'
+                  // maxWidth: '80%'
+                }}
+              >
+                {card.prompt}
+              </div>
+
+              {/* source */}
               <div className='source'>
                 <span style={{ marginRight: '10px' }}>source:</span>
                 {card.source && (
@@ -45,12 +67,14 @@ const PromptCardColumn = ({ cards }) => {
                 )}
               </div>
             </div>
+
+            {/* apply prompt button */}
             <div>
               <MDBBtn
                 style={{
                   marginRight: '5px'
                 }}
-                onClick={() => applyPrompt(index)}
+                onClick={() => applyPrompt(card.id)}
               >
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span>Apply</span>
