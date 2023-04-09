@@ -16,6 +16,7 @@ function CancelAPIButton({ pending, onCancel }) {
       style={{
         display: pending ? 'block' : 'none', // Hide button when not pending
         width: '80px',
+        height: '40px',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -40,9 +41,9 @@ function CancelAPIButton({ pending, onCancel }) {
           display: 'block',
           width: '12px',
           height: '12px',
-          borderRadius: '50%',
+          borderRadius: '20%',
           backgroundColor: 'white',
-          animation: `${isPulsing ? 'pulsing' : ''} 1s ease-in-out infinite`
+          animation: `${isPulsing ? 'pulsing' : ''} 0.5s ease-in-out infinite`
         }}
       />
       Stop

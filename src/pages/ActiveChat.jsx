@@ -354,7 +354,7 @@ function ActiveChat() {
             )}
 
             {/*  prompt library, shown only when user chat input is empty */}
-            {!chatInput && (
+            {!chatInput && !cancelToken && (
               <div style={{ padding: '5px 0px', zIndex: 1 }}>
                 <PromptLibButton />
               </div>
