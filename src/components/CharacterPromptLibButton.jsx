@@ -4,7 +4,7 @@ import { faker } from '@faker-js/faker'
 import { Container, InputAdornment, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import CharacterPromptCards from './CharacterPromptCards'
-import { ImBooks } from 'react-icons/im'
+import { BsPersonCircle } from 'react-icons/bs'
 
 import { createClient } from '@supabase/supabase-js'
 
@@ -68,7 +68,7 @@ const CharacterPromptLibButton = () => {
         }}
         onClick={handleButtonClick}
       >
-        <ImBooks size={24} style={{ marginRight: '5px' }} />
+        <BsPersonCircle size={24} style={{ marginRight: '5px' }} />
         <Typography> Choose Character </Typography>
       </div>
       {showModal && (
