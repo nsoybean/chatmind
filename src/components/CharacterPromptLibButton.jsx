@@ -4,9 +4,29 @@ import { faker } from '@faker-js/faker'
 import { Container, InputAdornment, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import CharacterPromptCards from './CharacterPromptCards'
+import CharacterPromptCard from './CharacterPromptCard'
 import { BsPersonCircle } from 'react-icons/bs'
-
+import {
+  Configure,
+  InstantSearch,
+  SearchBox,
+  Hits,
+  InfiniteHits
+} from 'react-instantsearch-hooks-web'
+import { getAlgoliaResults } from '@algolia/autocomplete-js'
+import { searchBox } from 'instantsearch.js/es/widgets'
+import algoliasearch from 'algoliasearch'
+import { Autocomplete } from './AgoliaAutoComplete'
 import { createClient } from '@supabase/supabase-js'
+// Include only the reset
+// import 'instantsearch.css/themes/reset.css'
+// or include the full Satellite theme
+import 'instantsearch.css/themes/satellite.css'
+
+const searchClient = algoliasearch(
+  'XRUEQYGG84', // app ID
+  'ab1aeb2d7d64639e7074032d6440cd30' //Search-Only API Key
+)
 
 const supabaseOptions = {
   db: {
@@ -23,6 +43,17 @@ const supabase = createClient(
   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkdHNtcWZ4andrYWRqdHp3dXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA4NDgxOTksImV4cCI6MTk5NjQyNDE5OX0.jsesB8nxIryrIUSrgUiysgcsavSgbtxcznQriNyl1wc',
   supabaseOptions
 )
+
+// function Hit({ hit }) {
+//   return (
+//     <article>
+//       {/* <img src={hit.image} alt={hit.name} /> */}
+//       {/* <p>{hit.categories[0]}</p> */}
+//       <h1>{hit.act}</h1>
+//       <p>{hit.prompt}</p>
+//     </article>
+//   )
+// }
 
 const CharacterPromptLibButton = () => {
   const [showModal, setShowModal] = useState(false)
@@ -96,41 +127,49 @@ const CharacterPromptLibButton = () => {
             }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* title */}
-            <Typography
-              variant='h6'
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginBottom: '5px'
-              }}
-            >
-              ChatGPT to act as... <br />
-            </Typography>
-
-            <Container maxWidth='md' sx={{ my: '20px' }}>
-              {/* search bar */}
-              {/* <TextField
-                id='search'
-                type='search'
-                label='Search'
-                value={searchTerm}
-                onChange={handleSearchChange}
-                sx={{ width: '100%', paddingBottom: '10px' }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              {/* title */}
+              <Typography
+                variant='h6'
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  marginBottom: '5px'
                 }}
-              /> */}
+              >
+                ChatGPT to act as... <br />
+              </Typography>
 
-              {/* prompt cards */}
-              <div>
+              <Container maxWidth='md' sx={{ my: '20px' }}>
+                {/* search bar */}
+                <InstantSearch
+                  searchClient={searchClient}
+                  indexName='dev_PROMPTS'
+                >
+                  <Configure hitsPerPage={5} />
+                  <SearchBox
+                    autoFocus={true}
+                    placeholder={'Search for prompts'}
+                  />
+                  <div
+                    className='card-container'
+                    style={{
+                      width: '100%',
+                      maxHeight: '500px',
+                      overflow: 'auto'
+                    }}
+                  >
+                    <Hits hitComponent={CharacterPromptCard} />
+                  </div>
+                  {/* <InfiniteHits hitComponent={CharacterPromptCard} /> */}
+                </InstantSearch>
+
+                {/* prompt cards */}
+                {/* <div>
                 <CharacterPromptCards cards={promptLibrary ?? []} />
-              </div>
-            </Container>
+              </div> */}
+              </Container>
+            </div>
           </div>
         </div>
       )}

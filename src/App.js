@@ -8,6 +8,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Context } from './context/token'
+import algoliasearch from 'algoliasearch/lite'
+import { InstantSearch } from 'react-instantsearch-hooks-web'
 
 function App() {
   const [openAiToken, setOpenAiToken] = useState('')
