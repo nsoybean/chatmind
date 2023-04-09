@@ -3,7 +3,7 @@ import React from 'react'
 // import './cardColumn.css'
 import { MDBBtn } from 'mdb-react-ui-kit'
 
-const PromptCardColumn = ({ cards }) => {
+const PromptCards = ({ cards }) => {
   function applyPrompt(id) {
     console.log(`applying prompt id: ${id}`)
   }
@@ -116,4 +116,4 @@ const extractHostname = (url) => {
   return hostname
 }
 
-export default PromptCardColumn
+export default PromptCards

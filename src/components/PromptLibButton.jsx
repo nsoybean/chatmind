@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 import { faker } from '@faker-js/faker'
 import { Container, InputAdornment, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
-import PromptCardColumn from '../components/PromptCardColumn'
+import PromptCards from './PromptCards'
 import { ImBooks } from 'react-icons/im'
 
 import { createClient } from '@supabase/supabase-js'
@@ -141,7 +141,7 @@ const PromptLibButton = () => {
 
               {/* prompt cards */}
               <div>
-                <PromptCardColumn cards={promptLibrary ?? []} />
+                <PromptCards cards={promptLibrary ?? []} />
               </div>
             </Container>
           </div>
