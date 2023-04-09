@@ -16,9 +16,6 @@ const supabaseOptions = {
     autoRefreshToken: true,
     persistSession: true,
     detectSessionInUrl: true
-  },
-  global: {
-    headers: { 'x-my-custom-header': 'my-app-name' }
   }
 }
 const supabase = createClient(
@@ -32,27 +29,27 @@ const PromptLibButton = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [promptLibrary, setPromptLibrary] = useState(null)
 
+  // fetch prompts when modal is open
   useEffect(() => {
     async function getAllPrompts() {
       const { data, error } = await supabase.from('Prompts').select()
-      console.log(
-        '🚀 ~ file: PromptLibButton.jsx:37 ~ getAllPrompts ~ data:',
-        data
-      )
       setPromptLibrary(data)
     }
 
-    getAllPrompts()
-  }, [])
+    if (showModal) {
+      getAllPrompts()
+    }
+  }, [showModal])
 
   const handleSearchChange = (event) => {
-    console.log('🚀 Searching for prompt:', event.target.value)
+    // console.log('🚀 Searching for prompt:', event.target.value)
     setSearchTerm(event.target.value)
   }
   function handleButtonClick() {
     setShowModal(true)
   }
 
+  // mock prompt using faker
   // const promptLibrary = []
 
   // function createRandomUser() {
@@ -126,7 +123,7 @@ const PromptLibButton = () => {
 
             <Container maxWidth='md' sx={{ my: '20px' }}>
               {/* search bar */}
-              <TextField
+              {/* <TextField
                 id='search'
                 type='search'
                 label='Search'
@@ -140,7 +137,7 @@ const PromptLibButton = () => {
                     </InputAdornment>
                   )
                 }}
-              />
+              /> */}
 
               {/* prompt cards */}
               <div>
