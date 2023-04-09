@@ -103,11 +103,12 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     flexDirection: 'row',
                     // justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: chat.role === 'user' ? '#3b82f6' : 'white',
+                    backgroundColor:
+                      chat.role === 'user' ? '#3b82f6' : '#ebecf0',
                     color: chat.role === 'user' ? 'white' : 'black',
                     padding: '20px',
                     borderRadius: '15px',
-                    maxWidth: '90%', // chat bubble not taking up full width
+                    maxWidth: '85%', // chat bubble not taking up full width
                     // width: '580px', // chat bubble not taking up full width
                     margin: '8px 0px',
                     overflowWrap: 'break-word',
@@ -124,7 +125,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                       code({
                         node,
                         inline,
-                        className = 'blog-code',
+                        className = 'blog-code', // inline block code
                         children,
                         ...props
                       }) {
