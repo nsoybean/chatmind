@@ -40,10 +40,18 @@ const PromptCards = ({ cards }) => {
             >
               {/* field */}
               <div className={`field ${card.field.toLowerCase()}`}>
-                <span style={{ backgroundColor: '#a7ffa7' }}>{card.field}</span>
+                <span
+                  style={{
+                    borderRadius: '40px',
+                    padding: '5px 10px',
+                    backgroundColor: `#${card.title_bg_colour}` ?? '#82C3EC' // colour configured in BD, else default to blue
+                  }}
+                >
+                  {card.field}
+                </span>
               </div>
 
-              {/* field */}
+              {/* title */}
               <Typography className='title' variant='h6'>
                 {card.title}
               </Typography>
@@ -63,14 +71,16 @@ const PromptCards = ({ cards }) => {
               </div>
 
               {/* source */}
-              <div className='source'>
-                <span style={{ marginRight: '10px' }}>source:</span>
-                {card.source && (
-                  <a href={card.source} target='_blank' rel='noreferrer'>
-                    {extractHostname(card.source)}
-                  </a>
-                )}
-              </div>
+              {card.source && (
+                <div className='source'>
+                  <span style={{ marginRight: '10px' }}>source:</span>
+                  {card.source && (
+                    <a href={card.source} target='_blank' rel='noreferrer'>
+                      {extractHostname(card.source)}
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
 
             {/* apply prompt button */}
