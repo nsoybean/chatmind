@@ -33,7 +33,9 @@ const PromptLibButton = () => {
   useEffect(() => {
     async function getAllPrompts() {
       const { data, error } = await supabase.from('Prompts').select()
-      setPromptLibrary(data)
+      if (data) {
+        setPromptLibrary(data)
+      }
     }
 
     if (showModal) {

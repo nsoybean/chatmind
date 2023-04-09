@@ -33,7 +33,9 @@ const CharacterPromptLibButton = () => {
   useEffect(() => {
     async function getAllPrompts() {
       const { data, error } = await supabase.from('Character').select()
-      setPromptLibrary(data)
+      if (data) {
+        setPromptLibrary(data)
+      }
     }
 
     if (showModal) {
