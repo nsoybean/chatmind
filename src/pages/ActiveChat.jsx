@@ -8,6 +8,7 @@ import { OpenAiAPI } from '../api/openAiAPI'
 import general from '../helper/general'
 import { toast } from 'react-toastify'
 import ConfigureChatButton from '../components/ConfigureChatButton'
+import CharacterPromptLibButton from '../components/CharacterPromptLibButton'
 import PromptLibButton from '../components/PromptLibButton'
 import CancelAPIButton from '../components/CancelAPIButton'
 import axios from 'axios'
@@ -355,8 +356,17 @@ function ActiveChat() {
 
             {/*  prompt library, shown only when user chat input is empty */}
             {!chatInput && !cancelToken && (
-              <div style={{ padding: '5px 0px', zIndex: 1 }}>
-                <PromptLibButton />
+              <div style={{ display: 'flex', flexDirection: 'row' }}>
+                <div
+                  style={{ padding: '5px 0px', zIndex: 1, margin: '0px 3px' }}
+                >
+                  <CharacterPromptLibButton />
+                </div>
+                <div
+                  style={{ padding: '5px 0px', zIndex: 1, margin: '0px 3px' }}
+                >
+                  <PromptLibButton />
+                </div>
               </div>
             )}
             {/*  chat input text bar  */}
