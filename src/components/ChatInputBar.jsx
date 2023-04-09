@@ -1,12 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { FaPaperPlane } from 'react-icons/fa' // import send icon
 import TextField from '@mui/material/TextField'
+import { Context } from '../context/token'
 
 const ChatInputBar = ({ setInputMessage }) => {
-  const [input, setInput] = useState('') // define state for message input
+  // const [input, setInput] = useState('') // define state for message input
+
+  // global use context
+  const { chatInput, setChatInput } = useContext(Context)
 
   async function handleSend() {
-    const messageObj = { role: 'user', content: input }
+    const messageObj = { role: 'user', content: chatInput }
     setInputMessage(messageObj)
   }
 
@@ -14,7 +18,7 @@ const ChatInputBar = ({ setInputMessage }) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault()
       handleSend()
-      setInput('') // clear input after sending
+      setChatInput('') // clear input after sending
     }
   }
 
@@ -41,9 +45,9 @@ const ChatInputBar = ({ setInputMessage }) => {
         maxRows={4}
         fullWidth
         size='small'
-        value={input}
+        value={chatInput}
         autoFocus={true}
-        onChange={(e) => setInput(e.target.value)} // update message input state on change event
+        onChange={(e) => setChatInput(e.target.value)} // update message input state on change event
         onKeyDown={handleKeyDown} // add onKeyDown event listener to input field
         sx={{
           '& .MuiOutlinedInput-root': {

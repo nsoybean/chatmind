@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -11,6 +11,7 @@ import ConfigureChatButton from '../components/ConfigureChatButton'
 import PromptLibButton from '../components/PromptLibButton'
 import CancelAPIButton from '../components/CancelAPIButton'
 import axios from 'axios'
+import { Context } from '../context/token'
 
 function ActiveChat() {
   // const navigate = useNavigate()
@@ -24,6 +25,9 @@ function ActiveChat() {
   const [cancelToken, setCancelToken] = useState(null)
   const { id } = useParams()
   const navigate = useNavigate()
+
+  // global use context
+  const { chatInput } = useContext(Context)
 
   async function sendChatToOpenAI(chatData) {
     // extract token from local
@@ -339,10 +343,12 @@ function ActiveChat() {
               </div>
             )}
 
-            <div style={{ marginBottom: '5px', zIndex: 1 }}>
-              <PromptLibButton />
-            </div>
-
+            {/*  prompt library, shown only when user chat input is empty */}
+            {!chatInput && (
+              <div style={{ marginBottom: '5px', zIndex: 1 }}>
+                <PromptLibButton />
+              </div>
+            )}
             {/*  chat input text bar  */}
             <div
               style={{

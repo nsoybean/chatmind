@@ -12,6 +12,7 @@ import { Context } from './context/token'
 function App() {
   const [openAiToken, setOpenAiToken] = useState('')
   const [showConfetti, setShowConfetti] = useState(null)
+  const [chatInput, setChatInput] = useState('')
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('MA_openai_token'))
@@ -23,7 +24,14 @@ function App() {
 
   return (
     <Context.Provider
-      value={{ openAiToken, setOpenAiToken, showConfetti, setShowConfetti }}
+      value={{
+        openAiToken,
+        setOpenAiToken,
+        showConfetti,
+        setShowConfetti,
+        chatInput,
+        setChatInput
+      }}
     >
       <div>
         <ToastContainer

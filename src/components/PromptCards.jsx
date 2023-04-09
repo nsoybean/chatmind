@@ -1,13 +1,16 @@
+import React, { useContext } from 'react'
 import { Typography } from '@mui/material'
-import React from 'react'
 // import './cardColumn.css'
 import { MDBBtn } from 'mdb-react-ui-kit'
+import { Context } from '../context/token'
 
 const PromptCards = ({ cards }) => {
+  // global use context
+  const { setChatInput } = useContext(Context)
+
   function applyPrompt(id, index) {
-    console.log(
-      `🚀 applying prompt id ${id}, index ${index}: ${cards[index].prompt}`
-    )
+    console.log(`🚀 applying prompt id ${id}: ${cards[index].prompt}`)
+    setChatInput(cards[index].prompt)
   }
 
   return (
