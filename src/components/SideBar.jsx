@@ -56,6 +56,7 @@ function Sidebar({ chatList, setChatList }) {
 
   const newChatStyle = {
     display: 'flex',
+    justifyContent: 'center',
     fontFamily: 'Arial',
     backgroundColor: 'transparent',
     color: 'white',
