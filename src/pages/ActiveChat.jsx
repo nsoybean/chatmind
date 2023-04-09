@@ -248,15 +248,18 @@ function ActiveChat() {
         width: '100vw'
       }}
     >
+      {/* SIDEBAR PANEL */}
       <Sidebar
         style={{ flex: 1 }} // flex:1 makes it fixed
         chatList={chatList}
         setChatList={setChatList}
       />
+
+      {/* MAIN PAGE PANEL */}
       <div
         style={{
           display: 'flex',
-          flexGrow: 1,
+          flexGrow: 1, // ensure main page takes up remaining space horizontally
           flexDirection: 'column',
           justifyContent: 'flex-start', // main axis (vertically)
           alignItems: 'center', // cross axis (horizontally)
@@ -264,38 +267,48 @@ function ActiveChat() {
           backgroundColor: '#f8f7fe'
         }}
       >
-        {/* section at the top of page to show quotes, chatGPT usage */}
+        {/* QU0TE SECTION */}
         <div
           style={{
             display: 'flex',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            height: '10%',
+            maxHeight: '10%',
+            marginBottom: '5px',
             boxShadow: '0 5px 5px -5px rgba(0, 0, 0, 0.25)'
           }}
         >
-          <blockquote
+          <div
             style={{
-              overflowY: 'auto',
-              maxHeight: '50px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifySelf: 'center',
+              overflow: 'auto',
+              maxHeight: '80%',
               maxWidth: '70%',
-              padding: '5px 0px'
+              padding: '5px 0px',
+              margin: '10px 5px'
             }}
           >
             {quote}
-          </blockquote>
+          </div>
         </div>
 
-        {/* Conversation scroll window */}
+        {/* CONVERSATION SECTION */}
         <div
           style={{
             display: 'flex',
+            flexGrow: 1,
             flexDirection: 'column',
             justifyContent: 'flex-start', // main axis (vertically)
             alignItems: 'center', // cross axis (horizontally)
-            height: '100%',
-            width: '100%'
+            width: '100%',
+            height: '80vh' // set a height to make sure the div doesn't expand infinitely
           }}
         >
           <ChatConversation
@@ -311,11 +324,8 @@ function ActiveChat() {
                 flexDirection: 'row',
                 width: '30%',
                 justifyContent: 'space-evenly',
-                // justifyContent: 'flex-start',
                 alignItems: 'center',
-                // margin: '5px 0px',
                 marginTop: '20px'
-                // zIndex: 2
               }}
             >
               <ConfigureChatButton
@@ -325,12 +335,12 @@ function ActiveChat() {
             </div>
           )}
 
-          {/* chat input text bar and chat configuration buttons*/}
+          {/* CHAT SECTION */}
           <div
             style={{
               display: 'flex',
               flexDirection: 'column',
-              justifyContent: 'flex-end',
+              justifyContent: 'space-around',
               alignItems: 'center',
               marginTop: 'auto',
               marginBottom: '10px',
@@ -345,7 +355,7 @@ function ActiveChat() {
 
             {/*  prompt library, shown only when user chat input is empty */}
             {!chatInput && (
-              <div style={{ marginBottom: '5px', zIndex: 1 }}>
+              <div style={{ padding: '5px 0px', zIndex: 1 }}>
                 <PromptLibButton />
               </div>
             )}
@@ -357,8 +367,8 @@ function ActiveChat() {
                 justifyContent: 'center',
                 alignItems: 'flex-end',
                 alignSelf: 'flex-end',
-                marginBottom: '10px',
-                width: '100%'
+                width: '100%',
+                padding: '5px 0px'
               }}
             >
               {chatID && <ChatInputBar setInputMessage={setInputMessage} />}
