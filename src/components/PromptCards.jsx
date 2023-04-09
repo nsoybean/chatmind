@@ -4,8 +4,10 @@ import React from 'react'
 import { MDBBtn } from 'mdb-react-ui-kit'
 
 const PromptCards = ({ cards }) => {
-  function applyPrompt(id) {
-    console.log(`applying prompt id: ${id}`)
+  function applyPrompt(id, index) {
+    console.log(
+      `🚀 applying prompt id ${id}, index ${index}: ${cards[index].prompt}`
+    )
   }
 
   return (
@@ -74,7 +76,7 @@ const PromptCards = ({ cards }) => {
                 style={{
                   marginRight: '5px'
                 }}
-                onClick={() => applyPrompt(card.id)}
+                onClick={() => applyPrompt(card.id, index)}
               >
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span>Apply</span>
