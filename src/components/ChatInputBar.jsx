@@ -42,7 +42,7 @@ const ChatInputBar = ({ setInputMessage }) => {
         id='outlined-multiline-flexible'
         placeholder='Type your message here'
         multiline
-        maxRows={4}
+        maxRows={20}
         fullWidth
         size='small'
         value={chatInput}
