@@ -69,7 +69,7 @@ const CharacterPromptLibButton = () => {
         onClick={handleButtonClick}
       >
         <BsPersonCircle size={24} style={{ marginRight: '5px' }} />
-        <Typography> Choose Character </Typography>
+        <Typography> Define Character </Typography>
       </div>
       {showModal && (
         <div
@@ -105,7 +105,7 @@ const CharacterPromptLibButton = () => {
                 marginBottom: '5px'
               }}
             >
-              ChatGPT to act as...
+              ChatGPT to act as... <br />
             </Typography>
 
             <Container maxWidth='md' sx={{ my: '20px' }}>
