@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { HiOutlineChatBubbleLeft } from 'react-icons/hi2'
 import { faCircle, faEdit, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useNavigate, useParams } from 'react-router-dom'
+import { Context } from '../context/token'
 
 const ChatList = ({ chats, setChatList }) => {
   const [hoveredChatIndex, setHoveredChatIndex] = useState(null)
@@ -11,6 +12,8 @@ const ChatList = ({ chats, setChatList }) => {
   const [editChatTitle, setEditChatTitle] = useState(null)
   const navigate = useNavigate()
   const { id } = useParams()
+
+  const { setChatInput } = useContext(Context)
 
   // icon and delete icon. shown when hovered
   const editChatStyle = {
@@ -76,6 +79,8 @@ const ChatList = ({ chats, setChatList }) => {
     console.log(`🚀 delete chatID: ${chatID}`)
     localStorage.removeItem(`MA_chat_${chatID}`)
     setChatList(chats.filter((item) => item.id !== chatID)) // remove from chatlist, applicable when path is already at '/', as re-rendering wont happen
+    // clear chat input (if any)
+    setChatInput('')
     // navgiate to root
     navigate(`/`)
   }
