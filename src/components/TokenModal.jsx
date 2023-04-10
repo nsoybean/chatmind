@@ -134,13 +134,13 @@ export default function TokenModal({ text }) {
                     className='openai-anchor-tag'
                     href='https://platform.openai.com/account/api-keys'
                     style={{
-                      color: '#1F51FF' // neon blue
-                      // textDecoration: 'underline'
+                      color: '#1F51FF', // neon blue
+                      textDecoration: 'underline'
                     }}
                     target='_blank'
                     rel='noreferrer'
                   >
-                    → Get your API key from OpenAI
+                    → Get your API key from OpenAI here
                   </a>
                 </div>
                 <p style={{ margin: '5px 0px' }}>
