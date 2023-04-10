@@ -146,7 +146,9 @@ const CharacterPromptLibButton = () => {
                   searchClient={searchClient}
                   indexName='dev_PROMPTS'
                 >
-                  <Configure hitsPerPage={5} />
+                  <Configure />
+                  {/* temp comment out hits per page */}
+                  {/* <Configure hitsPerPage={5} /> */}
                   <SearchBox
                     autoFocus={true}
                     placeholder={'Search for prompts'}
