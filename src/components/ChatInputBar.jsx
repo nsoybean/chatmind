@@ -12,13 +12,13 @@ const ChatInputBar = ({ setInputMessage }) => {
   async function handleSend() {
     const messageObj = { role: 'user', content: chatInput }
     setInputMessage(messageObj)
+    setChatInput('') // clear input after sending
   }
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
       e.preventDefault()
       handleSend()
-      setChatInput('') // clear input after sending
     }
   }
 

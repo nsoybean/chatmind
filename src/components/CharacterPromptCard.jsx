@@ -11,7 +11,7 @@ const CharacterPromptCard = ({ hit }) => {
 
   function applyPrompt(hit) {
     console.log(`🚀 applying prompt: ${hit.act}`)
-    // setChatInput(cards[index].prompt)
+    setChatInput(hit.prompt)
   }
 
   return (
