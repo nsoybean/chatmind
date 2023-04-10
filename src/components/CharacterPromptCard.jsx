@@ -45,12 +45,14 @@ const CharacterPromptCard = ({ hit }) => {
           {/* prompt */}
           <div
             className='prompt'
-            style={{
-              overflow: 'hidden',
-              whiteSpace: 'nowrap',
-              textOverflow: 'ellipsis'
-              // maxWidth: '80%'
-            }}
+            style={
+              {
+                // overflow: 'hidden'
+                // whiteSpace: 'nowrap'
+                // textOverflow: 'ellipsis'
+                // maxWidth: '80%'
+              }
+            }
           >
             <Highlight attribute='prompt' hit={hit} />
           </div>
