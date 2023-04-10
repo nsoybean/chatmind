@@ -230,24 +230,24 @@ function ActiveChat() {
                 }
 
                 let text = payload.choices[0].delta.content
-                if (text != '\n') {
-                  // console.log('Text: ' + text)
-                  resultRef.current = resultRef.current + text
-                  // console.log('ResultRef.current: ' + resultRef.current)
-                  setResult(resultRef.current)
+                // if (text !== '\n') {
+                // console.log('Text: ' + text)
+                resultRef.current = resultRef.current + text
+                // console.log('ResultRef.current: ' + resultRef.current)
+                setResult(resultRef.current)
 
-                  // append streamed response (text) to assistant's chat to re-render streamed response
-                  setChatData((prevState) => {
-                    let messages = [...prevState.messages] // copy previous state
-                    messages[messages.length - 1].content = resultRef.current // replace assistant's chat content
-                    // messages.push(inputMessage)
-                    return {
-                      ...prevState,
-                      messages: messages, // replace new messages
-                      updatedAt: new Date().toISOString()
-                    }
-                  })
-                }
+                // append streamed response (text) to assistant's chat to re-render streamed response
+                setChatData((prevState) => {
+                  let messages = [...prevState.messages] // copy previous state
+                  messages[messages.length - 1].content = resultRef.current // replace assistant's chat content
+                  // messages.push(inputMessage)
+                  return {
+                    ...prevState,
+                    messages: messages, // replace new messages
+                    updatedAt: new Date().toISOString()
+                  }
+                })
+                // }
               }
             } else {
               // console.log('stream ended! [DONE]!')
