@@ -103,8 +103,7 @@ const ChatConversation = ({ chatConvo, setChatConvo }) => {
                     flexDirection: 'row',
                     // justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor:
-                      chat.role === 'user' ? '#3b82f6' : '#ebecf0',
+                    backgroundColor: chat.role === 'user' ? '#3b82f6' : '#fff',
                     color: chat.role === 'user' ? 'white' : 'black',
                     padding: '20px',
                     borderRadius: '15px',
