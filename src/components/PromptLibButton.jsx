@@ -5,8 +5,21 @@ import { Container, InputAdornment, TextField } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import PromptCards from './PromptCards'
 import { ImBooks } from 'react-icons/im'
-
+import PromptCard from './PromptCard'
+import {
+  Configure,
+  InstantSearch,
+  SearchBox,
+  Hits,
+  InfiniteHits
+} from 'react-instantsearch-hooks-web'
+import algoliasearch from 'algoliasearch'
 import { createClient } from '@supabase/supabase-js'
+import 'instantsearch.css/themes/satellite.css'
+const searchClient = algoliasearch(
+  'XRUEQYGG84', // app ID
+  'a8b499f1610dfa33662cf441d46cfe68' //Search-Only API Key
+)
 
 const supabaseOptions = {
   db: {
@@ -72,7 +85,7 @@ const PromptLibButton = () => {
       <div
         style={{
           borderRadius: '20px',
-          width: '200px',
+          width: '220px',
           height: '40px',
           display: 'flex',
           alignItems: 'center',
@@ -125,26 +138,28 @@ const PromptLibButton = () => {
 
             <Container maxWidth='md' sx={{ my: '20px' }}>
               {/* search bar */}
-              {/* <TextField
-                id='search'
-                type='search'
-                label='Search'
-                value={searchTerm}
-                onChange={handleSearchChange}
-                sx={{ width: '100%', paddingBottom: '10px' }}
-                InputProps={{
-                  endAdornment: (
-                    <InputAdornment position='end'>
-                      <SearchIcon />
-                    </InputAdornment>
-                  )
-                }}
-              /> */}
-
-              {/* prompt cards */}
-              <div>
-                <PromptCards cards={promptLibrary ?? []} />
-              </div>
+              <InstantSearch
+                searchClient={searchClient}
+                indexName='dev_PROMPTS_2'
+              >
+                <Configure />
+                {/* temp comment out hits per page */}
+                {/* <Configure hitsPerPage={5} /> */}
+                <SearchBox
+                  autoFocus={true}
+                  placeholder={'Search for prompts'}
+                />
+                <div
+                  className='card-container'
+                  style={{
+                    width: '100%',
+                    maxHeight: '500px',
+                    overflow: 'auto'
+                  }}
+                >
+                  <Hits hitComponent={PromptCard} />
+                </div>
+              </InstantSearch>
             </Container>
           </div>
         </div>

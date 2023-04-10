@@ -165,11 +165,6 @@ const CharacterPromptLibButton = () => {
                   </div>
                   {/* <InfiniteHits hitComponent={CharacterPromptCard} /> */}
                 </InstantSearch>
-
-                {/* prompt cards */}
-                {/* <div>
-                <CharacterPromptCards cards={promptLibrary ?? []} />
-              </div> */}
               </Container>
             </div>
           </div>
