@@ -87,7 +87,7 @@ const CharacterPromptLibButton = () => {
       <div
         style={{
           borderRadius: '20px',
-          width: '200px',
+          width: '220px',
           height: '40px',
           display: 'flex',
           alignItems: 'center',
@@ -100,7 +100,7 @@ const CharacterPromptLibButton = () => {
         onClick={handleButtonClick}
       >
         <BsPersonCircle size={24} style={{ marginRight: '5px' }} />
-        <Typography> Define Character </Typography>
+        <Typography> Choose ChatGPT role </Typography>
       </div>
       {showModal && (
         <div
