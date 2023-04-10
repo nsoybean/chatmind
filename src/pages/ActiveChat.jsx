@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect, useContext, useRef } from 'react'
 import ChatConversation from '../components/ChatConversation'
 import ChatInputBar from '../components/ChatInputBar'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -13,6 +13,9 @@ import PromptLibButton from '../components/PromptLibButton'
 import CancelAPIButton from '../components/CancelAPIButton'
 import axios from 'axios'
 import { Context } from '../context/token'
+import { SSE } from 'sse.js'
+
+let eventStream
 
 function ActiveChat() {
   // const navigate = useNavigate()
@@ -24,6 +27,13 @@ function ActiveChat() {
   const [chatData, setChatData] = useState(null) // full data of a chat; id, title, and messages
   const [openAPIToken, setOpenAPIToken] = useState(null) // full data of a chat; id, title, and messages
   const [cancelToken, setCancelToken] = useState(null)
+  const [result, setResult] = useState('')
+
+  const resultRef = useRef()
+  useEffect(() => {
+    resultRef.current = result
+  }, [result])
+
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -172,36 +182,84 @@ function ActiveChat() {
 
           tempChatData.messages.push(inputMessage)
 
-          // call API
-          const { data: responseMessage, error } = await general.awaitWrap(
-            sendChatToOpenAI(tempChatData)
-          )
-
-          // set cancel to false if API completes
-          setCancelToken(null)
-
-          if (error) {
-            // show toast only for invalid API token
-            if (error.message === 'INVALID_TOKEN_ERR') {
-              toast.error('Invalid OpenAI API Key!', {
-                position: 'bottom-right',
-                autoClose: 4000,
-                hideProgressBar: false,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: 'dark'
-              })
-            }
-
-            // return for all errors
-            return
+          let url = 'https://api.openai.com/v1/chat/completions'
+          let data = {
+            model: tempChatData.model,
+            messages: tempChatData.messages,
+            temperature: tempChatData.temperature,
+            stream: true
+            // max_tokens: chatData.maxToken //empty
           }
 
-          console.log('🚀 GPT said:', responseMessage?.content)
-          tempChatData.messages.push(responseMessage)
-          appendMessageToChatData(responseMessage)
+          // cancel API state
+          let tempCancelToken = axios.CancelToken.source()
+          setCancelToken(tempCancelToken)
+          const API_KEY = JSON.parse(localStorage.getItem('MA_openai_token'))
+          eventStream = new SSE(url, {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${API_KEY}`
+            },
+            method: 'POST',
+            payload: JSON.stringify(data)
+          })
+
+          // stream response
+          let assistantResponse = { role: 'assistant', content: '' }
+          let isAssistantChatInitiated = false
+
+          eventStream.addEventListener('message', (e) => {
+            if (e.data != '[DONE]') {
+              let payload = JSON.parse(e.data)
+              //  ensure respones has 'content' data
+              if (payload.choices[0].delta.content) {
+                // on first response, init assistant response into conversation
+                if (!isAssistantChatInitiated) {
+                  isAssistantChatInitiated = true
+                  // update assistant content to render streamed response
+                  setChatData((prevState) => {
+                    let messages = [...prevState.messages] // copy previous state
+                    // messages[messages.length - 1].content = resultRef.current
+                    messages.push(assistantResponse) // init assistant chat content
+                    return {
+                      ...prevState,
+                      messages: messages, // replace new messages
+                      updatedAt: new Date().toISOString()
+                    }
+                  })
+                }
+
+                let text = payload.choices[0].delta.content
+                if (text != '\n') {
+                  // console.log('Text: ' + text)
+                  resultRef.current = resultRef.current + text
+                  // console.log('ResultRef.current: ' + resultRef.current)
+                  setResult(resultRef.current)
+
+                  // append streamed response (text) to assistant's chat to re-render streamed response
+                  setChatData((prevState) => {
+                    let messages = [...prevState.messages] // copy previous state
+                    messages[messages.length - 1].content = resultRef.current // replace assistant's chat content
+                    // messages.push(inputMessage)
+                    return {
+                      ...prevState,
+                      messages: messages, // replace new messages
+                      updatedAt: new Date().toISOString()
+                    }
+                  })
+                }
+              }
+            } else {
+              // console.log('stream ended! [DONE]!')
+              // reset states
+              setResult('')
+              // reset (so that 'stop' button will not show)
+              setCancelToken(null)
+              eventStream.close()
+            }
+          })
+
+          eventStream.stream()
         }
       }
     }
@@ -234,7 +292,9 @@ function ActiveChat() {
   function onCancelAPI() {
     // only allow if there is an ongoing API
     if (cancelToken) {
-      cancelToken.cancel('Cancelled API Request') // err msg in promise's error.message
+      // cancelToken.cancel('Cancelled API Request') // err msg in promise's error.message
+      eventStream.close()
+      setResult('')
     }
     // reset (so that 'stop' button will not show)
     setCancelToken(null)
