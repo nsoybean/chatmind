@@ -113,6 +113,10 @@ const ChatList = ({ chats, setChatList }) => {
           setEditChatTitle(null)
         }
       }
+    } else if (event.key === 'Escape') {
+      setEditChatID(null)
+      setEditChatIndex(null)
+      setEditChatTitle(null)
     }
   }
 
