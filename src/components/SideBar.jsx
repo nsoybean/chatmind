@@ -9,6 +9,10 @@ import TokenModal from '../components/TokenModal'
 import ConfettiExplosion from 'react-confetti-explosion'
 import { Context } from '../context/token'
 import Darkmode from 'darkmode-js'
+import { MDBBtn, MDBModal } from 'mdb-react-ui-kit'
+import LoginModal from '../components/LoginModal'
+import Profile from '../components/Profile'
+import UserAccount from '../components/UserAccount'
 
 function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
@@ -16,7 +20,7 @@ function Sidebar({ chatList, setChatList }) {
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredChatList, setFilteredChatList] = useState([]) // array of chat list. Only contains chat id and title
 
-  const { showConfetti } = useContext(Context)
+  const { showConfetti, session, user } = useContext(Context)
 
   // TODO: filter chats based on search input
   useEffect(() => {
@@ -159,6 +163,15 @@ function Sidebar({ chatList, setChatList }) {
   // const darkmode = new Darkmode(darkLightModeOption)
   // darkmode.showWidget()
 
+  function showProfile() {
+    console.log('show profile...')
+  }
+
+  function login() {
+    console.log('login...')
+    // return AuthModal
+  }
+
   return (
     <div
       className='darkmode-ignore'
@@ -243,22 +256,60 @@ function Sidebar({ chatList, setChatList }) {
               alignItems: 'flex-start',
               width: '100%',
               marginTop: 'auto', // flushed to the bottom
-              marginLeft: '5px',
-              marginBottom: '20px'
+              // marginLeft: '5px',
+              marginBottom: '10px'
             }}
           >
-            <div
-              style={{
-                fontSize: '14px',
-                color: '#fff',
-                margin: '5px 0px',
-                fontWeight: 'bold'
-              }}
-            >
-              OpenAI API KEY
+            {/* <div>
+              <div
+                style={{
+                  fontSize: '14px',
+                  color: '#fff',
+                  margin: '5px 0px',
+                  fontWeight: 'bold'
+                }}
+              >
+                Profile
+              </div>
+              {!session ? (
+                <AuthModal text={'Login'} />
+              ) : (
+                <Profile
+                  key={session.user.id}
+                  session={session}
+                  text='show profile'
+                />
+              )}
+            </div> */}
+            <div style={{ width: '100%' }}>
+              <div
+                style={{
+                  fontSize: '14px',
+                  color: '#fff',
+                  margin: '5px 0px',
+                  fontWeight: 'bold'
+                }}
+              >
+                OpenAI API Key
+              </div>
+              {showConfetti && <ConfettiExplosion />}
+              <TokenModal stye={{ margin: '5px 0px' }} text='Enter Here' />
+              <div
+                style={{
+                  borderTop: '1px solid #fff',
+                  marginTop: '15px',
+                  width: ' 100%'
+                }}
+              >
+                {session ? (
+                  <UserAccount email={user?.email} />
+                ) : (
+                  <div style={{ marginLeft: '20px' }}>
+                    <LoginModal text='Login' />
+                  </div>
+                )}
+              </div>
             </div>
-            {showConfetti && <ConfettiExplosion />}
-            <TokenModal stye={{ margin: '5px 0px' }} text='Enter Here' />
           </div>
         </div>
       )}

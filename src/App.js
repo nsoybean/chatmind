@@ -10,11 +10,48 @@ import 'react-toastify/dist/ReactToastify.css'
 import { Context } from './context/token'
 import algoliasearch from 'algoliasearch/lite'
 import { InstantSearch } from 'react-instantsearch-hooks-web'
+import { supabase } from './util/supabaseClient'
+
+import { createClient } from '@supabase/supabase-js'
+const supabaseOptions = {
+  db: {
+    schema: 'public'
+  },
+  auth: {
+    autoRefreshToken: true,
+    persistSession: true,
+    detectSessionInUrl: true
+  }
+}
+
+// const supabase = createClient(
+//   'https://edtsmqfxjwkadjtzwupl.supabase.co',
+//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkdHNtcWZ4andrYWRqdHp3dXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA4NDgxOTksImV4cCI6MTk5NjQyNDE5OX0.jsesB8nxIryrIUSrgUiysgcsavSgbtxcznQriNyl1wc',
+//   supabaseOptions
+// )
 
 function App() {
+  const [session, setSession] = useState(null)
+  const [user, setUser] = useState(null)
   const [openAiToken, setOpenAiToken] = useState('')
   const [showConfetti, setShowConfetti] = useState(null)
   const [chatInput, setChatInput] = useState('')
+  const [accountDetails, setAccountDetails] = useState(null)
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session)
+    })
+
+    // this enables UI to show logged out without refreshing
+    const {
+      data: { subscription }
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session)
+    })
+
+    return () => subscription.unsubscribe()
+  }, [])
 
   useEffect(() => {
     const token = JSON.parse(localStorage.getItem('MA_openai_token'))
@@ -24,6 +61,17 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    async function setUserDataFromSession() {
+      const { user } = session
+      setUser(user)
+    }
+
+    if (session) {
+      setUserDataFromSession()
+    }
+  }, [session])
+
   return (
     <Context.Provider
       value={{
@@ -32,7 +80,11 @@ function App() {
         showConfetti,
         setShowConfetti,
         chatInput,
-        setChatInput
+        setChatInput,
+        session,
+        setSession,
+        supabase,
+        user
       }}
     >
       <div>
