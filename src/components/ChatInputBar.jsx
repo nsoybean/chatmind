@@ -17,8 +17,8 @@ const ChatInputBar = ({ setInputMessage }) => {
 
   const handleKeyDown = (e) => {
     if (e.keyCode === 13 && !e.shiftKey) {
-      e.preventDefault()
       handleSend()
+      e.preventDefault()
     }
   }
 
