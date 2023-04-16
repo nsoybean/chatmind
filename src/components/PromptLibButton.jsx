@@ -16,6 +16,12 @@ import {
 import algoliasearch from 'algoliasearch'
 import { createClient } from '@supabase/supabase-js'
 import 'instantsearch.css/themes/satellite.css'
+import { IoIosCreate } from 'react-icons/io'
+import { MDBBtn } from 'mdb-react-ui-kit'
+import Button from '@mui/material/Button'
+import { IoCreate } from 'react-icons/io5'
+import { Link } from 'react-router-dom'
+
 const searchClient = algoliasearch(
   'XRUEQYGG84', // app ID
   'a8b499f1610dfa33662cf441d46cfe68' //Search-Only API Key
@@ -80,6 +86,10 @@ const PromptLibButton = () => {
   //   promptLibrary.push(createRandomUser())
   // })
 
+  function submitPrompt() {
+    console.log('creating new prompt...')
+  }
+
   return (
     <div style={{ position: 'relative' }}>
       <div
@@ -138,17 +148,44 @@ const PromptLibButton = () => {
 
             <Container maxWidth='md' sx={{ my: '20px' }}>
               {/* search bar */}
+
               <InstantSearch
                 searchClient={searchClient}
                 indexName='dev_PROMPTS_2'
               >
-                <Configure />
+                {/* <Configure /> */}
                 {/* temp comment out hits per page */}
                 {/* <Configure hitsPerPage={5} /> */}
-                <SearchBox
-                  autoFocus={true}
-                  placeholder={'Search for prompts'}
-                />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-start',
+                    alignItems: 'center'
+                  }}
+                >
+                  <SearchBox
+                    autoFocus={true}
+                    placeholder={'Search for prompts'}
+                    style={{ width: '85%' }}
+                  />
+
+                  {/* Create a prompt! */}
+                  <Button
+                    variant='contained'
+                    sx={{
+                      marginLeft: 'auto',
+                      height: '40px',
+                      width: '110px',
+                      borderRadius: '5px'
+                    }}
+                    component={Link}
+                    to='/new-prompt'
+                  >
+                    <IoCreate size={20} />
+                    Create
+                  </Button>
+                </div>
                 <div
                   className='card-container'
                   style={{

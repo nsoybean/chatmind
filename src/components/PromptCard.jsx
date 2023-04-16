@@ -10,7 +10,8 @@ const PromptCards = ({ hit }) => {
   const { setChatInput } = useContext(Context)
 
   function applyPrompt(hit) {
-    console.log('🚀hit:', hit)
+    // uncomment to see all data on prompt
+    // console.log('🚀hit:', hit)
     console.log(`🚀 applying prompt: ${hit.title}`)
     setChatInput(hit.prompt)
   }
@@ -93,7 +94,7 @@ const PromptCards = ({ hit }) => {
             {hit.source && (
               <>
                 <span style={{ marginRight: '10px' }}>
-                  source:{' '}
+                  source:
                   <a href={hit.source} target='_blank' rel='noreferrer'>
                     {extractHostname(hit.source)}
                   </a>

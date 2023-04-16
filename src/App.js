@@ -11,6 +11,7 @@ import { Context } from './context/token'
 import algoliasearch from 'algoliasearch/lite'
 import { InstantSearch } from 'react-instantsearch-hooks-web'
 import { supabase } from './util/supabaseClient'
+import PromptForm from './components/PromptForm'
 
 import { createClient } from '@supabase/supabase-js'
 const supabaseOptions = {
@@ -103,6 +104,10 @@ function App() {
         {/* more specific paths to less specific paths, this is so you won't need to specify the exact */}
         <Routes>
           <Route path='/chat/:id' element={<ActiveChat />} />
+          <Route
+            path='/new-prompt/'
+            element={<PromptForm session={session} />}
+          />
           <Route exact path='/' element={<Home />} />
         </Routes>
       </div>
