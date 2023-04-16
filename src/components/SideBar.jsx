@@ -331,14 +331,12 @@ function Sidebar({ chatList, setChatList }) {
                       style={{ color: profileIconHovered ? 'white' : '#666' }}
                     />
                   </div>
-                  {profileModal ? (
+                  {profileModal && (
                     <LoginModal
                       showModel={profileModal}
                       setShowModal={setProfileModal}
                       session={session}
                     />
-                  ) : (
-                    ''
                   )}
                 </div>
               </div>
