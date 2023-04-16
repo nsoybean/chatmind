@@ -8,7 +8,7 @@ import Checkbox from '@mui/material/Checkbox'
 import Link from '@mui/material/Link'
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
+import AssignmentIcon from '@mui/icons-material/Assignment'
 import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
@@ -34,13 +34,17 @@ function Copyright(props) {
 
 const theme = createTheme()
 
-export default function SignUp() {
+export default function Submit() {
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     console.log({
-      email: data.get('email'),
-      password: data.get('password')
+      tag: data.get('tag'),
+      promptTitle: data.get('promptTitle'),
+      promptDescription: data.get('promptDescription'),
+      prompt: data.get('prompt'),
+      username: data.get('username'),
+      source: data.get('source')
     })
   }
 
@@ -57,7 +61,7 @@ export default function SignUp() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            <LockOutlinedIcon />
+            <AssignmentIcon />
           </Avatar>
           <Typography component='h1' variant='h5'>
             Submit a prompt
@@ -70,7 +74,7 @@ export default function SignUp() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <CreatePromptTag />
+                <CreatePromptTag name='tag' />
               </Grid>
 
               <Grid item xs={12}>
@@ -78,14 +82,15 @@ export default function SignUp() {
                   required
                   fullWidth
                   id='promptTitle'
+                  name='promptTitle'
                   label='Prompt Title'
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   fullWidth
                   id='promptDescription'
+                  name='promptDescription'
                   label='Prompt Description (optional)'
                 />
               </Grid>
@@ -95,6 +100,7 @@ export default function SignUp() {
                   multiline
                   fullWidth
                   id='prompt'
+                  name='prompt'
                   label='Prompt'
                 />
               </Grid>
@@ -109,8 +115,8 @@ export default function SignUp() {
                   marginTop: '20px'
                 }}
               >
-                <Typography component='h1' variant='h5'>
-                  Recognition
+                <Typography variant='h6'>
+                  Please input your name so we can attribute credit to you
                 </Typography>
               </Grid>
 
@@ -118,6 +124,7 @@ export default function SignUp() {
                 <TextField
                   fullWidth
                   id='username'
+                  name='username'
                   label='username (optional)'
                   helperText='Note: this will be shown to public'
                 />
@@ -125,7 +132,8 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  id='Cite your source (optional)'
+                  id='source'
+                  name='source'
                   label='source (optional)'
                   helperText="Let's give credit where it's due"
                 />
@@ -139,13 +147,6 @@ export default function SignUp() {
             >
               Submit !
             </Button>
-            {/* <Grid container justifyContent='flex-end'>
-              <Grid item>
-                <Link href='#' variant='body2'>
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid> */}
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />
