@@ -13,14 +13,13 @@ import {
 } from 'mdb-react-ui-kit'
 
 import { supabase } from '../util/supabaseClient'
-export default function Account({ session, text }) {
+export default function Account({ showModal, setShowModal, session, text }) {
   const [loading, setLoading] = useState(true)
   const [username, setUsername] = useState(null)
   const [website, setWebsite] = useState(null)
   const [avatar_url, setAvatarUrl] = useState(null)
-  const [centredModal, setCentredModal] = useState(false)
 
-  const toggleShow = () => setCentredModal(!centredModal)
+  const toggleShow = () => setShowModal(!showModal)
 
   supabase.auth.onAuthStateChange((event, session) => {
     // toggleShow()
@@ -75,10 +74,10 @@ export default function Account({ session, text }) {
 
   return (
     <>
-      <MDBBtn onClick={toggleShow}>{text}</MDBBtn>
+      {/* <MDBBtn onClick={toggleShow}>{text}</MDBBtn> */}
 
       <div>
-        <MDBModal tabIndex='-1' show={centredModal} setShow={setCentredModal}>
+        <MDBModal tabIndex='-1' show={showModal} setShow={setShowModal}>
           <MDBModalDialog centered>
             <MDBModalContent>
               <MDBModalHeader>

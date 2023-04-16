@@ -13,12 +13,15 @@ import { MDBBtn, MDBModal } from 'mdb-react-ui-kit'
 import LoginModal from '../components/LoginModal'
 import Profile from '../components/Profile'
 import UserAccount from '../components/UserAccount'
+import { FaUser } from 'react-icons/fa'
 
 function Sidebar({ chatList, setChatList }) {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(true)
   const [searchTerm, setSearchTerm] = useState('')
   const [filteredChatList, setFilteredChatList] = useState([]) // array of chat list. Only contains chat id and title
+  const [profileIconHovered, setProfileIconHovered] = useState(null)
+  const [profileModal, setProfileModal] = useState(false)
 
   const { showConfetti, session, user } = useContext(Context)
 
@@ -39,6 +42,10 @@ function Sidebar({ chatList, setChatList }) {
       setFilteredChatList(filteredArray)
     }
   }, [searchTerm])
+
+  function toggleProfileModal() {
+    setProfileModal(!profileModal)
+  }
 
   // function to manage state of sidebar
   const toggleSidebar = () => {
@@ -162,15 +169,6 @@ function Sidebar({ chatList, setChatList }) {
 
   // const darkmode = new Darkmode(darkLightModeOption)
   // darkmode.showWidget()
-
-  function showProfile() {
-    console.log('show profile...')
-  }
-
-  function login() {
-    console.log('login...')
-    // return AuthModal
-  }
 
   return (
     <div
@@ -298,16 +296,51 @@ function Sidebar({ chatList, setChatList }) {
                 style={{
                   borderTop: '1px solid #fff',
                   marginTop: '15px',
-                  width: ' 100%'
+                  width: '100%'
                 }}
               >
-                {session ? (
-                  <UserAccount email={user?.email} />
-                ) : (
-                  <div style={{ marginLeft: '20px' }}>
-                    <LoginModal text='Login' />
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    padding: '5px 5px',
+                    cursor: 'pointer',
+                    width: 'fit-content',
+                    margin: '5px 0px',
+                    borderRadius: '5px'
+                  }}
+                >
+                  <div
+                    style={{
+                      height: '35px',
+                      width: '35px',
+                      borderRadius: '5px',
+                      backgroundColor: profileIconHovered ? '#3b71ca' : '#fff',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      justifyContent: 'center',
+                      alignItems: 'center'
+                    }}
+                    onClick={toggleProfileModal}
+                    onMouseEnter={() => setProfileIconHovered(true)}
+                    onMouseLeave={() => setProfileIconHovered(false)}
+                  >
+                    <FaUser
+                      size={25}
+                      style={{ color: profileIconHovered ? 'white' : '#666' }}
+                    />
                   </div>
-                )}
+                  {profileModal ? (
+                    <LoginModal
+                      showModel={profileModal}
+                      setShowModal={setProfileModal}
+                      session={session}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </div>
               </div>
             </div>
           </div>
