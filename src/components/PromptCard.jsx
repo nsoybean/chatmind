@@ -9,7 +9,8 @@ const PromptCards = ({ hit }) => {
   // global use context
   const { setChatInput } = useContext(Context)
 
-  function applyPrompt(id, index) {
+  function applyPrompt(hit) {
+    console.log('🚀hit:', hit)
     console.log(`🚀 applying prompt: ${hit.title}`)
     setChatInput(hit.prompt)
   }
@@ -65,28 +66,41 @@ const PromptCards = ({ hit }) => {
           {/* <div className='prompt'>{truncateText(card.prompt)}</div> */}
           <div
             className='prompt'
-            style={
-              {
-                // overflow: 'hidden',
-                // whiteSpace: 'nowrap',
-                // textOverflow: 'ellipsis'
-                // maxWidth: '80%'
-              }
-            }
+            style={{
+              display: '-webkit-box',
+              overflow: 'hidden',
+              WebkitBoxOrient: 'vertical',
+              WebkitLineClamp: 3
+            }}
           >
             <Highlight attribute='prompt' hit={hit} />
           </div>
-          {/* source */}
-          {hit.source && (
-            <div className='source'>
-              <span style={{ marginRight: '10px' }}>source:</span>
-              {hit.source && (
-                <a href={hit.source} target='_blank' rel='noreferrer'>
-                  {extractHostname(hit.source)}
-                </a>
-              )}
-            </div>
-          )}
+
+          {/* prompts metadata */}
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              marginTop: '10px'
+            }}
+          >
+            {/* user */}
+            {hit?.user && (
+              <span style={{ marginRight: '10px' }}>user: {hit.user}</span>
+            )}
+
+            {/* source */}
+            {hit.source && (
+              <>
+                <span style={{ marginRight: '10px' }}>
+                  source:{' '}
+                  <a href={hit.source} target='_blank' rel='noreferrer'>
+                    {extractHostname(hit.source)}
+                  </a>
+                </span>
+              </>
+            )}
+          </div>
         </div>
 
         {/* apply prompt button */}
