@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CreatePromptTag from './CreatePromptTag'
+import { supabase } from '../util/supabaseClient'
 
 function Copyright(props) {
   return (
@@ -37,17 +38,24 @@ const theme = createTheme()
 export default function Submit() {
   const [tagValue, setTagValue] = useState(null)
 
-  const handleSubmit = (event) => {
+  async function handleSubmit(event) {
     event.preventDefault()
-    const data = new FormData(event.currentTarget)
-    console.log({
-      tag: tagValue.field,
-      promptTitle: data.get('promptTitle'),
-      promptDescription: data.get('promptDescription'),
-      prompt: data.get('prompt'),
-      username: data.get('username'),
-      source: data.get('source')
-    })
+    let formData = new FormData(event.currentTarget)
+
+    const promptForm = {
+      field: tagValue?.field,
+      title: formData.get('promptTitle'),
+      description: formData.get('promptDescription'),
+      prompt: formData.get('prompt'),
+      user_name: formData.get('username'),
+      source: formData.get('source')
+    }
+
+    const userData = await supabase.auth.getUser()
+    const user_id = userData.data?.user?.id
+    promptForm.user_id = user_id
+
+    await supabase.from('Prompts').insert([promptForm])
   }
 
   return (
