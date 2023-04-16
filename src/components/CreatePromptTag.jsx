@@ -12,8 +12,8 @@ import { Context } from '../context/token'
 
 const filter = createFilterOptions()
 
-export default function CreatePromptTag() {
-  const [value, setValue] = useState(null)
+export default function CreatePromptTag({ tagValue, setTagValue }) {
+  //   const [value, setValue] = useState(null)
   const [open, toggleOpen] = useState(false)
   const [promptTags, setPromptTags] = useState(null)
   const [dialogValue, setDialogValue] = useState({
@@ -42,7 +42,7 @@ export default function CreatePromptTag() {
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setValue({
+    setTagValue({
       field: dialogValue.field
     })
     handleClose()
@@ -51,7 +51,7 @@ export default function CreatePromptTag() {
   return (
     <React.Fragment>
       <Autocomplete
-        value={value}
+        value={tagValue}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {
             // timeout to avoid instant validation of the dialog's form.
@@ -67,7 +67,7 @@ export default function CreatePromptTag() {
               field: newValue.inputValue
             })
           } else {
-            setValue(newValue)
+            setTagValue(newValue)
           }
         }}
         filterOptions={(options, params) => {

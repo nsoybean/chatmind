@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -35,11 +35,13 @@ function Copyright(props) {
 const theme = createTheme()
 
 export default function Submit() {
+  const [tagValue, setTagValue] = useState(null)
+
   const handleSubmit = (event) => {
     event.preventDefault()
     const data = new FormData(event.currentTarget)
     console.log({
-      tag: data.get('tag'),
+      tag: tagValue.field,
       promptTitle: data.get('promptTitle'),
       promptDescription: data.get('promptDescription'),
       prompt: data.get('prompt'),
@@ -74,7 +76,10 @@ export default function Submit() {
           >
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <CreatePromptTag name='tag' />
+                <CreatePromptTag
+                  tagValue={tagValue}
+                  setTagValue={setTagValue}
+                />
               </Grid>
 
               <Grid item xs={12}>
