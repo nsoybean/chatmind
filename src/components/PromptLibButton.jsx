@@ -14,7 +14,7 @@ import {
   InfiniteHits
 } from 'react-instantsearch-hooks-web'
 import algoliasearch from 'algoliasearch'
-import { createClient } from '@supabase/supabase-js'
+import { createClient, SupabaseClient } from '@supabase/supabase-js'
 import 'instantsearch.css/themes/satellite.css'
 import { IoIosCreate } from 'react-icons/io'
 import { MDBBtn } from 'mdb-react-ui-kit'
@@ -22,68 +22,37 @@ import Button from '@mui/material/Button'
 import { IoCreate } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
 import { agoliaClientPrompts } from '../util/agoliaClient'
-
-const supabaseOptions = {
-  db: {
-    schema: 'public'
-  },
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  }
-}
-const supabase = createClient(
-  'https://edtsmqfxjwkadjtzwupl.supabase.co',
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkdHNtcWZ4andrYWRqdHp3dXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA4NDgxOTksImV4cCI6MTk5NjQyNDE5OX0.jsesB8nxIryrIUSrgUiysgcsavSgbtxcznQriNyl1wc',
-  supabaseOptions
-)
+import { supabase } from '../util/supabaseClient'
+import general from '../helper/general'
+import { toast } from 'react-toastify'
 
 const PromptLibButton = () => {
   const [showModal, setShowModal] = useState(false)
-  const [searchTerm, setSearchTerm] = useState('')
-  const [promptLibrary, setPromptLibrary] = useState(null)
 
-  // fetch prompts when modal is open
-  useEffect(() => {
-    async function getAllPrompts() {
-      const { data, error } = await supabase.from('Prompts').select()
-      if (data) {
-        setPromptLibrary(data)
-      }
-    }
-
-    if (showModal) {
-      getAllPrompts()
-    }
-  }, [showModal])
-
-  const handleSearchChange = (event) => {
-    // console.log('🚀 Searching for prompt:', event.target.value)
-    setSearchTerm(event.target.value)
-  }
   function handleButtonClick() {
     setShowModal(true)
   }
 
-  // mock prompt using faker
-  // const promptLibrary = []
+  async function authCreateNewPrompt() {
+    const { data: userSession, error } = await general.awaitWrap(
+      supabase.auth.getSession()
+    )
 
-  // function createRandomUser() {
-  //   return {
-  //     field: faker.music.genre(),
-  //     title: faker.internet.userName(),
-  //     prompt: faker.lorem.paragraph(),
-  //     source: faker.internet.userName()
-  //   }
-  // }
-
-  // Array.from({ length: 10 }).forEach(() => {
-  //   promptLibrary.push(createRandomUser())
-  // })
-
-  function submitPrompt() {
-    console.log('creating new prompt...')
+    // if access token exist (logged in)
+    if (userSession?.data?.session?.access_token) {
+      window.open('/new-prompt')
+    } else {
+      toast.warn('Please sign in to create prompts 😎', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      })
+    }
   }
 
   return (
@@ -181,9 +150,10 @@ const PromptLibButton = () => {
                         color: 'white'
                       }
                     }}
-                    target='_blank'
-                    component={Link}
-                    to='/new-prompt'
+                    // target='_blank'
+                    // component={Link}
+                    // to='/new-prompt'
+                    onClick={authCreateNewPrompt}
                   >
                     {/* <IoCreate size={20} /> */}
                     Create

@@ -8,28 +8,8 @@ import '@fortawesome/fontawesome-free/css/all.min.css'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Context } from './context/token'
-import algoliasearch from 'algoliasearch/lite'
-import { InstantSearch } from 'react-instantsearch-hooks-web'
 import { supabase } from './util/supabaseClient'
 import PromptForm from './components/PromptForm'
-
-import { createClient } from '@supabase/supabase-js'
-const supabaseOptions = {
-  db: {
-    schema: 'public'
-  },
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  }
-}
-
-// const supabase = createClient(
-//   'https://edtsmqfxjwkadjtzwupl.supabase.co',
-//   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVkdHNtcWZ4andrYWRqdHp3dXBsIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODA4NDgxOTksImV4cCI6MTk5NjQyNDE5OX0.jsesB8nxIryrIUSrgUiysgcsavSgbtxcznQriNyl1wc',
-//   supabaseOptions
-// )
 
 function App() {
   const [session, setSession] = useState(null)
