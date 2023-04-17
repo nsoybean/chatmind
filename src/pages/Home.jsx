@@ -9,6 +9,8 @@ import { AwesomeButton } from 'react-awesome-button'
 import '../styles/awesomeButton/styles.css'
 import TokenModal from '../components/TokenModal'
 import { Context } from '../context/token'
+import LoginModal from '../components/LoginModal'
+import { FaUser } from 'react-icons/fa'
 
 function Home() {
   const [quote, setQuote] = useState(null)
@@ -19,7 +21,10 @@ function Home() {
   const [chatData, setChatData] = useState(null) // full data of a chat; id, title, and messages
   const [validatedToken, setValidatedToken] = useState(null)
   const navigate = useNavigate()
-  const { openAiToken } = useContext(Context)
+  const [profileIconHovered, setProfileIconHovered] = useState(null)
+  const [profileModal, setProfileModal] = useState(false)
+
+  const { openAiToken, session } = useContext(Context)
 
   const createNewChat = () => {
     const chatID = uuidv4()
@@ -110,6 +115,10 @@ function Home() {
       })
   }, [])
 
+  function toggleProfileModal() {
+    setProfileModal(!profileModal)
+  }
+
   return (
     <div
       style={{
@@ -134,27 +143,67 @@ function Home() {
           backgroundColor: '#f8f7fe'
         }}
       >
-        {/* section at the top of page to show quotes, chatGPT usage */}
+        {/* TOP BAR */}
+        {/* QUOTE */}
         <div
           style={{
             display: 'flex',
+            flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
             width: '100%',
-            height: '10%',
+            maxHeight: '10%',
+            marginBottom: '5px',
             boxShadow: '0 5px 5px -5px rgba(0, 0, 0, 0.25)'
           }}
         >
-          <blockquote
+          <div
             style={{
-              overflowY: 'auto',
-              maxHeight: '50px',
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              alignSelf: 'center',
+              justifySelf: 'center',
+              overflow: 'auto',
+              maxHeight: '80%',
               maxWidth: '70%',
-              padding: '5px 0px'
+              padding: '5px 0px',
+              margin: '10px 5px'
             }}
           >
             {quote}
-          </blockquote>
+          </div>
+
+          {/* LOGIN ICON */}
+          <div
+            style={{
+              height: profileIconHovered ? '42px' : '40px',
+              width: profileIconHovered ? '42px' : '40px',
+              borderRadius: '100%',
+              // backgroundColor: profileIconHovered ? '#3b71ca' : '#fff', // white default, hovered blue
+              backgroundColor: profileIconHovered ? '#2c5aa4' : '#3b71ca', // dark-grey default, hovered black
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              left: '90%',
+              cursor: 'pointer'
+            }}
+            onClick={toggleProfileModal}
+            onMouseEnter={() => setProfileIconHovered(true)}
+            onMouseLeave={() => setProfileIconHovered(false)}
+          >
+            <FaUser size={20} style={{ color: 'white' }} />
+          </div>
+          {profileModal && (
+            <LoginModal
+              showModel={profileModal}
+              setShowModal={setProfileModal}
+              session={session}
+            />
+          )}
         </div>
 
         <div

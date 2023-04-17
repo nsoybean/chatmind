@@ -11,7 +11,6 @@ import { Context } from '../context/token'
 import Darkmode from 'darkmode-js'
 import { MDBBtn, MDBModal } from 'mdb-react-ui-kit'
 import LoginModal from '../components/LoginModal'
-import Profile from '../components/Profile'
 import UserAccount from '../components/UserAccount'
 import { FaUser } from 'react-icons/fa'
 
@@ -279,12 +278,18 @@ function Sidebar({ chatList, setChatList }) {
                 />
               )}
             </div> */}
-            <div style={{ width: '100%' }}>
+            <div
+              style={{
+                width: '100%',
+                margin: '10px 0px',
+                borderTop: '1px solid #fff'
+              }}
+            >
               <div
                 style={{
                   fontSize: '14px',
                   color: '#fff',
-                  margin: '5px 0px',
+                  margin: '10px 0px',
                   fontWeight: 'bold'
                 }}
               >
@@ -292,7 +297,7 @@ function Sidebar({ chatList, setChatList }) {
               </div>
               {showConfetti && <ConfettiExplosion />}
               <TokenModal stye={{ margin: '5px 0px' }} text='Enter Here' />
-              <div
+              {/* <div
                 style={{
                   borderTop: '1px solid #fff',
                   marginTop: '15px',
@@ -312,7 +317,7 @@ function Sidebar({ chatList, setChatList }) {
                   }}
                 >
                   <div
-                    style={{
+                    style={{  
                       height: '35px',
                       width: '35px',
                       borderRadius: '5px',
@@ -339,7 +344,7 @@ function Sidebar({ chatList, setChatList }) {
                     />
                   )}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

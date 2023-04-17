@@ -14,7 +14,10 @@ import CancelAPIButton from '../components/CancelAPIButton'
 import axios from 'axios'
 import { Context } from '../context/token'
 import { SSE } from 'sse.js'
+import LoginModal from '../components/LoginModal'
+import { FaUser } from 'react-icons/fa'
 
+// global variable to store chatGPT's response
 let eventStream
 
 function ActiveChat() {
@@ -28,6 +31,8 @@ function ActiveChat() {
   const [openAPIToken, setOpenAPIToken] = useState(null) // full data of a chat; id, title, and messages
   const [cancelToken, setCancelToken] = useState(null)
   const [result, setResult] = useState('')
+  const [profileIconHovered, setProfileIconHovered] = useState(null)
+  const [profileModal, setProfileModal] = useState(false)
 
   const resultRef = useRef()
   useEffect(() => {
@@ -38,7 +43,7 @@ function ActiveChat() {
   const navigate = useNavigate()
 
   // global use context
-  const { chatInput } = useContext(Context)
+  const { chatInput, session } = useContext(Context)
 
   async function sendChatToOpenAI(chatData) {
     // extract token from local
@@ -308,12 +313,16 @@ function ActiveChat() {
   function onCancelAPI() {
     // only allow if there is an ongoing API
     if (cancelToken) {
-      // cancelToken.cancel('Cancelled API Request') // err msg in promise's error.message
+      // cancelToken.cancel('Cancelled AfPI Request') // err msg in promise's error.message
       eventStream.close()
       setResult('')
     }
     // reset (so that 'stop' button will not show)
     setCancelToken(null)
+  }
+
+  function toggleProfileModal() {
+    setProfileModal(!profileModal)
   }
 
   return (
@@ -344,7 +353,8 @@ function ActiveChat() {
           backgroundColor: '#f8f7fe'
         }}
       >
-        {/* QU0TE SECTION */}
+        {/* TOP BAR */}
+        {/* QUOTE */}
         <div
           style={{
             display: 'flex',
@@ -374,6 +384,36 @@ function ActiveChat() {
           >
             {quote}
           </div>
+
+          {/* LOGIN ICON */}
+          <div
+            style={{
+              height: profileIconHovered ? '42px' : '40px',
+              width: profileIconHovered ? '42px' : '40px',
+              borderRadius: '100%',
+              // backgroundColor: profileIconHovered ? '#3b71ca' : '#fff', // white default, hovered blue
+              backgroundColor: profileIconHovered ? '#2c5aa4' : '#3b71ca', // dark-grey default, hovered black
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+              position: 'absolute',
+              left: '90%',
+              cursor: 'pointer'
+            }}
+            onClick={toggleProfileModal}
+            onMouseEnter={() => setProfileIconHovered(true)}
+            onMouseLeave={() => setProfileIconHovered(false)}
+          >
+            <FaUser size={20} style={{ color: 'white' }} />
+          </div>
+          {profileModal && (
+            <LoginModal
+              showModel={profileModal}
+              setShowModal={setProfileModal}
+              session={session}
+            />
+          )}
         </div>
 
         {/* CONVERSATION SECTION */}

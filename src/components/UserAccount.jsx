@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { FaUser } from 'react-icons/fa'
 import { BsChevronExpand } from 'react-icons/bs'
 import { MDBBtn } from 'mdb-react-ui-kit'
-import Profile from './Profile'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 

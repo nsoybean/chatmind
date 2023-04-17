@@ -97,7 +97,7 @@ export default function LoginModal({ showModel, setShowModal, session }) {
           {!session ? (
             <MDBModalContent>
               <MDBModalHeader>
-                <MDBModalTitle> Login to Supabase</MDBModalTitle>
+                <MDBModalTitle> Login to MindAi</MDBModalTitle>
                 <MDBBtn
                   className='btn-close'
                   color='none'
