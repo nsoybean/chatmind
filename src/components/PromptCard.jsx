@@ -86,8 +86,8 @@ const PromptCards = ({ hit }) => {
             }}
           >
             {/* user */}
-            {hit?.user && (
-              <span style={{ marginRight: '10px' }}>user: {hit.user}</span>
+            {hit?.user_name && (
+              <span style={{ marginRight: '10px' }}>user: {hit.user_name}</span>
             )}
 
             {/* source */}
@@ -95,7 +95,12 @@ const PromptCards = ({ hit }) => {
               <>
                 <span style={{ marginRight: '10px' }}>
                   source:
-                  <a href={hit.source} target='_blank' rel='noreferrer'>
+                  <a
+                    href={hit.source}
+                    target='_blank'
+                    rel='noreferrer'
+                    style={{ marginLeft: '5px' }}
+                  >
                     {extractHostname(hit.source)}
                   </a>
                 </span>
