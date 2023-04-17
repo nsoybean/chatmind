@@ -22,6 +22,7 @@
     "mdb-react-ui-kit": "^6.0.0",
     "react": "^18.2.0",
     "react-awesome-button": "^7.0.5",
+    "react-color": "^2.19.3",
     "react-confetti-explosion": "^2.0.2",
     "react-cool-form": "^0.4.1",
     "react-dom": "^18.2.0",

@@ -8,18 +8,21 @@ import DialogActions from '@mui/material/DialogActions'
 import Button from '@mui/material/Button'
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 import { ImCool } from 'react-icons/im'
+import { IoColorPaletteSharp } from 'react-icons/io5'
 import { Context } from '../context/token'
+import { SwatchesPicker } from 'react-color'
 
 const filter = createFilterOptions()
 
 export default function CreatePromptTag({
   tagValue,
   setTagValue,
-  isFormSubmitted
+  isFormSubmitted,
+  setNewTagColor
 }) {
   //   const [value, setValue] = useState(null)
   const [open, toggleOpen] = useState(false)
-  const [promptTags, setPromptTags] = useState([{ field: 'marketing' }])
+  const [promptTags, setPromptTags] = useState([{ field: '' }])
   const [dialogValue, setDialogValue] = useState({
     field: ''
   })
@@ -50,6 +53,10 @@ export default function CreatePromptTag({
       field: dialogValue.field
     })
     handleClose()
+  }
+
+  function handleColorChange(color) {
+    setNewTagColor(color.hex)
   }
 
   return (
@@ -116,10 +123,10 @@ export default function CreatePromptTag({
       />
       <Dialog open={open} onClose={handleClose}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle> Add a new tag</DialogTitle>
+          <DialogTitle> Can't find what your tag?</DialogTitle>
           <DialogContent>
             <DialogContentText>
-              Can't find what you need? Please add it! <ImCool />
+              Please add it! <ImCool />
             </DialogContentText>
             <TextField
               autoFocus
@@ -136,6 +143,15 @@ export default function CreatePromptTag({
               label='Field/ Industry'
               type='text'
               variant='standard'
+            />
+            <DialogContentText
+              style={{ marginTop: '20px', marginBottom: '10px' }}
+            >
+              Pick a new colour! <IoColorPaletteSharp />
+            </DialogContentText>
+            <SwatchesPicker
+              color={'#fff'}
+              onChangeComplete={handleColorChange}
             />
           </DialogContent>
           <DialogActions>

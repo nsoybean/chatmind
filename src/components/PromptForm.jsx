@@ -42,6 +42,7 @@ const theme = createTheme()
 export default function Submit() {
   const [tagValue, setTagValue] = useState(null)
   const [isFormSubmitted, setIsFormSubmitted] = useState(null)
+  const [newTagColor, setNewTagColor] = useState(null) // default tag color grey
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -56,14 +57,59 @@ export default function Submit() {
       source: formData.get('source'),
       uuid: uuidv4()
     }
+    console.log('🚀 promptForm:', promptForm)
 
-    // metadata to store in supabase
-    const userData = await supabase.auth.getUser()
-    const metaData = {
-      user_id: userData.data?.user?.id,
-      prompt_id: promptForm.uuid
+    // error if any of the mandatory fields are null
+    if (
+      !promptForm.field ||
+      !promptForm.title ||
+      !promptForm.prompt ||
+      !promptForm.uuid
+    ) {
+      toast.error('Invalid Form Input!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'dark'
+      })
+      return
     }
 
+    // metadata to store in supabase
+    // get user session
+    const userData = await supabase.auth.getUser()
+
+    // determine taq color
+    // if newTag Color not assigned (null), means its a pre-existing tag, hence should lookup supabase to get the latest color
+    let prompt_tag_color
+    if (!newTagColor) {
+      const { data: latestTagColor, error: getTagColorErr } = await supabase
+        .from('prompt_metadata')
+        .select('tag_color')
+        .eq('field', promptForm.field)
+        .order('created_at', { ascending: false }) // use latest if there are many (fingers crossed)
+        .limit(1)
+
+      if (latestTagColor) {
+        prompt_tag_color = latestTagColor[0].tag_color.toUpperCase()
+      }
+    } else {
+      // else, its a new tag and take what was assigned
+      prompt_tag_color = newTagColor.substring(1).toUpperCase()
+    }
+
+    const metaData = {
+      user_id: userData.data?.user?.id,
+      prompt_id: promptForm.uuid,
+      field: promptForm.field,
+      tag_color: prompt_tag_color
+    }
+
+    // insert into supabase
     const { data: createRes, error: createErr } = await general.awaitWrap(
       supabase.from('prompt_metadata').insert([metaData])
     )
@@ -81,7 +127,8 @@ export default function Submit() {
         description: promptForm.description,
         prompt: promptForm.prompt,
         user_name: promptForm.user_name,
-        source: promptForm.source
+        source: promptForm.source,
+        title_bg_colour: prompt_tag_color
       }
       const index = agoliaClientPrompts.initIndex('dev_PROMPTS_2')
 
@@ -124,6 +171,9 @@ export default function Submit() {
           <Box
             component='form'
             noValidate
+            onKeyPress={(e) => {
+              e.key === 'Enter' && e.preventDefault()
+            }}
             onSubmit={handleSubmit}
             sx={{ mt: 3 }}
           >
@@ -133,11 +183,13 @@ export default function Submit() {
                   tagValue={tagValue}
                   setTagValue={setTagValue}
                   isFormSubmitted={isFormSubmitted}
+                  setNewTagColor={setNewTagColor}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <TextField
+                  autoComplete='off'
                   disabled={isFormSubmitted}
                   required
                   fullWidth
@@ -148,6 +200,7 @@ export default function Submit() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  autoComplete='off'
                   disabled={isFormSubmitted}
                   fullWidth
                   id='promptDescription'
@@ -157,6 +210,7 @@ export default function Submit() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  autoComplete='off'
                   disabled={isFormSubmitted}
                   required
                   multiline
@@ -164,6 +218,7 @@ export default function Submit() {
                   id='prompt'
                   name='prompt'
                   label='Prompt'
+                  helperText='Put curly braces around dynamic value. i.e. write a topic about {{user input}}'
                 />
               </Grid>
 
@@ -194,6 +249,7 @@ export default function Submit() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  autoComplete='off'
                   disabled={isFormSubmitted}
                   fullWidth
                   id='source'
