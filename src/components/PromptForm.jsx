@@ -14,6 +14,10 @@ import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CreatePromptTag from './CreatePromptTag'
 import { supabase } from '../util/supabaseClient'
+import { toast } from 'react-toastify'
+import general from '../helper/general'
+import { v4 as uuidv4 } from 'uuid'
+import { agoliaClientPrompts } from '../util/agoliaClient'
 
 function Copyright(props) {
   return (
@@ -37,6 +41,7 @@ const theme = createTheme()
 
 export default function Submit() {
   const [tagValue, setTagValue] = useState(null)
+  const [isFormSubmitted, setIsFormSubmitted] = useState(null)
 
   async function handleSubmit(event) {
     event.preventDefault()
@@ -48,14 +53,54 @@ export default function Submit() {
       description: formData.get('promptDescription'),
       prompt: formData.get('prompt'),
       user_name: formData.get('username'),
-      source: formData.get('source')
+      source: formData.get('source'),
+      uuid: uuidv4()
     }
 
+    // metadata to store in supabase
     const userData = await supabase.auth.getUser()
-    const user_id = userData.data?.user?.id
-    promptForm.user_id = user_id
+    const metaData = {
+      user_id: userData.data?.user?.id,
+      prompt_id: promptForm.uuid
+    }
 
-    await supabase.from('Prompts').insert([promptForm])
+    const { data: createRes, error: createErr } = await general.awaitWrap(
+      supabase.from('prompt_metadata').insert([metaData])
+    )
+
+    // if prompt created successfully
+    if (createRes.status === 201) {
+      // disabled submit button
+      setIsFormSubmitted(true)
+
+      // create record in agolia
+      const agoliaMetaData = {
+        objectID: promptForm.uuid,
+        field: promptForm.field,
+        title: promptForm.title,
+        description: promptForm.description,
+        prompt: promptForm.prompt,
+        user_name: promptForm.user_name,
+        source: promptForm.source
+      }
+      const index = agoliaClientPrompts.initIndex('dev_PROMPTS_2')
+
+      await index.saveObject(agoliaMetaData).then(({ objectIDs }) => {
+        console.log(`🚀 prompt saved`)
+      })
+
+      // show toast
+      toast.success('Prompt Submitted!', {
+        position: 'bottom-right',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light'
+      })
+    }
   }
 
   return (
@@ -87,11 +132,13 @@ export default function Submit() {
                 <CreatePromptTag
                   tagValue={tagValue}
                   setTagValue={setTagValue}
+                  isFormSubmitted={isFormSubmitted}
                 />
               </Grid>
 
               <Grid item xs={12}>
                 <TextField
+                  disabled={isFormSubmitted}
                   required
                   fullWidth
                   id='promptTitle'
@@ -101,6 +148,7 @@ export default function Submit() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  disabled={isFormSubmitted}
                   fullWidth
                   id='promptDescription'
                   name='promptDescription'
@@ -109,6 +157,7 @@ export default function Submit() {
               </Grid>
               <Grid item xs={12}>
                 <TextField
+                  disabled={isFormSubmitted}
                   required
                   multiline
                   fullWidth
@@ -135,6 +184,7 @@ export default function Submit() {
 
               <Grid item xs={12} sm={6}>
                 <TextField
+                  disabled={isFormSubmitted}
                   fullWidth
                   id='username'
                   name='username'
@@ -144,6 +194,7 @@ export default function Submit() {
               </Grid>
               <Grid item xs={12} sm={6}>
                 <TextField
+                  disabled={isFormSubmitted}
                   fullWidth
                   id='source'
                   name='source'
@@ -152,8 +203,10 @@ export default function Submit() {
                 />
               </Grid>
             </Grid>
+
             <Button
               type='submit'
+              disabled={isFormSubmitted}
               fullWidth
               variant='contained'
               sx={{ mt: 3, mb: 2 }}

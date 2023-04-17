@@ -21,11 +21,7 @@ import { MDBBtn } from 'mdb-react-ui-kit'
 import Button from '@mui/material/Button'
 import { IoCreate } from 'react-icons/io5'
 import { Link } from 'react-router-dom'
-
-const searchClient = algoliasearch(
-  'XRUEQYGG84', // app ID
-  'a8b499f1610dfa33662cf441d46cfe68' //Search-Only API Key
-)
+import { agoliaClientPrompts } from '../util/agoliaClient'
 
 const supabaseOptions = {
   db: {
@@ -150,7 +146,7 @@ const PromptLibButton = () => {
               {/* search bar */}
 
               <InstantSearch
-                searchClient={searchClient}
+                searchClient={agoliaClientPrompts}
                 indexName='dev_PROMPTS_2'
               >
                 {/* <Configure /> */}
@@ -172,17 +168,24 @@ const PromptLibButton = () => {
 
                   {/* Create a prompt! */}
                   <Button
-                    variant='contained'
+                    variant='text'
                     sx={{
                       marginLeft: 'auto',
                       height: '40px',
                       width: '110px',
-                      borderRadius: '5px'
+                      borderRadius: '5px',
+                      backgroundColor: '#0095ff',
+                      color: 'white',
+                      ':hover': {
+                        backgroundColor: '#007be6',
+                        color: 'white'
+                      }
                     }}
+                    target='_blank'
                     component={Link}
                     to='/new-prompt'
                   >
-                    <IoCreate size={20} />
+                    {/* <IoCreate size={20} /> */}
                     Create
                   </Button>
                 </div>

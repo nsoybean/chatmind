@@ -12,10 +12,14 @@ import { Context } from '../context/token'
 
 const filter = createFilterOptions()
 
-export default function CreatePromptTag({ tagValue, setTagValue }) {
+export default function CreatePromptTag({
+  tagValue,
+  setTagValue,
+  isFormSubmitted
+}) {
   //   const [value, setValue] = useState(null)
   const [open, toggleOpen] = useState(false)
-  const [promptTags, setPromptTags] = useState(null)
+  const [promptTags, setPromptTags] = useState([{ field: 'marketing' }])
   const [dialogValue, setDialogValue] = useState({
     field: ''
   })
@@ -51,6 +55,7 @@ export default function CreatePromptTag({ tagValue, setTagValue }) {
   return (
     <React.Fragment>
       <Autocomplete
+        disabled={isFormSubmitted}
         value={tagValue}
         onChange={(event, newValue) => {
           if (typeof newValue === 'string') {

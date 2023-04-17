@@ -22,11 +22,7 @@ import { createClient } from '@supabase/supabase-js'
 // import 'instantsearch.css/themes/reset.css'
 // or include the full Satellite theme
 import 'instantsearch.css/themes/satellite.css'
-
-const searchClient = algoliasearch(
-  'XRUEQYGG84', // app ID
-  'ab1aeb2d7d64639e7074032d6440cd30' //Search-Only API Key
-)
+import { agoliaClientCharPrompts } from '../util/agoliaClient'
 
 const supabaseOptions = {
   db: {
@@ -143,7 +139,7 @@ const CharacterPromptLibButton = () => {
               <Container maxWidth='md' sx={{ my: '20px' }}>
                 {/* search bar */}
                 <InstantSearch
-                  searchClient={searchClient}
+                  searchClient={agoliaClientCharPrompts}
                   indexName='dev_PROMPTS'
                 >
                   <Configure />
