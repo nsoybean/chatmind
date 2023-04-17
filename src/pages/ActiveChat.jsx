@@ -191,10 +191,26 @@ function ActiveChat() {
             // max_tokens: chatData.maxToken //empty
           }
 
+          const API_KEY = JSON.parse(localStorage.getItem('MA_openai_token'))
+
+          if (!API_KEY) {
+            toast.error('Missing OpenAI Key!', {
+              position: 'bottom-right',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'dark'
+            })
+            return
+          }
+
           // cancel API state
           let tempCancelToken = axios.CancelToken.source()
           setCancelToken(tempCancelToken)
-          const API_KEY = JSON.parse(localStorage.getItem('MA_openai_token'))
+
           eventStream = new SSE(url, {
             headers: {
               'Content-Type': 'application/json',
