@@ -4,9 +4,8 @@ const FeatureList = () => {
   const features = [
     'Use your personal API key',
     'Data stored locally',
+    'Open-source prompt library',
     'Integrations',
-    'No repetitive logins',
-    'Useful prompt library',
     'Faster response',
     '...and more features!'
   ]
