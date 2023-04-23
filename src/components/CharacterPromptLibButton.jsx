@@ -6,6 +6,7 @@ import SearchIcon from '@mui/icons-material/Search'
 import CharacterPromptCards from './CharacterPromptCards'
 import CharacterPromptCard from './CharacterPromptCard'
 import { BsPersonCircle } from 'react-icons/bs'
+import { MDBBtn } from 'mdb-react-ui-kit'
 import {
   Configure,
   InstantSearch,
@@ -107,7 +108,7 @@ const CharacterPromptLibButton = () => {
             width: '100%',
             height: '100%',
             backgroundColor: 'rgba(0, 0, 0, 0.5)',
-            display: 'flex',
+            // display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             zIndex: 1
@@ -116,52 +117,76 @@ const CharacterPromptLibButton = () => {
         >
           <div
             style={{
-              backgroundColor: '#FFFFFF',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
+              width: '60vw',
+              margin: '30px auto'
             }}
-            onClick={(e) => e.stopPropagation()}
           >
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {/* title */}
-              <Typography
-                variant='h6'
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  marginBottom: '5px'
-                }}
-              >
-                ChatGPT to act as... <br />
-              </Typography>
-
-              <Container maxWidth='md' sx={{ my: '20px' }}>
-                {/* search bar */}
-                <InstantSearch
-                  searchClient={agoliaClientCharPrompts}
-                  indexName='dev_PROMPTS'
+            <div
+              style={{
+                backgroundColor: '#FFFFFF',
+                padding: '20px',
+                borderRadius: '10px',
+                boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                {/* title */}
+                <Typography
+                  variant='h6'
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: '5px'
+                  }}
                 >
-                  <Configure />
-                  {/* temp comment out hits per page */}
-                  {/* <Configure hitsPerPage={5} /> */}
-                  <SearchBox
-                    autoFocus={true}
-                    placeholder={'Search for prompts'}
-                  />
-                  <div
-                    className='card-container'
-                    style={{
-                      width: '100%',
-                      maxHeight: '500px',
-                      overflow: 'auto'
-                    }}
+                  ChatGPT to act as... <br />
+                </Typography>
+
+                <Container maxWidth='md' sx={{ my: '20px' }}>
+                  {/* search bar */}
+                  <InstantSearch
+                    searchClient={agoliaClientCharPrompts}
+                    indexName='dev_PROMPTS'
                   >
-                    <Hits hitComponent={CharacterPromptCard} />
-                  </div>
-                  {/* <InfiniteHits hitComponent={CharacterPromptCard} /> */}
-                </InstantSearch>
-              </Container>
+                    <Configure />
+                    {/* temp comment out hits per page */}
+                    {/* <Configure hitsPerPage={5} /> */}
+                    <SearchBox
+                      autoFocus={true}
+                      placeholder={'Search for prompts'}
+                    />
+                    <div
+                      className='card-container'
+                      style={{
+                        width: '100%',
+                        maxHeight: '500px',
+                        overflow: 'auto'
+                      }}
+                    >
+                      <Hits hitComponent={CharacterPromptCard} />
+                    </div>
+                    {/* <InfiniteHits hitComponent={CharacterPromptCard} /> */}
+                  </InstantSearch>
+                </Container>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    marginTop: '10px'
+                  }}
+                >
+                  <MDBBtn
+                    style={{ margin: '0px 5px' }}
+                    color='secondary'
+                    onClick={() => setShowModal(false)}
+                  >
+                    Close
+                  </MDBBtn>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -56,125 +56,153 @@ const PromptLibButton = () => {
   }
 
   return (
-    <div style={{ position: 'relative' }}>
-      <div
-        style={{
-          borderRadius: '20px',
-          width: '220px',
-          height: '40px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          color: '#fff',
-          backgroundColor: '#FF6000',
-          border: '1px solid #CCCCCC',
-          cursor: 'pointer'
-        }}
-        onClick={handleButtonClick}
-      >
-        <ImBooks size={24} style={{ marginRight: '5px' }} />
-        <Typography> Prompt Library </Typography>
-      </div>
-      {showModal && (
+    <>
+      <div style={{ position: 'relative' }}>
         <div
           style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            borderRadius: '20px',
+            width: '220px',
+            height: '40px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            color: '#fff',
+            backgroundColor: '#FF6000',
+            border: '1px solid #CCCCCC',
+            cursor: 'pointer'
           }}
-          onClick={() => setShowModal(false)}
+          onClick={handleButtonClick}
         >
+          <ImBooks size={24} style={{ marginRight: '5px' }} />
+          <Typography> Prompt Library </Typography>
+        </div>
+      </div>
+      <div>
+        {showModal && (
           <div
             style={{
-              backgroundColor: '#FFFFFF',
-              padding: '20px',
-              borderRadius: '10px',
-              boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
+              position: 'fixed',
+              top: 0,
+              left: 0,
+              width: '100%',
+              height: '100%',
+              backgroundColor: 'rgba(0, 0, 0, 0.5)',
+              // display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center'
             }}
-            onClick={(e) => e.stopPropagation()}
+            onClick={() => setShowModal(false)}
           >
-            {/* title */}
-            <Typography
-              variant='h6'
+            <div
               style={{
-                display: 'flex',
-                justifyContent: 'center',
-                marginBottom: '5px'
+                width: '60vw',
+                margin: '30px auto'
               }}
             >
-              Prompt Library
-            </Typography>
-
-            <Container maxWidth='md' sx={{ my: '20px' }}>
-              {/* search bar */}
-
-              <InstantSearch
-                searchClient={agoliaClientPrompts}
-                indexName='dev_PROMPTS_2'
+              <div
+                style={{
+                  backgroundColor: '#FFFFFF',
+                  padding: '20px',
+                  borderRadius: '10px',
+                  boxShadow: '0 0 10px 0 rgba(0, 0, 0, 0.2)'
+                }}
+                onClick={(e) => e.stopPropagation()}
               >
-                {/* <Configure /> */}
-                {/* temp comment out hits per page */}
-                {/* <Configure hitsPerPage={5} /> */}
+                {/* title */}
+                <Typography
+                  variant='h6'
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    marginBottom: '5px'
+                  }}
+                >
+                  Prompt Library
+                </Typography>
+
+                <Container maxWidth='md' sx={{ my: '20px' }}>
+                  {/* search bar */}
+
+                  <InstantSearch
+                    searchClient={agoliaClientPrompts}
+                    indexName='dev_PROMPTS_2'
+                  >
+                    {/* <Configure /> */}
+                    {/* temp comment out hits per page */}
+                    {/* <Configure hitsPerPage={5} /> */}
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'flex-start',
+                        alignItems: 'center'
+                      }}
+                    >
+                      <SearchBox
+                        autoFocus={true}
+                        placeholder={'Search for prompts'}
+                        style={{ width: '85%' }}
+                      />
+
+                      {/* Create a prompt! */}
+                      <Button
+                        variant='text'
+                        sx={{
+                          marginLeft: 'auto',
+                          height: '40px',
+                          width: '110px',
+                          borderRadius: '5px',
+                          backgroundColor: '#0095ff',
+                          color: 'white',
+                          ':hover': {
+                            backgroundColor: '#007be6',
+                            color: 'white'
+                          }
+                        }}
+                        // target='_blank'
+                        // component={Link}
+                        // to='/new-prompt'
+                        onClick={authCreateNewPrompt}
+                      >
+                        {/* <IoCreate size={20} /> */}
+                        Create
+                      </Button>
+                    </div>
+                    <div
+                      className='card-container'
+                      style={{
+                        width: '100%',
+                        maxHeight: '500px',
+                        overflow: 'auto'
+                      }}
+                    >
+                      <Hits hitComponent={PromptCard} />
+                    </div>
+                  </InstantSearch>
+                </Container>
                 <div
                   style={{
                     display: 'flex',
                     flexDirection: 'row',
-                    justifyContent: 'flex-start',
-                    alignItems: 'center'
+                    justifyContent: 'flex-end',
+                    alignItems: 'center',
+                    marginTop: '10px'
                   }}
                 >
-                  <SearchBox
-                    autoFocus={true}
-                    placeholder={'Search for prompts'}
-                    style={{ width: '85%' }}
-                  />
-
-                  {/* Create a prompt! */}
-                  <Button
-                    variant='text'
-                    sx={{
-                      marginLeft: 'auto',
-                      height: '40px',
-                      width: '110px',
-                      borderRadius: '5px',
-                      backgroundColor: '#0095ff',
-                      color: 'white',
-                      ':hover': {
-                        backgroundColor: '#007be6',
-                        color: 'white'
-                      }
-                    }}
-                    // target='_blank'
-                    // component={Link}
-                    // to='/new-prompt'
-                    onClick={authCreateNewPrompt}
+                  <MDBBtn
+                    style={{ margin: '0px 5px' }}
+                    color='secondary'
+                    onClick={() => setShowModal(false)}
                   >
-                    {/* <IoCreate size={20} /> */}
-                    Create
-                  </Button>
+                    Close
+                  </MDBBtn>
                 </div>
-                <div
-                  className='card-container'
-                  style={{
-                    width: '100%',
-                    maxHeight: '500px',
-                    overflow: 'auto'
-                  }}
-                >
-                  <Hits hitComponent={PromptCard} />
-                </div>
-              </InstantSearch>
-            </Container>
+              </div>
+            </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
+    </>
   )
 }
 
