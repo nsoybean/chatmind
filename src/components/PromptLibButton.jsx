@@ -42,7 +42,7 @@ const PromptLibButton = () => {
     if (userSession?.data?.session?.access_token) {
       window.open('/new-prompt')
     } else {
-      toast.warn('Please sign in to create prompts 😎', {
+      toast.warn('Sign in to create prompts 😎', {
         position: 'bottom-right',
         autoClose: 5000,
         hideProgressBar: false,

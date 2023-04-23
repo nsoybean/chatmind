@@ -178,11 +178,6 @@ function Home() {
           {/* LOGIN ICON */}
           <div
             style={{
-              height: profileIconHovered ? '42px' : '40px',
-              width: profileIconHovered ? '42px' : '40px',
-              borderRadius: '100%',
-              // backgroundColor: profileIconHovered ? '#3b71ca' : '#fff', // white default, hovered blue
-              backgroundColor: profileIconHovered ? '#2c5aa4' : '#3b71ca', // dark-grey default, hovered black
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -195,8 +190,26 @@ function Home() {
             onMouseEnter={() => setProfileIconHovered(true)}
             onMouseLeave={() => setProfileIconHovered(false)}
           >
-            <FaUser size={20} style={{ color: 'white' }} />
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: profileIconHovered ? '42px' : '40px',
+                width: profileIconHovered ? '42px' : '40px',
+                borderRadius: '100%',
+                // backgroundColor: profileIconHovered ? '#3b71ca' : '#fff', // white default, hovered blue
+                backgroundColor: profileIconHovered ? '#2c5aa4' : '#3b71ca', // dark-grey default, hovered black}}>
+                marginRight: '5px'
+              }}
+            >
+              <FaUser size={20} style={{ color: 'white' }} />
+            </div>
+            <div>
+              {session ? <strong> Profile</strong> : <strong>Login</strong>}
+            </div>
           </div>
+
           {profileModal && (
             <LoginModal
               showModel={profileModal}

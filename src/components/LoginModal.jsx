@@ -34,7 +34,7 @@ export default function LoginModal({ showModel, setShowModal, session }) {
   const toggleShow = () => setShowModal(!showModel)
 
   supabase.auth.onAuthStateChange((event, session) => {
-    console.log('🚀 event:', event)
+    // console.log('🚀 event:', event)
     if (event === 'SIGNED_IN') {
       setShowModal(false)
     }
