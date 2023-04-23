@@ -48,7 +48,7 @@ const PromptCards = ({ hit }) => {
               style={{
                 borderRadius: '40px',
                 padding: '5px 10px',
-                backgroundColor: `#${hit.title_bg_colour}` ?? '#82C3EC' // colour configured in BD, else default to blue
+                backgroundColor: `${hit.title_bg_colour}` ?? '#82C3EC' // colour configured in BD, else default to blue
               }}
             >
               <Highlight attribute='field' hit={hit} />

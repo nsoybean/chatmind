@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -13,6 +13,7 @@ import Typography from '@mui/material/Typography'
 import Container from '@mui/material/Container'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import CreatePromptTag from './CreatePromptTag'
+import CreatePromptTagV2 from './CreatePromptTagV2'
 import { supabase } from '../util/supabaseClient'
 import { toast } from 'react-toastify'
 import general from '../helper/general'
@@ -99,7 +100,7 @@ export default function Submit() {
       }
     } else {
       // else, its a new tag and take what was assigned
-      prompt_tag_color = newTagColor.substring(1).toUpperCase()
+      prompt_tag_color = newTagColor.toUpperCase()
     }
 
     const metaData = {
@@ -178,12 +179,21 @@ export default function Submit() {
             sx={{ mt: 3 }}
           >
             <Grid container spacing={2}>
-              <Grid item xs={12}>
+              {/* <Grid item xs={12}>
                 <CreatePromptTag
                   tagValue={tagValue}
                   setTagValue={setTagValue}
                   isFormSubmitted={isFormSubmitted}
                   setNewTagColor={setNewTagColor}
+                />
+              </Grid> */}
+              <Grid item xs={12}>
+                <CreatePromptTagV2
+                  tagValue={tagValue}
+                  setTagValue={setTagValue}
+                  newTagColor={newTagColor}
+                  setNewTagColor={setNewTagColor}
+                  isFormSubmitted={isFormSubmitted}
                 />
               </Grid>
 

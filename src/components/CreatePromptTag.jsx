@@ -10,7 +10,7 @@ import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete'
 import { ImCool } from 'react-icons/im'
 import { IoColorPaletteSharp } from 'react-icons/io5'
 import { Context } from '../context/token'
-import { SwatchesPicker } from 'react-color'
+import { TwitterPicker } from 'react-color'
 
 const filter = createFilterOptions()
 
@@ -40,7 +40,8 @@ export default function CreatePromptTag({
     getAndSetDistinctTags()
   }, [])
 
-  const handleClose = () => {
+  const handleClose = (event) => {
+    event.preventDefault()
     setDialogValue({
       field: ''
     })
@@ -149,13 +150,13 @@ export default function CreatePromptTag({
             >
               Pick a new colour! <IoColorPaletteSharp />
             </DialogContentText>
-            <SwatchesPicker
+            <TwitterPicker
               color={'#fff'}
               onChangeComplete={handleColorChange}
             />
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
+            <Button onClick={(event) => handleClose(event)}>Cancel</Button>
             <Button variant='contained' type='submit'>
               Add
             </Button>
