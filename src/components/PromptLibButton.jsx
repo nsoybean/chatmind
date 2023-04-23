@@ -11,7 +11,8 @@ import {
   InstantSearch,
   SearchBox,
   Hits,
-  InfiniteHits
+  InfiniteHits,
+  Pagination
 } from 'react-instantsearch-hooks-web'
 import algoliasearch from 'algoliasearch'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
@@ -127,9 +128,8 @@ const PromptLibButton = () => {
                     searchClient={agoliaClientPrompts}
                     indexName='dev_PROMPTS_2'
                   >
-                    {/* <Configure /> */}
-                    {/* temp comment out hits per page */}
-                    {/* <Configure hitsPerPage={5} /> */}
+                    {/* hits per page */}
+                    <Configure hitsPerPage={15} />
                     <div
                       style={{
                         display: 'flex',
@@ -178,6 +178,7 @@ const PromptLibButton = () => {
                     >
                       <Hits hitComponent={PromptCard} />
                     </div>
+                    <Pagination />
                   </InstantSearch>
                 </Container>
                 <div

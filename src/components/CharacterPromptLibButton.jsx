@@ -12,7 +12,8 @@ import {
   InstantSearch,
   SearchBox,
   Hits,
-  InfiniteHits
+  InfiniteHits,
+  Pagination
 } from 'react-instantsearch-hooks-web'
 import { getAlgoliaResults } from '@algolia/autocomplete-js'
 import { searchBox } from 'instantsearch.js/es/widgets'
@@ -149,9 +150,8 @@ const CharacterPromptLibButton = () => {
                     searchClient={agoliaClientCharPrompts}
                     indexName='dev_PROMPTS'
                   >
-                    <Configure />
-                    {/* temp comment out hits per page */}
-                    {/* <Configure hitsPerPage={5} /> */}
+                    {/* hits per page */}
+                    <Configure hitsPerPage={15} />
                     <SearchBox
                       autoFocus={true}
                       placeholder={'Search for prompts'}
@@ -166,6 +166,7 @@ const CharacterPromptLibButton = () => {
                     >
                       <Hits hitComponent={CharacterPromptCard} />
                     </div>
+                    <Pagination />
                     {/* <InfiniteHits hitComponent={CharacterPromptCard} /> */}
                   </InstantSearch>
                 </Container>
